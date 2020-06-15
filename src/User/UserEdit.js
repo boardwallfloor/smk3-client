@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Edit, SimpleForm, TextInput, SelectInput, NumberInput } from 'react-admin';
+import { Edit, SimpleForm, TextInput } from 'react-admin';
 
 import PageTitle from '../Util/PageTitle';
 

@@ -7,6 +7,7 @@ const httpClient = fetchUtils.fetchJson;
 export default {
     getList: (resource, params) => {
         const { page, perPage } = params.pagination;
+        // console.log(params.pagination);
         const { field, order } = params.sort;
         const query = {
             sort: JSON.stringify([field, order]),

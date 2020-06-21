@@ -94,9 +94,12 @@ export default {
         httpClient(`${apiUrl}/${resource}`, {
             method: 'POST',
             body: JSON.stringify(params.data),
-        }).then(({ json }) => ({
-            data: { ...params.data, id: json.id },
-        })),
+        }).then(({json}) => {
+            console.log(json);
+            return {
+                 data: { ...params.data, id: json.id },
+            }
+        }),
 
     delete: (resource, params) =>
         httpClient(`${apiUrl}/${resource}/${params.id}`, {

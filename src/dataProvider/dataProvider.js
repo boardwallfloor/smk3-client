@@ -14,7 +14,7 @@ export default {
             range: JSON.stringify([(page - 1) * perPage, page * perPage - 1]),
             filter: JSON.stringify(params.filter),
         };
-        
+        // console.log(query)
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
 
 
@@ -49,15 +49,19 @@ export default {
 
     getMany: (resource, params) => {
         const query = {
-            filter: JSON.stringify({ id: params.ids }),
+            filter: JSON.stringify({ _id: params.ids }),
         };
+        // console.log(query)
+        // console.log("Get Many")
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
+        // console.log(url)
         return httpClient(url).then(({ json }) => ({ data: json }));
     },
 
     getManyReference: (resource, params) => {
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
+        // console.log("Many Reference")
         const query = {
             sort: JSON.stringify([field, order]),
             range: JSON.stringify([(page - 1) * perPage, page * perPage - 1]),

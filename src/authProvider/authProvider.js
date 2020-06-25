@@ -15,8 +15,8 @@ const authProvider = {
             .then((json) => {
                 // console.log(json)
                 localStorage.setItem('username', username);
-                localStorage.setItem('privilege', json.privilege);
-                localStorage.setItem('userid', json._id);
+                // localStorage.setItem('privilege', json.privilege);
+                // localStorage.setItem('userid', json._id);
 
             })
             .catch((err) => {

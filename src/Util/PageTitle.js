@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-const PageTitle = (record) => {
-    return <span>Editing {record ? `"${record.record.title}"` : ''}</span>;
+const PageTitle = (props) => {
+    return <span>{props.action} {console.log(props)} {props.record.name ? `${props.record.name}` : ''}</span>;
 }
 
 export default PageTitle;

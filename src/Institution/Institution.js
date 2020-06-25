@@ -1,5 +1,5 @@
 import React from 'react';
-import {Create, Edit, List, Show, Datagrid, SimpleShowLayout, SimpleForm, ReferenceField, TextField, TextInput, NumberField, NumberInput, EditButton} from 'react-admin'
+import {Create, Edit, List, Show, Datagrid, SimpleShowLayout, SimpleForm, ReferenceField, TextField, TextInput, NumberField, NumberInput, EditButton, DeleteButton} from 'react-admin'
 import PageTitle from '../Util/PageTitle';
 
 export const InstitutionList = props => (
@@ -11,6 +11,7 @@ export const InstitutionList = props => (
             <TextField source="province" label="Provinsi"/>
             <NumberField source="area" label="Luas(m2)"/>
             <EditButton />
+            <DeleteButton />
         </Datagrid>
     </List>
 );

@@ -4,14 +4,13 @@ import {Create, Edit, List, Show, Datagrid, SimpleShowLayout, SimpleForm, Boolea
 import PageTitle from '../Util/PageTitle';
 
 export const UserList = props => (
-    <List {...props} bulkActionButtons={false}>
+    <List title={<PageTitle action="Creating"/>} {...props} bulkActionButtons={false}>
         <Datagrid rowClick="show">
             <TextField source="username" label="Username"/>
             <TextField source="privilege" label="Jenis User"/>
-            <TextField source="nip" label="NIP"/>
             <EmailField source="email" label="Email"/>
-            <TextField source="phonenumber" label="Nomor HP"/>
-            <TextField source="jobtitle" label="Jabatan"/>
+            <EditButton />
+            <DeleteButton />
         </Datagrid>
     </List>
 );

@@ -1,10 +1,10 @@
 import React from 'react';
-import {Create, Edit, List, Show, Datagrid, SimpleShowLayout, SimpleForm, BooleanField, BooleanInput, DateInput, DateField, ReferenceField, TextField, TextInput, NumberField, NumberInput, EditButton, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, SelectInput, ReferenceInput} from 'react-admin'
+import {Create, Edit, List, Show, Datagrid, BooleanField, BooleanInput, DateInput, DateField, ReferenceField, TextField, TextInput, NumberField, NumberInput, EditButton, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, SelectInput, ReferenceInput} from 'react-admin'
 
 import PageTitle from '../Util/PageTitle';
 
 export const ReportyearList = props => (
-    <List {...props} bulkActionButtons={false}>
+    <List title="Laporan per Tahun" {...props} bulkActionButtons={false}>
         <Datagrid rowClick="show">
             <ReferenceField label="Penulis" source="author" reference="user" emptyText="test">
                 <TextField source="username" />

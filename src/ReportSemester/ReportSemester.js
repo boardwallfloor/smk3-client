@@ -1,9 +1,9 @@
 import React from 'react';
-import {Create, Edit, List, Show, Datagrid, SimpleShowLayout, SimpleForm, BooleanField, SelectField, BooleanInput, DateInput, DateField, ReferenceField, TextField, TextInput, NumberField, NumberInput, EditButton, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, SelectInput, ReferenceInput} from 'react-admin'
+import {Create, Edit, List, Show, Datagrid, SelectField, ReferenceField, TextField, TextInput, NumberField, NumberInput, EditButton, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, SelectInput, ReferenceInput} from 'react-admin'
 import PageTitle from '../Util/PageTitle';
 
 export const ReportsemesterList = props => (
-    <List {...props} bulkActionButtons={false}>
+    <List title="Laporan per Semester" {...props} bulkActionButtons={false}>
         <Datagrid rowClick="show">
             <TextField source="month" label="Bulan"/>
             <TextField source="author" label="Penulis"/>

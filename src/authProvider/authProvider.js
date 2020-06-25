@@ -1,6 +1,6 @@
 const authProvider = {
     login: async ({username, password}) => {
-            await fetch('http://localhost:9000/auth/login',{
+            await fetch('http://192.168.100.62:9000/auth/login',{
                 method: 'POST',
                 body: JSON.stringify({ username, password }),
                 headers: new Headers({ 'Content-Type': 'application/json' }),
@@ -20,6 +20,7 @@ const authProvider = {
 
             })
             .catch((err) => {
+                console.log("Error")
                 console.log(err)
             })
             },

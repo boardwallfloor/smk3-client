@@ -1,5 +1,5 @@
 import React from 'react';
-import {Create, Edit, List, Show, Datagrid, SimpleShowLayout, SimpleForm, ReferenceField, TextField, TextInput, NumberField, NumberInput, EditButton, DeleteButton} from 'react-admin'
+import {Create, Edit, List, Show, Datagrid, SimpleShowLayout, SimpleForm, TextField, TextInput, NumberField, NumberInput, EditButton, DeleteButton} from 'react-admin'
 import PageTitle from '../Util/PageTitle';
 
 export const InstitutionList = props => (

@@ -1,7 +1,9 @@
 import { fetchUtils } from 'react-admin';
 import { stringify } from 'query-string';
 
-const apiUrl = 'http://localhost:9000';
+// const apiUrl = `${process.env.REACT_APP_API_CODE}`;
+// const apiUrl = 'http://localhost:9000';
+const apiUrl = 'http://192.168.100.62:9000';
 const httpClient = fetchUtils.fetchJson;
 
 export default {
@@ -14,7 +16,7 @@ export default {
             range: JSON.stringify([(page - 1) * perPage, page * perPage - 1]),
             filter: JSON.stringify(params.filter),
         };
-        // console.log(query)
+
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
 
 
@@ -42,9 +44,8 @@ export default {
     },
 
     getOne: (resource, params) =>
-        httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => (
-        {
-            data: json,
+        httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => ({
+            data:  { ...json, id: json._id },
         })),
 
     getMany: (resource, params) => {
@@ -55,7 +56,7 @@ export default {
         // console.log("Get Many")
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
         // console.log(url)
-        return httpClient(url).then(({ json }) => ({ data: json }));
+        return httpClient(url).then(({ json }) => ({ data: json.map(resource => ({ ...resource, id: resource._id }) ), }));
     },
 
     getManyReference: (resource, params) => {
@@ -73,7 +74,7 @@ export default {
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
 
         return httpClient(url).then(({ headers, json }) => ({
-            data: json,
+            data: json.map(resource => ({ ...resource, id: resource._id }) ),
             total: parseInt(headers.get('content-range').split('/').pop(), 10),
         }));
     },
@@ -91,7 +92,9 @@ export default {
         return httpClient(`${apiUrl}/${resource}?${stringify(query)}`, {
             method: 'PUT',
             body: JSON.stringify(params.data),
-        }).then(({ json }) => ({ data: json }));
+        }).then(({ json }) => ({
+            data: { ...json, id: json._id },
+        }));
     },
 
     create: (resource, params) =>
@@ -101,14 +104,16 @@ export default {
         }).then(({json}) => {
             console.log(json);
             return {
-                 data: { ...params.data, id: json.id },
+                 data: { ...params.data, id: json._id },
             }
         }),
 
     delete: (resource, params) =>
         httpClient(`${apiUrl}/${resource}/${params.id}`, {
             method: 'DELETE',
-        }).then(({ json }) => ({ data: json })),
+        }).then(({ json }) => ({ 
+               data: { ...json, id: json._id },
+        })),
 
     deleteMany: (resource, params) => {
         const query = {

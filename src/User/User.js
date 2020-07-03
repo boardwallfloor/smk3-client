@@ -45,7 +45,6 @@ const validateUserName = required();
 const validateFirstName = required();
 const validateFullName = required();
 const validatePrivilege = [choices(['Admin', 'User'], 'Must be User or Admin'), required()];
-const validateNip = required();
 const validateEmail = [email(), required()];
 const validatePhoneNumber = required();
 const validatePassword = [required(), minValue(8)];
@@ -61,7 +60,7 @@ export const UserCreate = props => (
                 { id: 'User', name: 'User' },
                 { id: 'Admin', name: 'Admin' }
             ]} />
-            <TextInput source="nip" validate={validateNip}/>
+            <TextInput source="nip"/>
             <TextInput source="email" validate={validateEmail}/>
             <TextInput source="phonenumber" validate={validatePhoneNumber}/>
             <TextInput source="password" validate={validatePassword}/>
@@ -70,7 +69,9 @@ export const UserCreate = props => (
     </Create>
 );
 
-export const UserShow = props => (
+export const UserShow = props => {
+    console.log(props.record)
+    return (
     <Show title={<PageTitle action="Show"/>} {...props}>
         <SimpleShowLayout>
             <TextField source="privilege" />
@@ -83,3 +84,4 @@ export const UserShow = props => (
         </SimpleShowLayout>
     </Show>
 );
+}

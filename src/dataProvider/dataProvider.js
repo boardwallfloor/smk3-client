@@ -6,10 +6,12 @@ import { stringify } from 'query-string';
 const apiUrl = 'http://192.168.100.62:9000';
 const httpClient = fetchUtils.fetchJson;
 
+
 export default {
     getList: (resource, params) => {
+
         const { page, perPage } = params.pagination;
-        // console.log(params.pagination);
+        console.log("Get List");
         const { field, order } = params.sort;
         const query = {
             sort: JSON.stringify([field, order]),
@@ -43,10 +45,23 @@ export default {
 
     },
 
-    getOne: (resource, params) =>
-        httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => ({
+    getOne: (resource, params) =>{
+        console.log(resource)
+        if(resource === 'profile'){
+            console.log("Get One Profile")
+            const userId = localStorage.getItem('userid')
+            console.log(userId)
+             return httpClient(`${apiUrl}/user/${userId}`).then(({ json }) => ({
             data:  { ...json, id: json._id },
-        })),
+        }))
+            // profileHandler(resource, params);
+        }else{
+            console.log("Get One")
+        return httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => ({
+            data:  { ...json, id: json._id },
+        }))
+        }
+    },
 
     getMany: (resource, params) => {
         const query = {

@@ -7,6 +7,7 @@ import TableRow from '@material-ui/core/TableRow';
 import { makeStyles } from '@material-ui/core/styles';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import DateRangeIcon from '@material-ui/icons/DateRange';
+import moment from 'moment';
 
 import CardWithIcon from '../CardWithIcon';
 
@@ -35,16 +36,16 @@ const ReportYearTable = (props) => {
 	          	</TableRow>
 	        </TableHead>
 	        <TableBody>
-	          	{props.data.map(item => (
+	          	{props.data.map((item, index) => (
 	            	<TableRow key={item._id}>
 	              	<TableCell component="th" scope="item">
-	                	{item.author}
+	                	{item.author.username}
 	              	</TableCell>
 	              	<TableCell component="th" scope="item">
-	                	{item.year}
+	                	{moment(item.year).format("YYYY")}
 	              	</TableCell>
 	              	<TableCell component="th" scope="item">
-	                	{item.institution}
+	                	{item.institution.name}
 	              	</TableCell>
 	            	</TableRow>
 	          	))}
@@ -64,23 +65,19 @@ const ReportSemesterTable = (props) => {
 		            <TableCell className={classes.bold}>Nama</TableCell>
 		            <TableCell className={classes.bold}>Bulan</TableCell>
 		            <TableCell className={classes.bold}>Tahun</TableCell>
-		            <TableCell className={classes.bold}>Fasyankes</TableCell>
 	          	</TableRow>
 	        </TableHead>
 	        <TableBody>
-	          	{props.data.map(item => (
+	          	{props.data.map((item, index) => (
 	            	<TableRow key={item._id}>
 	              	<TableCell component="th" scope="item">
-	                	{item.author}
+	                	{item.author.username}
 	              	</TableCell>
 	              	<TableCell component="th" scope="item">
 	                	{item.month}
 	              	</TableCell>
 	              	<TableCell component="th" scope="item">
-	                	{item.year}
-	              	</TableCell>
-	              	<TableCell component="th" scope="item">
-	                	{item.institution}
+	                	{moment(item.year).format("YYYY")}
 	              	</TableCell>
 	            	</TableRow>
 	          	))}
@@ -91,36 +88,42 @@ const ReportSemesterTable = (props) => {
 
 export const ReportYearCard = () => {
 	const [data, setData] = useState([]);
+	const [count, setCount] = useState(0);
 
     useEffect(() => {
         const resource = "reportyear"
         const fetchData = async () => {
             //Remember to Populate in Backend
-            const result = await fetch(`http://192.168.100.62:9000/${resource}`)
+            const result = await fetch(`http://192.168.100.62:9000/${resource}/db`)
             const json = await result.json();
-            setData(json);
+            // console.log(json.data[0].author)
+            setData(json.data);
+            setCount(json.count)
       }
     fetchData();
   	}, []);
 	return (
-		<CardWithIcon icon={EventNoteIcon} bgcolor="#f44336" name="Laporan Per Tahun" data={<ReportYearTable data={data}/>} length={data.length}/>
+		<CardWithIcon icon={EventNoteIcon} link="#/reportyear" bgcolor="#f44336" name="Laporan Per Tahun" data={<ReportYearTable data={data}/>} length={count}/>
 		)
 }
 
 export const ReportSemesterCard = () => {
 	const [data, setData] = useState([]);
+	const [count, setCount] = useState(0);
 
     useEffect(() => {
         const resource = "reportsemester"
         const fetchData = async () => {
             //Remember to Populate in Backend
-            const result = await fetch(`http://192.168.100.62:9000/${resource}`)
+            const result = await fetch(`http://192.168.100.62:9000/${resource}/db`)
             const json = await result.json();
-            setData(json);
+            setData(json.data);
+            console.log(json)
+            setCount(json.count)
       }
     fetchData();
   	}, []);
 	return (
-		<CardWithIcon icon={DateRangeIcon} bgcolor="#f44336" name="Laporan Per Semester" data={<ReportSemesterTable data={data}/>} length={data.length}/>
+		<CardWithIcon icon={DateRangeIcon} link="#/reportsemester" bgcolor="#f44336" name="Laporan Per Semester" data={<ReportSemesterTable data={data}/>} length={count}/>
 		)
 }

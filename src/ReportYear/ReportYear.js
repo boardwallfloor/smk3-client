@@ -13,6 +13,7 @@ export const ReportyearList = props => (
                 <TextField source="name"/>
             </ReferenceField>
             <NumberField source="total" />
+            <NumberField source="area" />
             <DateField source="year" />
             <EditButton />
             <DeleteButton />
@@ -24,10 +25,12 @@ export const ReportyearEdit = props => (
     <Edit title={<PageTitle action="Editing"/>} {...props}>
         <TabbedForm>
             <FormTab label="Penulis">
-                <TextInput source="author" />
+                <ReferenceInput label="Author" source="author" reference="user">
+                    <SelectInput optionText="username"/>
+                </ReferenceInput>
                 <NumberInput source="total" />
+                <NumberInput source="area" />
                 <DateInput source="year" />
-                <TextInput source="institution" />
             </FormTab>
             <FormTab label="Fasyankes" path="institution">
                 <ReferenceInput label="Fasyankes" source="institution" reference="institution">
@@ -201,10 +204,12 @@ export const ReportyearCreate = props => (
     <Create title={<PageTitle action="Creating"/>} {...props}>
         <TabbedForm>
             <FormTab label="Penulis">
-                <TextInput source="author" />
+                <ReferenceInput label="Author" source="author" reference="user">
+                    <SelectInput optionText="username"/>
+                </ReferenceInput>
                 <NumberInput source="total" />
+                <NumberInput source="area" />
                 <DateInput source="year" />
-                <TextInput source="institution" />
             </FormTab>
             <FormTab label="Fasyankes" path="institution">
                 <ReferenceInput label="Fasyankes" source="institution" reference="institution">

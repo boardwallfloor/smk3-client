@@ -19,11 +19,11 @@ const useStyles = makeStyles({
     },
 });
 
-const CardIcon = ({ Icon, bgColor }) => {
+const CardIcon = ({ Icon, bgColor, link }) => {
     const classes = useStyles();
     return (
         <Card className={classes.card} style={{ backgroundColor: bgColor }}>
-            <a href='#/institution'><Icon className={classes.icon} /></a>
+            <a href={link}><Icon className={classes.icon} /></a>
         </Card>
     );
 };

@@ -15,7 +15,7 @@ const authProvider = {
             .then((json) => {
                 // console.log(json)
                 localStorage.setItem('username', username);
-                // localStorage.setItem('privilege', json.privilege);
+                localStorage.setItem('privilege', json.privilege);
                 localStorage.setItem('userid', json._id);
 
             })
@@ -26,6 +26,8 @@ const authProvider = {
             },
     logout: () => {
         localStorage.removeItem('username');
+        localStorage.removeItem('privilege');
+        localStorage.removeItem('userid');
         return Promise.resolve()
 
     },
@@ -36,7 +38,8 @@ const authProvider = {
         return Promise.resolve()},
     getPermissions: () => {
         const role = localStorage.getItem('privilege');
-        return (role === 'A')? Promise.resolve(role) : Promise.reject() ;
+        console.log(role)
+        return role ? Promise.resolve(role) : Promise.reject() ;
     },
 };
 

@@ -58,6 +58,6 @@ export const InstitutionCard = () => {
     fetchData();
   	}, []);
 	return (
-		<CardWithIcon icon={LocalHospitalIcon} bgcolor="#f44336" name="Fasyankes" data={<InstitutionTable data={data}/>} length={data.length}/>
+		<CardWithIcon icon={LocalHospitalIcon} link="#/institution" bgcolor="#f44336" name="Fasyankes" data={<InstitutionTable data={data}/>} length={data.length}/>
 		)
 }

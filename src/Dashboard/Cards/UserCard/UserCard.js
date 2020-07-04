@@ -62,6 +62,6 @@ export const UserCard = () => {
     fetchData();
   	}, []);
 	return (
-		<CardWithIcon icon={GroupIcon} bgcolor="#f44336" name="User" data={<UserTable data={data}/>} length={data.length}/>
+		<CardWithIcon icon={GroupIcon} link="#/user" bgcolor="#f44336" name="User" data={<UserTable data={data}/>} length={data.length}/>
 		)
 }

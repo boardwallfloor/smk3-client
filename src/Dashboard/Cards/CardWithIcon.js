@@ -33,7 +33,7 @@ const useStyles = makeStyles({
         const classes = useStyles();
         return (
         <div className={classes.main}>
-            <CardIcon Icon={props.icon} bgColor={props.bgcolor} />
+            <CardIcon Icon={props.icon} bgColor={props.bgcolor} link={props.link}/>
             <Card className={classes.card}>
                 <CardContent className={classes.padding}>
                     <Typography className={classes.title} color="textSecondary">

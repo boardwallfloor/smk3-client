@@ -1,13 +1,8 @@
 import React from 'react';
-import {Create, Edit, List, Show, Datagrid, SimpleShowLayout, SimpleForm, SelectInput, EmailField, TextField, TextInput, NumberField, EditButton, DeleteButton} from 'react-admin'
+import {Create, Edit, List, Show, Datagrid, SimpleShowLayout, SimpleForm, SelectInput, EmailField, TextField, TextInput, EditButton, DeleteButton} from 'react-admin'
 import {
     required,
-    minLength,
-    maxLength,
     minValue,
-    maxValue,
-    number,
-    regex,
     email,
     choices
 } from 'react-admin';

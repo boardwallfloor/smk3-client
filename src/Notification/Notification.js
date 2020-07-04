@@ -1,5 +1,5 @@
 import React from 'react';
-import {Create, Edit, List, Show, BooleanField, DateField, ReferenceField, Datagrid, SimpleShowLayout, SimpleForm, TextField, TextInput, NumberField, NumberInput, EditButton, DeleteButton, BooleanInput, ReferenceInput, SelectInput, DateInput, SelectField} from 'react-admin'
+import {Create, Edit, List, Show, BooleanField, DateField, ReferenceField, Datagrid, SimpleShowLayout, SimpleForm, TextField, EditButton, DeleteButton, BooleanInput, ReferenceInput, SelectInput, DateInput, SelectField} from 'react-admin'
 import PageTitle from '../Util/PageTitle';
 
 export const NotifList = props => (

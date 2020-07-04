@@ -1,9 +1,8 @@
-import React,{useEffect, useState} from 'react';
+import React from 'react';
 import Card from '@material-ui/core/Card';
-import DollarIcon from '@material-ui/icons/AttachMoney';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-
+import CardContent from '@material-ui/core/CardContent';
 
 import CardIcon from './CardsIcon';
 
@@ -17,61 +16,38 @@ const useStyles = makeStyles({
     card: {
         overflow: 'inherit',
         textAlign: 'right',
-        padding: 16,
         minHeight: 52,
     },
+    padding: {
+        padding: 16,        
+    },
     title: {},
+    table: {
+        width: '100%',
+        padding: 0,
+        // marginTop: 20,
+  },
 });
 
-const fetchData = async(resource) => {
-    await fetch(`http://192.168.100.62:9000/${resource}`,{
-                method: 'GET',
-                headers: new Headers({ 'Content-Type': 'application/json' }),
-            }).then(async (res) => {
-                if (res.status < 200 || res.status >= 300){
-                    throw new Error(res.statusText);
-                }
-                const result = await res.json();
-                // console.log(result);
-                return result;
-            }).catch((err) => {
-                console.log("Error")
-                console.log(err)
-            })
-}
-
-const CardWithIcon = (props) => {
-    const classes = useStyles();
-    const [data, setData] = useState([]);
-
-    useEffect(() => {
-        const resource = props.data;
-        const fetchData = async () => {
-            const result = await fetch(`http://192.168.100.62:9000/${resource}`)
-            const json = await result.json();
-            setData(json);
-            console.log(json)
-      }
-    fetchData();
-    console.log(data)
-  }, []);
-    return (
+    const CardWithIcon = (props) => {
+        const classes = useStyles();
+        return (
         <div className={classes.main}>
             <CardIcon Icon={props.icon} bgColor={props.bgcolor} />
             <Card className={classes.card}>
-                <Typography className={classes.title} color="textSecondary">
-                    {props.resource}
-                </Typography>
-
-                      {data.map(item => (
-                         <Typography variant="subtitle1" gutterBottom >
-                            {item.username}
-                         </Typography>
-                      ))}
+                <CardContent className={classes.padding}>
+                    <Typography className={classes.title} color="textSecondary">
+                        {props.name}
+                    </Typography>
+                    <Typography  variant="h4" component="h4">
+                        {props.length}
+                    </Typography>
+                </CardContent>
+                {props.data}
             </Card>
         </div>
     );
-};
+    };
 
 export default CardWithIcon;
 

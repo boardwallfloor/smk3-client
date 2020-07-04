@@ -1,5 +1,5 @@
 import React from 'react';
-import {Create, Edit, List, Show, Datagrid, SimpleShowLayout, SimpleForm, SelectInput, EmailField, TextField, TextInput, NumberField, EditButton, DeleteButton} from 'react-admin'
+import { Show, SimpleShowLayout, EmailField, TextField} from 'react-admin'
 
 import PageTitle from '../Util/PageTitle';
 

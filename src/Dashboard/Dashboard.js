@@ -1,15 +1,14 @@
 import * as React from "react";
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import { Title } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
-import NoteIcon from '@material-ui/icons/Note';
-import Button from '@material-ui/core/Button';
 
-import Cards from './Cards/CardWithIcon'
+import {InstitutionCard} from './Cards/InstitutionCard/InstitutionCard';
+import {NotificationCard} from './Cards/NotificationCard/NotificationCard';
+import {ReportYearCard, ReportSemesterCard} from './Cards/ReportCard/ReportCard';
+import {UserCard} from './Cards/UserCard/UserCard';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,21 +31,27 @@ export default function CenteredGrid() {
     <div className={classes.root}>
     <Title title="SMK3" />
       <Grid container spacing={3}>
-      	<Grid item xs={12}>
-    		<Paper className={classes.paper}> Welcome Admin</Paper>
-
+      	<Grid item xs={6}>
+    		<Paper className={classes.paper}> Welcome Admin, and status if this is user</Paper>
         </Grid>
         <Grid item xs={6}>
-    		<Cards icon={NoteIcon} bgcolor="#f44336" resource="Report" data="user"/>
+    		<p>Populate this and format later</p>
+        <ReportYearCard />
         </Grid>
         <Grid item xs={3}>
-        	<Paper className={classes.paper}>Current Institute</Paper>
+          <p>Populate this later</p>
+        	<InstitutionCard />
         </Grid>
         <Grid item xs={3}>
-        	<Paper className={classes.paper}>Admin Only Last 10 Created User</Paper>
+          <UserCard />
         </Grid>
         <Grid item xs={6}>
-          <Paper className={classes.paper}>Currently Active CronJob</Paper>
+          <p>Populate this and format later</p>
+          <NotificationCard />
+        </Grid>
+        <Grid item xs={6}>
+          <p>Populate this and format later</p>
+          <ReportSemesterCard />
         </Grid>
       </Grid>
 

@@ -1,7 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch, Route, Link} from "react-router-dom";
+import {Route} from "react-router-dom";
 import { Admin, Resource} from 'react-admin';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import EventNoteIcon from '@material-ui/icons/EventNote';

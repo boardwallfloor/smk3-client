@@ -10,6 +10,8 @@ import {InstitutionCard} from './Cards/InstitutionCard/InstitutionCard';
 import {NotificationCard} from './Cards/NotificationCard/NotificationCard';
 import {ReportYearCard, ReportSemesterCard} from './Cards/ReportCard/ReportCard';
 import {UserCard} from './Cards/UserCard/UserCard';
+import {ReportStatusCard} from './Cards/ReportStatus/ReportStatus';
+import {ReportSemesterCardUser, ReportYearCardUser} from './Cards/ReportCardUser/ReportCardUser'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function CenteredGrid() {
+export const Dashboard = () => {
   const classes = useStyles();
   const { permissions } = usePermissions();
   const username = localStorage.getItem('username')
@@ -35,7 +37,7 @@ export default function CenteredGrid() {
       {permissions === "Admin" ?
       <Grid container spacing={3}>
       	<Grid item xs={12}>
-    		<Paper className={classes.paper}> Welcome {username}, and status if this is user</Paper>
+    		<Paper className={classes.paper}> Welcome {username}</Paper>
         </Grid>
         <Grid item xs={6}>
         <ReportYearCard />
@@ -57,17 +59,16 @@ export default function CenteredGrid() {
       {permissions === 'User' && 
       <Grid container spacing={3} style={{marginTop: 0.1}}>
     	<Grid item xs={12}>
-    		<Paper className={classes.paper}> Welcome User</Paper>
-
+    		<Paper className={classes.paper}> Welcome {username}</Paper>
         </Grid>
         <Grid item xs={6}>
-        	<Paper className={classes.paper}>User Report Notification State</Paper>
+        	<ReportStatusCard />
         </Grid>
         <Grid item xs={3}>
-        	<Paper className={classes.paper}>Submitted Report Yearly</Paper>
+          <ReportYearCardUser />
         </Grid>
         <Grid item xs={3}>
-        	<Paper className={classes.paper}>Submitted Report Semesterly</Paper>
+          <ReportSemesterCardUser />
         </Grid>
         </Grid>
       }

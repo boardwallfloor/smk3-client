@@ -22,6 +22,9 @@ const useStyles = makeStyles({
   	}
 });
 
+
+
+
 const ReportYearTable = (props) => {
 
     const classes = useStyles();
@@ -30,7 +33,6 @@ const ReportYearTable = (props) => {
 		<Table className={classes.table} size="small" aria-label="simple table">
 	        <TableHead>
           		<TableRow>
-		            <TableCell className={classes.bold}>Nama</TableCell>
 		            <TableCell className={classes.bold}>Tahun</TableCell>
 		            <TableCell className={classes.bold}>Fasyankes</TableCell>
 	          	</TableRow>
@@ -38,9 +40,6 @@ const ReportYearTable = (props) => {
 	        <TableBody>
 	          	{props.data.map((item, index) => (
 	            	<TableRow key={item._id}>
-	              	<TableCell component="th" scope="item">
-	                	{item.author.username}
-	              	</TableCell>
 	              	<TableCell component="th" scope="item">
 	                	{moment(item.year).format("YYYY")}
 	              	</TableCell>
@@ -62,7 +61,6 @@ const ReportSemesterTable = (props) => {
 		<Table className={classes.table} size="small" aria-label="simple table">
 	        <TableHead>
           		<TableRow>
-		            <TableCell className={classes.bold}>Nama</TableCell>
 		            <TableCell className={classes.bold}>Bulan</TableCell>
 		            <TableCell className={classes.bold}>Tahun</TableCell>
 	          	</TableRow>
@@ -70,9 +68,6 @@ const ReportSemesterTable = (props) => {
 	        <TableBody>
 	          	{props.data.map((item, index) => (
 	            	<TableRow key={item._id}>
-	              	<TableCell component="th" scope="item">
-	                	{item.author.username}
-	              	</TableCell>
 	              	<TableCell component="th" scope="item">
 	                	{item.month}
 	              	</TableCell>
@@ -86,17 +81,18 @@ const ReportSemesterTable = (props) => {
 		)
 }
 
-export const ReportYearCard = () => {
+export const ReportYearCardUser = () => {
 	const [data, setData] = useState([]);
 	const [count, setCount] = useState(0);
 
     useEffect(() => {
         const resource = "reportyear"
         const fetchData = async () => {
-            //Remember to Populate in Backend
-            const result = await fetch(`http://192.168.100.62:9000/${resource}/db`)
+
+        	const userid = localStorage.getItem('userid');
+        	const query = `filter={"remindee":"${userid}", "complete_status":"false"}`
+            const result = await fetch(`http://192.168.100.62:9000/${resource}/db?${query}`)
             const json = await result.json();
-            // console.log(json.data[0].author)
             setData(json.data);
             setCount(json.count)
       }
@@ -107,19 +103,23 @@ export const ReportYearCard = () => {
 		)
 }
 
-export const ReportSemesterCard = () => {
+export const ReportSemesterCardUser = () => {
 	const [data, setData] = useState([]);
 	const [count, setCount] = useState(0);
+
 
     useEffect(() => {
         const resource = "reportsemester"
         const fetchData = async () => {
-            //Remember to Populate in Backend
-            const result = await fetch(`http://192.168.100.62:9000/${resource}/db`)
+
+        	const userid = localStorage.getItem('userid');
+        	const query = `filter={"remindee":"${userid}", "complete_status":"false"}`
+            const result = await fetch(`http://192.168.100.62:9000/${resource}/db?${query}`)
             const json = await result.json();
             setData(json.data);
-            // console.log(json)
+            console.log(json)
             setCount(json.count)
+            
       }
     fetchData();
   	}, []);

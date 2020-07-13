@@ -17,10 +17,11 @@ import {ReportsemesterList, ReportsemesterEdit, ReportsemesterShow, Reportsemest
 import {NotifList, NotifEdit, NotifCreate, NotifShow} from './Notification/Notification.js'
 import {ProfileShow} from './Profile/Profile.js';
 import CustomLayout from './Layout/Layout';
+import LoginPage from './Login/Login.js'
 
 const App = () => (
 
-    <Admin layout={CustomLayout} dataProvider={dataProviderLocal} authProvider={authProviderLocal} dashboard={Dashboard} customRoutes={[
+    <Admin loginPage={LoginPage} layout={CustomLayout} dataProvider={dataProviderLocal} authProvider={authProviderLocal} dashboard={Dashboard} customRoutes={[
 		<Route
 			path="/profile"
 			component={ProfileShow}

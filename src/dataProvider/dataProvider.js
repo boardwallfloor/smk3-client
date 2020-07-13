@@ -50,7 +50,7 @@ export default {
     },
 
     getOne: (resource, params) =>{
-        console.log(resource)
+        console.log('resource')
         if(resource === 'profile'){
             console.log("Get One Profile")
             const userId = localStorage.getItem('userid')

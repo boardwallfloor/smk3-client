@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     },
 });
 
-export const MyAppBar = props => {
+export const CustomAppBar = props => {
     const classes = useStyles();
     return (
         <AppBar {...props} userMenu={<MyUserMenu />}>

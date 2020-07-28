@@ -16,12 +16,15 @@ const useStyles = makeStyles({
     spacer: {
         flex: 1,
     },
+    greenBackground: {
+        backgroundColor: '#a2de96',
+    }
 });
 
 export const CustomAppBar = props => {
     const classes = useStyles();
     return (
-        <AppBar {...props} userMenu={<MyUserMenu />}>
+        <AppBar  {...props} userMenu={<MyUserMenu />}>
             <Typography
                 variant="h6"
                 color="inherit"

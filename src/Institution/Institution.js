@@ -9,7 +9,7 @@ export const InstitutionList = props => (
             <TextField source="address" label="Alamat"/>
             <TextField source="city" label="Kabupaten/Kota"/>
             <TextField source="province" label="Provinsi"/>
-            <NumberField source="area" label="Luas(m2)"/>
+
             <EditButton />
             <DeleteButton />
         </Datagrid>
@@ -23,7 +23,7 @@ export const InstitutionShow = props => (
             <TextField source="address" />
             <TextField source="city" />
             <TextField source="province" />
-            <NumberField source="area" />
+
         </SimpleShowLayout>
     </Show>
 );
@@ -35,7 +35,7 @@ export const InstitutionEdit = props => (
             <TextInput source="address" />
             <TextInput source="city" />
             <TextInput source="province" />
-            <NumberInput source="area" />
+
         </SimpleForm>
     </Edit>
 );
@@ -46,7 +46,7 @@ export const InstitutionCreate = props => (
             <TextInput source="address" />
             <TextInput source="city" />
             <TextInput source="province" />
-            <NumberInput source="area" />
+
         </SimpleForm>
     </Create>
 );

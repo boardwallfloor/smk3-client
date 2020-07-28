@@ -1,5 +1,5 @@
 import React from 'react';
-import {Create, Edit, List, Show, Datagrid, SimpleShowLayout, SimpleForm, SelectInput, EmailField, TextField, TextInput, EditButton, DeleteButton} from 'react-admin'
+import {Create, Edit, List, Show, Datagrid, SimpleShowLayout, SimpleForm, SelectInput, EmailField, TextField, TextInput, EditButton, DeleteButton, ReferenceField, ReferenceInput} from 'react-admin'
 import {
     required,
     minValue,
@@ -15,6 +15,9 @@ export const UserList = props => (
             <TextField source="full_name" label="Nama"/>
             <TextField source="privilege" label="Jenis User"/>
             <EmailField source="email" label="Email"/>
+            <ReferenceField label="Fasyankes" source="institution" reference="institution">
+                <TextField source="name"/>
+            </ReferenceField>
             <EditButton />
             <DeleteButton />
         </Datagrid>
@@ -32,6 +35,9 @@ export const UserEdit = props => (
             <TextInput source="email" />
             <TextInput source="phonenumber" />
             <TextInput source="password" />
+            <ReferenceInput label="Fasyankes" source="institution" reference="institution">
+                    <SelectInput source="name"/>
+            </ReferenceInput>
         </SimpleForm>
     </Edit>
 );
@@ -47,7 +53,7 @@ const validateJobTitle = required();
 
 export const UserCreate = props => (
     <Create title={<PageTitle action="Creating"/>} {...props}>
-        <SimpleForm>
+        <SimpleForm redirect='show'>
             <TextInput source="username" validate={validateUserName} />
             <TextInput source="first_name" validate={validateFirstName} />
             <TextInput source="full_name" validate={validateFullName} />
@@ -59,7 +65,10 @@ export const UserCreate = props => (
             <TextInput source="email" validate={validateEmail}/>
             <TextInput source="phonenumber" validate={validatePhoneNumber}/>
             <TextInput source="password" validate={validatePassword}/>
-            <TextInput source="jobtitle" validate={validateJobTitle}/>
+            <TextInput source="job_title" validate={validateJobTitle}/>
+            <ReferenceInput label="Fasyankes" source="institution" reference="institution">
+                    <SelectInput source="name"/>
+                </ReferenceInput>
         </SimpleForm>
     </Create>
 );
@@ -76,6 +85,9 @@ export const UserShow = props => {
             <TextField source="full_name" />
             <EmailField source="email" />
             <TextField source="phonenumber" />
+            <ReferenceField label="Fasyankes" source="institution" reference="institution">
+                    <TextField source="name"/>
+            </ReferenceField>
         </SimpleShowLayout>
     </Show>
 );

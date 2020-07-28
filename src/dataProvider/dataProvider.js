@@ -11,7 +11,7 @@ export default {
     getList: (resource, params) => {
 
         const { page, perPage } = params.pagination;
-        console.log("Get List");
+        // console.log("Get List");
         const { field, order } = params.sort;
         const query = {
             sort: JSON.stringify([field, order]),
@@ -24,7 +24,7 @@ export default {
 
         return httpClient(url).then(({ headers, json }) => {
 
-            console.log(headers)
+            // console.log(headers)
             if (!headers.has('content-range')) {
                 throw new Error(
                     'The Content-Range header is missing in the HTTP Response. The simple REST data provider expects responses for lists of resources to contain this header with the total number of results to build the pagination. If you are using CORS, did you declare Content-Range in the Access-Control-Expose-Headers header?'
@@ -42,7 +42,7 @@ export default {
                 ),
             };
         }).catch((err) => {
-            console.log(err)
+            // console.log(err)
             
 
         });
@@ -50,11 +50,11 @@ export default {
     },
 
     getOne: (resource, params) =>{
-        console.log('resource')
+        // console.log('resource')
         if(resource === 'profile'){
-            console.log("Get One Profile")
+            // console.log("Get One Profile")
             const userId = localStorage.getItem('userid')
-            console.log(userId)
+            // console.log(userId)
              return httpClient(`${apiUrl}/user/${userId}`).then(({ json }) => ({
             data:  { ...json, id: json._id },
         }))
@@ -121,7 +121,7 @@ export default {
             method: 'POST',
             body: JSON.stringify(params.data),
         }).then(({json}) => {
-            console.log(json);
+            // console.log(json);
             return {
                  data: { ...params.data, id: json._id },
             }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Create, Edit, List, Show, Datagrid, SelectField, ReferenceField, TextField, TextInput, DateInput, DateField, NumberField, NumberInput, EditButton, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, SelectInput, ReferenceInput} from 'react-admin'
+import {Create, Edit, List, Show, Datagrid, SelectField, ReferenceField, TextField, TextInput, DateInput, DateField, NumberField, NumberInput, EditButton, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, SelectInput, ReferenceInput, FileInput, FileField} from 'react-admin'
 import PageTitle from '../Util/PageTitle';
 
 export const ReportsemesterList = props => (
@@ -38,6 +38,11 @@ export const ReportsemesterEdit = props => (
                     <SelectInput optionText="username"/>
                 </ReferenceInput>
                 <DateInput source="year" />
+            </FormTab>
+            <FormTab label="Fasyankes" path="institution">
+                <ReferenceInput label="Fasyankes" source="institution" reference="institution">
+                    <SelectInput source="name"/>
+                </ReferenceInput>
             </FormTab>
             <FormTab label="Laporan" path="report">
                 {/* Question 1*/}
@@ -105,6 +110,11 @@ export const ReportsemesterShow = props => (
 				]} />
                 <ReferenceField label="Penulis" source="author" reference="user">
                     <TextField source="username"/>
+                </ReferenceField>
+            </Tab>
+            <Tab label="Fasyankes" path="institution">
+                <ReferenceField label="Fasyankes" source="institution" reference="institution">
+                    <TextField source="name"/>
                 </ReferenceField>
             </Tab>
             <Tab label="Laporan" path="report">
@@ -186,41 +196,65 @@ export const ReportsemesterCreate = props => (
                 <p>1. Jumlah SDM Fasyankes </p>
                 <NumberInput source="report.question1.total" label="Jumlah"/>
                 <TextInput source="report.question1.detail" label="Keterangan"/>
+                <FileInput placeholder='Drag File atau Klik Text untuk Upload' source="files" label="File yang bersangkutan pertanyaan nomor 1" accept="application/pdf, doc, docsx">
+                    <FileField source="src" title="title" />
+                </FileInput>
                 
                 {/* Question 2 */}
                 <p>2. Jumlah SDM Fasyankes yang sakit </p>
                 <NumberInput source="report.question2.total" label="Jumlah"/>
                 <TextInput source="report.question2.detail" label="Keterangan"/>
+                <FileInput placeholder='Drag File atau Klik Text untuk Upload' source="files" label="File yang bersangkutan pertanyaan nomor 2" accept="application/pdf, doc, docsx">
+                    <FileField source="src" title="title" />
+                </FileInput>
 
                 {/* Question 3 */}
                 <p>3. Jumlah kasus penyakit umum pada SDM Fasyankes </p>
                 <NumberInput source="report.question3.total" label="Jumlah"/>
                 <TextInput source="report.question3.detail" label="Keterangan"/>
+                <FileInput placeholder='Drag File atau Klik Text untuk Upload' source="files" label="File yang bersangkutan pertanyaan nomor 3" accept="application/pdf, doc, docsx">
+                    <FileField source="src" title="title" />
+                </FileInput>
 
                 {/* Question 4 */}
                 <p>4. Jumlah kasus dugaan penyakit akibat kerja pada suatu SDM Fasyankes </p>
                 <NumberInput source="report.question4.total" label="Jumlah"/>
                 <TextInput source="report.question4.detail" label="Keterangan"/>
+                <FileInput placeholder='Drag File atau Klik Text untuk Upload' source="files" label="File yang bersangkutan pertanyaan nomor 5" accept="application/pdf, doc, docsx">
+                    <FileField source="src" title="title" />
+                </FileInput>
 
                 {/* Question 5 */}
                 <p>5. Jumlah kasus penyakit akibat kerja pada SDM Fasyankes</p>
                 <NumberInput source="report.question5.total" label="Jumlah"/>
                 <TextInput source="report.question5.detail" label="Keterangan"/>
+                <FileInput placeholder='Drag File atau Klik Text untuk Upload' source="files" label="File yang bersangkutan pertanyaan nomor 5" accept="application/pdf, doc, docsx">
+                    <FileField source="src" title="title" />
+                </FileInput>
 
                 {/* Question 6 */}
                 <p>6. Jumlah kasus kecelakaan akibat kerja pada SDM Fasyankes</p>
                 <NumberInput source="report.question6.total" label="Jumlah"/>
                 <TextInput source="report.question6.detail" label="Keterangan"/>
+                <FileInput placeholder='Drag File atau Klik Text untuk Upload' source="files" label="File yang bersangkutan pertanyaan nomor 6" accept="application/pdf, doc, docsx">
+                    <FileField source="src" title="title" />
+                </FileInput>
                 
                 {/* Question 7 */}
                 <p>7. Jumlah kasus kejadian hampir celaka(<i>near misses</i>) pada SDM Fasyankes</p>
                 <NumberInput source="report.question7.total" label="Jumlah"/>
                 <TextInput source="report.question7.detail" label="Keterangan"/>
+                <FileInput placeholder='Drag File atau Klik Text untuk Upload' source="files" label="File yang bersangkutan pertanyaan nomor 7" accept="application/pdf, doc, docsx">
+                    <FileField source="src" title="title" />
+                </FileInput>
                 
                 {/* Qustion 8 */}
                 <p>8. Jumlah hari absen SDM Fasyankes karena sakit</p>
                 <NumberInput source="report.question8.total" label="Jumlah"/>
                 <TextInput source="report.question8.detail" label="Keterangan"/>
+                <FileInput placeholder='Drag File atau Klik Text untuk Upload' source="files" label="File yang bersangkutan pertanyaan nomor 8" accept="application/pdf, doc, docsx">
+                    <FileField source="src" title="title" />
+                </FileInput>
 
             </FormTab>
         </TabbedForm>

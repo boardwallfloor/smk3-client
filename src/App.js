@@ -17,7 +17,8 @@ import {ReportsemesterList, ReportsemesterEdit, ReportsemesterShow, Reportsemest
 import {NotifList, NotifEdit, NotifCreate, NotifShow} from './Notification/Notification.js'
 import {ProfileShow} from './Profile/Profile.js';
 import CustomLayout from './Layout/Layout';
-import LoginPage from './Login/Login.js'
+import LoginPage from './Layout/Login/Login'
+import LoginForm from './Layout/Login/LoginForm'
 
 const App = () => (
 

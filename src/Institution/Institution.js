@@ -1,5 +1,5 @@
 import React from 'react';
-import {Create, Edit, List, Show, Datagrid, SimpleShowLayout, SimpleForm, TextField, TextInput, NumberField, NumberInput, EditButton, DeleteButton} from 'react-admin'
+import {Create, Edit, List, Show, Datagrid, SimpleShowLayout, SimpleForm, TextField, TextInput, FileField, FileInput, EditButton, DeleteButton} from 'react-admin'
 import PageTitle from '../Util/PageTitle';
 
 export const InstitutionList = props => (
@@ -9,7 +9,6 @@ export const InstitutionList = props => (
             <TextField source="address" label="Alamat"/>
             <TextField source="city" label="Kabupaten/Kota"/>
             <TextField source="province" label="Provinsi"/>
-
             <EditButton />
             <DeleteButton />
         </Datagrid>
@@ -23,7 +22,7 @@ export const InstitutionShow = props => (
             <TextField source="address" />
             <TextField source="city" />
             <TextField source="province" />
-
+            <FileField source="file.title" title='file.title'/>
         </SimpleShowLayout>
     </Show>
 );
@@ -46,7 +45,9 @@ export const InstitutionCreate = props => (
             <TextInput source="address" />
             <TextInput source="city" />
             <TextInput source="province" />
-
+            <FileInput placeholder='Drag File atau Klik Text untuk Upload' source="file" label="File yang bersangkutan pertanyaan nomor 9" accept=".doc,.docx,application/pdf,.png">
+                <FileField source="src" title="title" />
+            </FileInput>
         </SimpleForm>
     </Create>
 );

@@ -7,6 +7,22 @@ const apiUrl = 'http://192.168.100.62:9000';
 const httpClient = fetchUtils.fetchJson;
 
 
+const changeParamsForFile =async (params) => {
+    const blobFetch = await fetch(params).then(r => r.blob());
+
+    return new Promise( (resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload =  () =>
+        {
+            resolve(reader.result)
+        }
+
+        reader.onerror = reject;
+
+        reader.readAsDataURL(blobFetch);
+    })
+}
+
 export default {
     getList: (resource, params) => {
 
@@ -116,16 +132,20 @@ export default {
         }));
     },
 
-    create: (resource, params) =>
-        httpClient(`${apiUrl}/${resource}`, {
+    create: async (resource, params) =>{
+       await changeParamsForFile(params.data.file.src)
+       .then(
+        (results) => {
+            params.data.file.src = results;
+        })
+        return httpClient(`${apiUrl}/${resource}`, {
             method: 'POST',
             body: JSON.stringify(params.data),
         }).then(({json}) => {
-            // console.log(json);
             return {
                  data: { ...params.data, id: json._id },
             }
-        }),
+        })},
 
     delete: (resource, params) =>
         httpClient(`${apiUrl}/${resource}/${params.id}`, {

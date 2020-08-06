@@ -39,20 +39,6 @@ const authProvider = {
 
     },
     checkAuth: () => {
-        // console.log(localStorage.getItem('jwt'))
-        // const jwtToken = localStorage.getItem('token');
-        // console.log(jwtToken);
-        // await fetch('http://192.168.100.62:9000/auth/authenticated',{
-        //     method: 'POST',
-        //     headers:{
-        //         'Content-Type': 'application/json',
-        //         Accept: 'application/json',
-        //         'Authorization': `Bearer ${jwtToken}`
-        // }})
-        // .then( async (user) =>{
-        //     const status = await user.json();
-        //     console.log(status)
-        // })
         return localStorage.getItem('jwt') ? Promise.resolve() : Promise.reject();
             },
     checkError: () => {

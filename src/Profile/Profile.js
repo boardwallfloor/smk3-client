@@ -4,7 +4,6 @@ import { Show, SimpleShowLayout, EmailField, TextField} from 'react-admin'
 import PageTitle from '../Util/PageTitle';
 
 export const ProfileShow = ({ staticContext, ...props }) => {
-	console.log(props)
 	const userId = localStorage.getItem('userid')
 	return (
     <Show title={<PageTitle action="Show"/>} id={userId} resource="profile" basePath="/profile" {...props}>

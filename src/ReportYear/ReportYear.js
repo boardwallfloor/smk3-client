@@ -43,6 +43,11 @@ export const ReportyearEdit = props => (
                 {/* Question 1*/}
                 <p>1. SMK3 di Fasyankes</p>
                 <BooleanInput source="report.question1.a.information" label="a. Ada komitmen/kebijakan"/>
+                <FormDataConsumer >
+                 {({ formData, ...rest }) => formData?.report?.question1?.a?.information &&
+                    <FileUpload sizeLimit="500000" source="report.question1.a.file" {...rest}/>
+                 }
+                </FormDataConsumer>
                 <BooleanInput source="report.question1.b.information" label="b. Dokumen rencana kegiatan K3"/>
                 <BooleanInput source="report.question1.c.information" label="c. Ada Tim K3/Pengelola  K3"/>
                 
@@ -131,11 +136,11 @@ export const ReportyearShow = props => (
                 {/* Question 1*/}
                 <p>1. SMK3 di Fasyankes</p>
                 <BooleanField source="report.question1.a.information" label="a. Ada komitmen/kebijakan"/>
-                <FileField source="report.question1.a.file.src" title="report.question1.a.file.src.file.title" />
+                <FileField source="report.question1.a.file.src" title="report.question1.a.file.title" />
                 <BooleanField source="report.question1.b.information" label="b. Dokumen rencana kegiatan K3"/>
-                <FileField source="report.question1.b.file.src" title="report.question1.b.file.src.file.title" />
+                <FileField source="report.question1.b.file.src" title="report.question1.b.file.title" />
                 <BooleanField source="report.question1.c.information" label="c. Ada Tim K3/Pengelola  K3"/>
-                <FileField source="report.question1.c.file.src" title="report.question1.c.file.src.file.title" />
+                <FileField source="report.question1.c.file.src" title="report.question1.c.file.title" />
                 
                 {/* Question 2 */}
                 <p>2. Pengenalan Potensi Bahaya dan Pengendalian Resiko</p>
@@ -205,14 +210,15 @@ export const ReportyearShow = props => (
     </Show>
 );
 
-export const ReportyearCreate = props => (
+export const ReportyearCreate = props => {
+    const userId = localStorage.getItem('userid')
+
+    return(
     <Create title={<PageTitle action="Creating"/>} {...props}>
-        <TabbedForm>
-            <FormTab label="Penulis">
-                <ReferenceInput label="Author" source="author" reference="user">
-                    <SelectInput optionText="username"/>
-                </ReferenceInput>
-                <NumberInput source="totalSDM" />
+        <TabbedForm redirect="show">
+            <FormTab label="Tanggal">
+                <TextInput source='author' initialValue={userId} disabled/>
+                <NumberInput source="totalSDM" label='Jumlah Sumber Daya Manusia'/>
                 <DateInput source="year" />
             </FormTab>
             <FormTab label="Fasyankes" path="institution">
@@ -226,55 +232,54 @@ export const ReportyearCreate = props => (
                 <p>1. SMK3 di Fasyankes</p>
                 <BooleanInput source="report.question1.a.information" label="a. Ada komitmen/kebijakan"/>
                 <FormDataConsumer >
-                 {({ formData, ...rest }) => formData?.report?.question1?.a?.information &&
-                    <FileInput placeholder='Drag File atau Klik Text untuk Upload' source="files"  accept=".doc,.docx,application/pdf,.png">
-                        <FileField source="src" title="title" {...rest}/>
-                    </FileInput>
+                 {({ formData, ...rest }) => (formData?.report?.question1?.a?.information) ?
+                    <FileUpload sizeLimit="500000" source="report.question1.a.file" {...rest}/>
+                 : null
                  }
                 </FormDataConsumer>
-
                 <BooleanInput source="report.question1.b.information" label="b. Dokumen rencana kegiatan K3"/>
                 <FormDataConsumer >
-                 {({ formData, ...rest }) => formData?.report?.question1?.b?.information  &&
-                    <FileInput placeholder='Drag File atau Klik Text untuk Upload' source="files" accept="application/pdf, doc, docsx">
-                        <FileField source="src" title="title" {...rest}/>
-                    </FileInput>
+                 {({ formData, ...rest }) => (formData?.report?.question1?.b?.information) ?
+                    <FileUpload sizeLimit="500000" source="report.question1.b.file" {...rest}/>
+                 : null
                  }
                 </FormDataConsumer>
-
                 <BooleanInput source="report.question1.c.information" label="c. Ada Tim K3/Pengelola  K3"/>
-                <FormDataConsumer >
-                 {({ formData, ...rest }) => formData?.report?.question1?.c?.information  &&
-                    <FileInput placeholder='Drag File atau Klik Text untuk Upload' source="files" label="Upload File" accept="application/pdf, doc, docsx">
-                        <FileField source="src" title="title" {...rest}/>
-                    </FileInput>
+                 <FormDataConsumer >
+                 {({ formData, ...rest }) => (formData?.report?.question1?.c?.information) ?
+                    <FileUpload sizeLimit="500000" source="report.question1.c.file" {...rest}/>
+                 : null
                  }
                 </FormDataConsumer>
-                
 
                 
                 {/* Question 2 */}
                 <p>2. Pengenalan Potensi Bahaya dan Pengendalian Resiko</p>
                 <BooleanInput source="report.question2.a.information" label="a. Identifikasi potensi bahaya"/>
                 <FormDataConsumer >
-                 {({ formData, ...rest }) => formData?.report?.question2?.a?.information  &&
-                    <FileUpload source="report.question2.a.file" {...rest}/>
+                 {({ formData, ...rest }) => (formData?.report?.question2?.a?.information) ?
+                    <FileUpload sizeLimit="500000" source="report.question2.a.file" {...rest}/>
+                 : null
                  }
                 </FormDataConsumer>
 
                 <BooleanInput source="report.question2.b.information" label="b. Penilaian risiko"/>
                 <FormDataConsumer >
-                 {({ formData, ...rest }) => formData?.report?.question2?.b?.information  &&
-                    <FileUpload source="report.question2.b.file" {...rest}/>
+                 {({ formData, ...rest }) => (formData?.report?.question2?.b?.information) ?
+                    <FileUpload sizeLimit="500000" source="report.question2.b.file" {...rest}/>
+                 : null
                  }
                 </FormDataConsumer>
 
+
                 <BooleanInput source="report.question2.c.information" label="c. Pengendalian Risiko"/>
                 <FormDataConsumer >
-                 {({ formData, ...rest }) => formData?.report?.question2?.c?.information  &&
-                    <FileUpload source="report.question2.c.file" {...rest}/>
+                 {({ formData, ...rest }) => (formData?.report?.question2?.c?.information) ?
+                    <FileUpload sizeLimit="500000" source="report.question2.c.file" {...rest}/>
+                 : null
                  }
                 </FormDataConsumer>
+
 
                 {/* Question 3 */}
                 <p>3. Penerapan Kewaspadaan Standar </p>
@@ -486,4 +491,4 @@ export const ReportyearCreate = props => (
             </FormTab>
         </TabbedForm>
     </Create>
-);
+)};

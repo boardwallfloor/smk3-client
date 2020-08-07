@@ -8,6 +8,10 @@ const myTheme = createMuiTheme({
       main: '#0288d1',
     },
   },
+        //   "primary1Color": "#43a047",
+        // "accent1Color": "#8bc34a",
+        // "primary2Color": "#388e3c",
+        // "primary3Color": "#c8e6c9"
     typography: {
         // Use the system font instead of the default Roboto font.
         fontFamily: [

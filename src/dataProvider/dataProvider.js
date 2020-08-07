@@ -9,12 +9,12 @@ const httpClient = fetchUtils.fetchJson;
 
 const changeBlobToBase64 =async (files) => {
     const blobFetch = await fetch(files).then(r => r.blob());
-
     return new Promise( (resolve, reject) => {
         const reader = new FileReader()
         reader.onload =  () =>
         {
             resolve(reader.result)
+            console.log('fired')
         }
 
         reader.onerror = reject;
@@ -23,32 +23,35 @@ const changeBlobToBase64 =async (files) => {
     })
 }
 
-const handleParamForFileUpload = async (params) => {
+const handleParamForFileUpload = async (params, resource) => {
     const files = params.data.report;
-    if(files.question1.file){
-        files.question1.file.src = await changeBlobToBase64(files.question1.file.src)
+    if(resource === 'reportsemester'){
+        await Promise.all(Object.keys(files).map( async (key, index) => {
+            if (files[key].file){
+               return files[key].file.src = await changeBlobToBase64(files[key].file.src)
+            }
+        }))
     }
-    if(files.question2.file){
-        files.question2.file.src = await changeBlobToBase64(files.question2.file.src)
+    if(resource === 'reportyear'){
+        await Promise.all(Object.keys(files).map( async (question, index) => {
+            await Promise.all(Object.keys(files[question]).map( async (point1, i) => {
+                if(files[question][point1].file){
+                    console.log(`files[${question}][${point1}]`)
+                    return files[question][point1].file.src = await changeBlobToBase64(files[question][point1].file.src)
+                }
+                await Promise.all(Object.keys(files[question][point1]).map( async (point2, int) => {
+                        if(files[question][point1][point2].file){
+                            console.log(`files[${question}][${point1}][${point2}]`)
+                            return files[question][point1][point2].file.src = await changeBlobToBase64(files[question][point1][point2].file.src)
+                        }
+                    })
+                    )
+            }))
+
+        }))
+
     }
-    if(files.question3.file){
-        files.question3.file.src = await changeBlobToBase64(files.question3.file.src)
-    }
-    if(files.question4.file){
-        files.question4.file.src = await changeBlobToBase64(files.question4.file.src)
-    }
-    if(files.question5.file){
-        files.question5.file.src = await changeBlobToBase64(files.question5.file.src)
-    }
-    if(files.question6.file){
-        files.question6.file.src = await changeBlobToBase64(files.question6.file.src)
-    }
-    if(files.question7.file){
-        files.question7.file.src = await changeBlobToBase64(files.question7.file.src)
-    }
-    if(files.question8.file){
-        files.question8.file.src = await changeBlobToBase64(files.question8.file.src)
-    }
+    console.log(files)
     return files;
 }
 
@@ -95,7 +98,6 @@ export default {
     },
 
     getOne: (resource, params) =>{
-        // console.log('resource')
         if(resource === 'profile'){
             // console.log("Get One Profile")
             const userId = localStorage.getItem('userid')
@@ -163,18 +165,23 @@ export default {
 
     create: async (resource, params) =>{
         if(resource === 'reportyear' || resource === 'reportsemester'){
+            console.log(params)
             await handleParamForFileUpload(params, resource)
             .then(
             (results) => {
                 params.data.report = results;
-                console.log(params.data)
+                console.log('results')
+                console.log(results)
             })
         }
+        console.log('params')
+        console.log(params.data)
         return httpClient(`${apiUrl}/${resource}`, {
             method: 'POST',
             body: JSON.stringify(params.data),
         }).then(({json}) => {
-            
+            console.log('json')
+            console.log(json)
             return {
                  data: { ...params.data, id: json._id },
             }

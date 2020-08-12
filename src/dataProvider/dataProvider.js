@@ -14,7 +14,7 @@ const changeBlobToBase64 =async (files) => {
         reader.onload =  () =>
         {
             resolve(reader.result)
-            console.log('fired')
+            // console.log('fired')
         }
 
         reader.onerror = reject;
@@ -36,22 +36,25 @@ const handleParamForFileUpload = async (params, resource) => {
         await Promise.all(Object.keys(files).map( async (question, index) => {
             await Promise.all(Object.keys(files[question]).map( async (point1, i) => {
                 if(files[question][point1].file){
-                    console.log(`files[${question}][${point1}]`)
+                    // console.log(`files[${question}][${point1}]`)
                     return files[question][point1].file.src = await changeBlobToBase64(files[question][point1].file.src)
                 }
                 await Promise.all(Object.keys(files[question][point1]).map( async (point2, int) => {
                         if(files[question][point1][point2].file){
-                            console.log(`files[${question}][${point1}][${point2}]`)
+                            // console.log(`files[${question}][${point1}][${point2}]`)
                             return files[question][point1][point2].file.src = await changeBlobToBase64(files[question][point1][point2].file.src)
                         }
                     })
                     )
             }))
-
+            if(question === 'question9' && files[question].file){
+                // console.log('test')
+                return files[question].file.src = await changeBlobToBase64(files[question].file.src)
+            }
         }))
 
     }
-    console.log(files)
+    // console.log(files)
     return files;
 }
 
@@ -165,23 +168,23 @@ export default {
 
     create: async (resource, params) =>{
         if(resource === 'reportyear' || resource === 'reportsemester'){
-            console.log(params)
+            // console.log(params)
             await handleParamForFileUpload(params, resource)
             .then(
             (results) => {
                 params.data.report = results;
-                console.log('results')
-                console.log(results)
+                // console.log('results')
+                // console.log(results)
             })
         }
-        console.log('params')
-        console.log(params.data)
+        // console.log('params')
+        // console.log(params.data)
         return httpClient(`${apiUrl}/${resource}`, {
             method: 'POST',
             body: JSON.stringify(params.data),
         }).then(({json}) => {
-            console.log('json')
-            console.log(json)
+            // console.log('json')
+            // console.log(json)
             return {
                  data: { ...params.data, id: json._id },
             }

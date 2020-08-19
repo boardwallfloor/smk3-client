@@ -25,6 +25,7 @@ const authProvider = {
                 localStorage.setItem('privilege', decodedToken.privilege);
                 localStorage.setItem('username', decodedToken.username);
                 localStorage.setItem('userid', decodedToken._id);
+                localStorage.setItem('institution', decodedToken.user_institution);
                 // console.log('decodedToken')
 
             })
@@ -35,6 +36,8 @@ const authProvider = {
         localStorage.removeItem('privilege');
         localStorage.removeItem('username');
         localStorage.removeItem('userid');
+        localStorage.removeItem('institution');
+
         return Promise.resolve()
 
     },

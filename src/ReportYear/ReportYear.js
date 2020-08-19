@@ -1,41 +1,59 @@
 import React from 'react';
-import {Create, Edit, List, Show, Datagrid, BooleanField, BooleanInput, DateInput, DateField, ReferenceField, TextField, TextInput, NumberField, NumberInput, EditButton, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, SelectInput, ReferenceInput, FileInput, FileField, FormDataConsumer} from 'react-admin'
+import {Create, Edit, List, Show, Datagrid, BooleanField, BooleanInput, DateInput, DateField, ReferenceField, TextField, TextInput, ShowButton, NumberField, NumberInput, EditButton, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, SelectInput, ReferenceInput, FileField, FormDataConsumer} from 'react-admin'
 
 import PageTitle from '../Util/PageTitle';  
 import ActionBar from '../Util/ActionBar';
 import FileUpload from '../Util/FileUpload';
+import QuestionAccordion from '../Util/QuestionAccordion';
 
-export const ReportyearList = props => (
+export const ReportyearList = ({permissions, record, ...props}) => (
     <List title="Laporan per Tahun" {...props} bulkActionButtons={false}>
-        <Datagrid rowClick="show">
+        <Datagrid rowClick={permissions !== 'Kepala Fasyankes' ? "show" : "edit"}>
             <ReferenceField label="Penulis" source="author" reference="user" emptyText="test">
                 <TextField source="username" />
             </ReferenceField>
             <ReferenceField label="Fasyankes" source="institution" reference="institution">
                 <TextField source="name"/>
             </ReferenceField>
-            <NumberField source="total" />
-            <NumberField source="area" />
+            <NumberField source="totalSDM" label='Total SDM' />
             <DateField source="year" />
-            <EditButton />
-            <DeleteButton />
+            { permissions === 'Operator' && permissions === 'Admin' ?
+            <div>
+                <EditButton />
+                <DeleteButton />
+            </div>
+            :
+            <ShowButton />
+            }
+            {record && record.validated ? <p>Sudah Validasi</p> : <p>Belum Validasi </p>}
         </Datagrid>
     </List>
 );
 
-export const ReportyearEdit = props => (
+export const ReportyearEdit = ({permissions, ...props}) => (
     <Edit title={<PageTitle action="Editing"/>} {...props}>
         <TabbedForm>
+            { permissions ==='Kepala Fasyankes' && 
+            <FormTab label="Validasi">
+            <QuestionAccordion text="Aktifkan apabila laporan telah sesuai standar" question="Validasi Laporan" />
+                <BooleanInput source='validated' label='Status Laporan'/>
+            </FormTab>
+            }
+            { permissions === 'Operator' ?
             <FormTab label="Tanggal">
                 <TextInput source='author' disabled/>
                 <NumberInput source="totalSDM" label='Jumlah Sumber Daya Manusia'/>
                 <DateInput source="year" />
             </FormTab>
+            : null}
+            { permissions === 'Operator' ?
             <FormTab label="Fasyankes" path="institution">
                 <ReferenceInput label="Fasyankes" source="institution" reference="institution">
                     <SelectInput source="name"/>
                 </ReferenceInput>
             </FormTab>
+            : null}
+            { permissions === 'Operator' ? 
             <FormTab label="Laporan" path="report">
                 {/* Question 1*/}
                 <p>1. SMK3 di Fasyankes</p>
@@ -111,6 +129,7 @@ export const ReportyearEdit = props => (
                 <TextInput source="report.question11.b.information" label="b. Jumlah SDM Fasyankes yang terlatih K3"/>
 
             </FormTab>
+            : null}
         </TabbedForm>
     </Edit>
 );
@@ -237,7 +256,7 @@ export const ReportyearShow = props => (
 
 export const ReportyearCreate = props => {
     const userId = localStorage.getItem('userid')
-
+    const isntitutionid = localStorage.getItem('institution')
     return(
     <Create title={<PageTitle action="Creating"/>} {...props}>
         <TabbedForm redirect="show">
@@ -247,9 +266,8 @@ export const ReportyearCreate = props => {
                 <DateInput source="year" />
             </FormTab>
             <FormTab label="Fasyankes" path="institution">
-                <ReferenceInput label="Fasyankes" source="institution" reference="institution">
-                    <SelectInput source="name"/>
-                </ReferenceInput>
+                <QuestionAccordion text="ID Fasyankes hanya dapat diubah oleh administrator" question='ID Fasyankes Pelapor'/>
+                <TextInput source='institution' initialValue={isntitutionid} disabled/>
             </FormTab>
             <FormTab label="Laporan" path="report">
 

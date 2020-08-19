@@ -18,7 +18,6 @@ import {NotifList, NotifEdit, NotifCreate, NotifShow} from './Notification/Notif
 import {ProfileShow} from './Profile/Profile.js';
 import CustomLayout from './Layout/Layout';
 import LoginPage from './Layout/Login/Login'
-import LoginForm from './Layout/Login/LoginForm'
 
 const App = () => (
 
@@ -26,15 +25,33 @@ const App = () => (
 		<Route
 			path="/profile"
 			component={ProfileShow}
-		/>
+		/>,
+    <Route
+      path="/profile"
+      component={ProfileShow}
+    />
    	]}>
    	{permissions => [
 
-       	permissions == 'Admin' ? <Resource name="notif" icon={NotificationsActiveIcon} list={NotifList} edit={NotifEdit} create={NotifCreate} show={NotifShow} options={{ label: 'Reminder' }} /> : null,
-       	permissions == 'Admin' ? <Resource name="user" icon={GroupIcon} list={UserList} edit={UserEdit} create={UserCreate} show={UserShow} options={{ label: 'User' }}/> : <Resource name="user" />,
-       	<Resource name="institution" icon={LocalHospitalIcon} list={InstitutionList} show={InstitutionShow} edit={InstitutionEdit} create={InstitutionCreate} options={{ label: 'Fasyankes' }}/>,
-       	<Resource name="reportyear" icon={EventNoteIcon} list={ReportyearList} edit={ReportyearEdit} show={ReportyearShow} create={ReportyearCreate} options={{ label: 'Laporan Per Tahun' }}/>,
-       	<Resource name="reportsemester" icon={DateRangeIcon } list={ReportsemesterList} edit={ReportsemesterEdit} show={ReportsemesterShow} create={ReportsemesterCreate} options={{ label: 'Laporan Per Semester' }}/>,
+       	permissions === 'Admin' ? <Resource name="notif" icon={NotificationsActiveIcon} 
+        list={NotifList} 
+        edit={permissions !== 'Dinas Kesehatan' ? NotifEdit : null} 
+        create={permissions !== 'Dinas Kesehatan' ? NotifCreate : null} 
+        show={NotifShow} 
+        options={{ label: 'Reminder' }} /> : null,
+
+       	permissions === 'Admin' ? <Resource name="user" icon={GroupIcon} list={UserList} 
+        edit={permissions !== 'Dinas Kesehatan' ? UserEdit : null} 
+        create={permissions !== 'Dinas Kesehatan' ? UserCreate : null} 
+        show={UserShow} options={{ label: 'User' }}/> : <Resource name="user" />,
+
+       	permissions !== 'Operator' ? <Resource name="institution" icon={LocalHospitalIcon} list={InstitutionList} show={InstitutionShow} 
+        edit={permissions !== 'Dinas Kesehatan' ? InstitutionEdit : null} 
+        create={permissions !== 'Dinas Kesehatan' ? InstitutionCreate : null} options={{ label: 'Fasyankes' }}/> : <Resource name="institution" />,
+
+       	<Resource name="reportyear" icon={EventNoteIcon} list={ReportyearList} edit={permissions !== 'Dinas Kesehatan' ? ReportyearEdit : null} show={ReportyearShow} create={permissions !== 'Dinas Kesehatan' ? ReportyearCreate : null} options={{ label: 'Laporan Per Tahun' }}/>,
+
+       	<Resource name="reportsemester" icon={DateRangeIcon } list={ReportsemesterList} edit={permissions !== 'Dinas Kesehatan' ? ReportsemesterEdit : null} show={ReportsemesterShow} create={permissions !== 'Dinas Kesehatan' ? ReportsemesterCreate : null} options={{ label: 'Laporan Per Semester' }}/>,
        	<Resource name='profile' />
    		]}
     </Admin>

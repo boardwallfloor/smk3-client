@@ -113,7 +113,6 @@ export const ReportStatusCard = () => {
             const json = await result.json();
             setData(json.data);
             setCount(json.count)
-            console.log(json)
       }
     fetchData();
   	}, []);

@@ -110,7 +110,7 @@ export default {
         }))
             // profileHandler(resource, params);
         }else{
-            console.log("Get One")
+            // console.log("Get One")
         return httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => ({
             data:  { ...json, id: json._id },
         }))

@@ -1,27 +1,16 @@
 import * as React from "react";
 import { Title } from 'react-admin';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
 import { usePermissions } from 'react-admin';
+import { makeStyles } from '@material-ui/core/styles';
 
-import {InstitutionCard} from './Cards/InstitutionCard/InstitutionCard';
-import {NotificationCard} from './Cards/NotificationCard/NotificationCard';
-import {ReportYearCard, ReportSemesterCard} from './Cards/ReportCard/ReportCard';
-import {UserCard} from './Cards/UserCard/UserCard';
-import {ReportStatusCard} from './Cards/ReportStatus/ReportStatus';
-import {ReportSemesterCardUser, ReportYearCardUser} from './Cards/ReportCardUser/ReportCardUser';
-import {ReportChart} from './Chart/ReportChart';
-
+import AdminDashboard from './RoleDashboard/AdminDashboard/AdminDashboard'
+import KepalaDashboard from './RoleDashboard/KepalaDashboard/KepalaDashboard'
+import OperatorDashboard from './RoleDashboard/OperatorDashboard/OperatorDashboard'
+import DinasDashboard from './RoleDashboard/DinasDashboard/DinasDashboard.js'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
   },
 }));
 
@@ -30,85 +19,20 @@ const useStyles = makeStyles((theme) => ({
 export const Dashboard = () => {
   const classes = useStyles();
   const { permissions } = usePermissions();
-  const username = localStorage.getItem('username')
   return (
     <div className={classes.root}>
     <Title title="SMK3" />
       {permissions === "Admin" ?
-      <Grid container spacing={3}>
-      	<Grid item xs={12}>
-    		<Paper className={classes.paper}> Welcome {username}</Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <ReportChart />
-        </Grid>
-        <Grid item xs={6}>
-          <ReportChart />
-        </Grid>
-        <Grid item xs={6}>
-        <ReportYearCard />
-        </Grid>
-        <Grid item xs={6}>
-          <ReportSemesterCard />
-        </Grid>
-        <Grid item xs={6}>
-          <NotificationCard />
-        </Grid>
-        <Grid item xs={3}>
-        	<InstitutionCard />
-        </Grid>
-        <Grid item xs={3}>
-          <UserCard />
-        </Grid>
-      </Grid>
+      <AdminDashboard />
       : null}
       {permissions === 'Operator' && 
-      <Grid container spacing={3} style={{marginTop: 0.1}}>
-    	<Grid item xs={12}>
-    		<Paper className={classes.paper}> Welcome {username}</Paper>
-        </Grid>
-        <Grid item xs={6}>
-        	<ReportStatusCard />
-        </Grid>
-        <Grid item xs={3}>
-          <ReportYearCardUser />
-        </Grid>
-        <Grid item xs={3}>
-          <ReportSemesterCardUser />
-        </Grid>
-        </Grid>
+      <OperatorDashboard />
       }
       {permissions === 'Kepala Fasyankes' && 
-      <Grid container spacing={3} style={{marginTop: 0.1}}>
-      <Grid item xs={12}>
-        <Paper className={classes.paper}> Welcome {username}</Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <ReportStatusCard />
-        </Grid>
-        <Grid item xs={3}>
-          <ReportYearCardUser />
-        </Grid>
-        <Grid item xs={3}>
-          <ReportSemesterCardUser />
-        </Grid>
-        </Grid>
+      <KepalaDashboard />
       }
       {permissions === 'Dinas Kesehatan' && 
-      <Grid container spacing={3} style={{marginTop: 0.1}}>
-      <Grid item xs={12}>
-        <Paper className={classes.paper}> Welcome {username}</Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <ReportStatusCard />
-        </Grid>
-        <Grid item xs={3}>
-          <ReportYearCardUser />
-        </Grid>
-        <Grid item xs={3}>
-          <ReportSemesterCardUser />
-        </Grid>
-        </Grid>
+      <DinasDashboard />
       }
     </div>
   );

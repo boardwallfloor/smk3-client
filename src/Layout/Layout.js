@@ -3,9 +3,6 @@ import { Layout } from 'react-admin';
 
 import {CustomSidebar} from './SideBar/SideBar'
 import {CustomAppBar} from './AppBar/AppBar';
-import k3theme from './ThemeProvider/K3theme'
-
-
 
 const MyLayout = props => {
 	return (

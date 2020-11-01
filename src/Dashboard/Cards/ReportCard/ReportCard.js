@@ -94,7 +94,7 @@ export const ReportYearCard = () => {
         const resource = "reportyear"
         const fetchData = async () => {
             //Remember to Populate in Backend
-            const result = await fetch(`http://192.168.100.62:9000/${resource}/db`)
+            const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/db`)
             const json = await result.json();
             // console.log(json.data[0].author)
             setData(json.data);
@@ -115,7 +115,7 @@ export const ReportSemesterCard = () => {
         const resource = "reportsemester"
         const fetchData = async () => {
             //Remember to Populate in Backend
-            const result = await fetch(`http://192.168.100.62:9000/${resource}/db`)
+            const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/db`)
             const json = await result.json();
             setData(json.data);
             // console.log(json)

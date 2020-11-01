@@ -16,6 +16,7 @@ import {ReportyearList, ReportyearShow, ReportyearEdit, ReportyearCreate} from '
 import {ReportsemesterList, ReportsemesterEdit, ReportsemesterShow, ReportsemesterCreate} from './ReportSemester/ReportSemester'
 import {NotifList, NotifEdit, NotifCreate, NotifShow} from './Notification/Notification.js'
 import {ProfileShow} from './Profile/Profile.js';
+import Manual from './Manual/Manual'
 import CustomLayout from './Layout/Layout';
 import LoginPage from './Layout/Login/Login'
 
@@ -27,18 +28,18 @@ const App = () => (
 			component={ProfileShow}
 		/>,
     <Route
-      path="/profile"
-      component={ProfileShow}
+      path="/manual"
+      component={Manual}
     />
    	]}>
    	{permissions => [
 
-       	permissions === 'Admin' ? <Resource name="notif" icon={NotificationsActiveIcon} 
+        <Resource name="notif" icon={NotificationsActiveIcon} 
         list={NotifList} 
-        edit={permissions !== 'Dinas Kesehatan' ? NotifEdit : null} 
-        create={permissions !== 'Dinas Kesehatan' ? NotifCreate : null} 
+        edit={permissions !== 'Dinas Kesehatan' || permissions === 'Kepala Fasyankes' ? NotifEdit : null} 
+        create={permissions !== 'Dinas Kesehatan' || permissions === 'Kepala Fasyankes' ? NotifCreate : null} 
         show={NotifShow} 
-        options={{ label: 'Reminder' }} /> : null,
+        options={{ label:'Reminder' }} />,
 
        	permissions === 'Admin' ? <Resource name="user" icon={GroupIcon} list={UserList} 
         edit={permissions !== 'Dinas Kesehatan' ? UserEdit : null} 

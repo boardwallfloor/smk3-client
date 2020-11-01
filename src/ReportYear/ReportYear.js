@@ -17,15 +17,19 @@ export const ReportyearList = ({permissions, record, ...props}) => (
             </ReferenceField>
             <NumberField source="totalSDM" label='Total SDM' />
             <DateField source="year" />
-            { permissions === 'Operator' && permissions === 'Admin' ?
-            <div>
-                <EditButton />
-                <DeleteButton />
-            </div>
+            <BooleanField source="validated" label='Status Validasi' />
+            {record && record.validated ? <p>Sudah Validasi</p> : <p>Belum Validasi </p>}
+            { permissions === 'Operator' || permissions === 'Admin' ?
+            <EditButton />
             :
             <ShowButton />
             }
-            {record && record.validated ? <p>Sudah Validasi</p> : <p>Belum Validasi </p>}
+            { permissions === 'Operator' || permissions === 'Admin' ?
+            <DeleteButton />
+            :
+            null
+            }
+            
         </Datagrid>
     </List>
 );
@@ -139,7 +143,7 @@ export const ReportyearShow = props => (
     <TabbedShowLayout>
             <Tab label="Penulis">
                 <TextField source="author" />
-                <NumberField source="total" />
+                <NumberField source="totalSDM" label="Jumlah SDM" />
                 <TextField source="institution" />
                 <DateField source="year" label="Tahun Penulisan"/>
             </Tab>
@@ -502,7 +506,7 @@ export const ReportyearCreate = props => {
                 </FormDataConsumer>
 
                 <TextInput source="report.question10.b.b.information" label="- Aktif ( Jumlah APAR dan alat pemadam lainnya)"/>
-                <TextInput source="report.question10.b.c.information" label="- Pasif ( pintu dan tangga darurat, jalur evakuasi)"/>
+                <TextInput source="report.question10.b.c.information" label="- Pasif ( Pintu dan tangga darurat, jalur evakuasi)"/>
                 <p>c. Simulasi</p>
                 <BooleanInput source="report.question10.c.a.information" label="- Darurat Bencana"/>
                 <FormDataConsumer >

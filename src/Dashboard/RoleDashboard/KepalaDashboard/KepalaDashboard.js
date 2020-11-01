@@ -1,9 +1,6 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import HelpIcon from '@material-ui/icons/Help';
 import { makeStyles } from '@material-ui/core/styles';
 
 import {ReportStatusCard} from '../../Cards/ReportStatus/ReportStatus';
@@ -37,12 +34,13 @@ const KepalaDashboard = () => {
         <Grid item xs={6}>
           <ReportStatusCard />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={6}>
           <ReportYearCardUser query={query}/>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={6}>
           <ReportSemesterCardUser query={query}/>
         </Grid>
+        
     </Grid>
 	)
 }

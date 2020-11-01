@@ -92,13 +92,13 @@ export const ReportYearCardUser = (props) => {
         const resource = "reportyear"
      
         const fetchData = async () => {
-            const result = await fetch(`http://192.168.100.62:9000/${resource}/db?${props.query}`)
+            const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/db?${props.query}`)
             const json = await result.json();
             setData(json.data);
             setCount(json.count)
       	}
     fetchData();
-  	},[]);
+  	},[props.query]);
 	return (
 		<CardWithIcon icon={EventNoteIcon} link="#/reportyear" bgcolor="#f44336" name="Laporan Per Tahun" data={<ReportYearTable data={data}/>} length={count}/>
 		)
@@ -112,14 +112,14 @@ export const ReportSemesterCardUser = (props) => {
         const resource = "reportsemester"
      
         const fetchData = async () => {
-            const result = await fetch(`http://192.168.100.62:9000/${resource}/db?${props.query}`)
+            const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/db?${props.query}`)
             const json = await result.json();
             setData(json.data);
             setCount(json.count)
             
       }
     fetchData();
-  	},[]);
+  	},[props.query]);
 
   	
 	return (

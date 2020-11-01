@@ -1,9 +1,7 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid';
 
-import K3 from '../../asset/K3/k3_sm.png';
 import K3_1 from '../../asset/K3/K3_1.jpg';
-import UGM from '../../asset/UGM/logo-ugm-putih70.png'
 import UGM2 from '../../asset/UGM/(PNG Image, 310 × 163 pixels).png'
 
 const Footer = () => {

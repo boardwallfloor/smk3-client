@@ -1,5 +1,5 @@
 import React from 'react';
-import {Create, Edit, List, Show, Datagrid, ReferenceField, TextField, TextInput, DateInput, DateField, NumberField, NumberInput, ShowButton, EditButton, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, FileField, BooleanInput, FormDataConsumer} from 'react-admin'
+import {Create, Edit, List, Show, Datagrid, ReferenceField, TextField, TextInput, DateInput, DateField, NumberField, NumberInput, BooleanField, ShowButton, EditButton, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, FileField, BooleanInput, FormDataConsumer} from 'react-admin'
 
 
 import PageTitle from '../Util/PageTitle';
@@ -17,7 +17,9 @@ export const ReportsemesterList = ({permissions, record, ...props}) => (
                 <TextField source="name"/>
             </ReferenceField>
             <DateField source="date" label='Tanggal pembuatan laporan' options={{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }} locales="id-ID" />
-            { permissions === 'Operator' && permissions === 'Admin' ?
+            <BooleanField source="validated" label='Status Validasi' />
+            {record && record.validated ? <p>Sudah Validasi</p> : <p>Belum Validasi </p>}
+            { permissions === 'Operator' || permissions === 'Admin' ?
             <div>
                 <EditButton />
                 <DeleteButton />
@@ -25,7 +27,6 @@ export const ReportsemesterList = ({permissions, record, ...props}) => (
             :
             <ShowButton />
             }
-            {record && record.validated ? <p>Sudah Validasi</p> : <p>Belum Validasi </p>}
         </Datagrid>
     </List>
 );

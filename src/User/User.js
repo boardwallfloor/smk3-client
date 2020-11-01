@@ -4,8 +4,7 @@ import {
     required,
     minValue,
     email,
-    choices
-} from 'react-admin';
+    } from 'react-admin';
 
 import PageTitle from '../Util/PageTitle';
 
@@ -15,7 +14,7 @@ export const UserList = props => (
             <TextField source="full_name" label="Nama"/>
             <TextField source="privilege" label="Jenis User"/>
             <EmailField source="email" label="Email"/>
-            <ReferenceField label="Fasyankes" source="institution" reference="institution">
+            <ReferenceField label="Fasyankes" source="user_institution" reference="institution">
                 <TextField source="name"/>
             </ReferenceField>
             <EditButton />
@@ -35,7 +34,8 @@ export const UserEdit = props => (
             <TextInput source="email" />
             <TextInput source="phonenumber" />
             <TextInput source="password" />
-            <ReferenceInput label="Fasyankes" source="institution" reference="institution">
+            <TextInput source="job_title" />
+            <ReferenceInput label="Fasyankes" source="user_institution" reference="institution">
                     <SelectInput source="name"/>
             </ReferenceInput>
         </SimpleForm>
@@ -45,7 +45,7 @@ export const UserEdit = props => (
 const validateUserName = required();
 const validateFirstName = required();
 const validateFullName = required();
-const validatePrivilege = [choices(['Admin', 'User'], 'Must be User or Admin'), required()];
+// const validatePrivilege = [choices(['Admin', 'User'], 'Must be User or Admin'), required()];
 const validateEmail = [email(), required()];
 const validatePhoneNumber = required();
 const validatePassword = [required(), minValue(8)];
@@ -57,16 +57,18 @@ export const UserCreate = props => (
             <TextInput source="username" validate={validateUserName} />
             <TextInput source="first_name" validate={validateFirstName} />
             <TextInput source="full_name" validate={validateFullName} />
-            <SelectInput source="privilege" validate={validatePrivilege} choices={[
-                { id: 'User', name: 'User' },
-                { id: 'Admin', name: 'Admin' }
+            <SelectInput source="privilege" label='Peran Akun' choices={[
+                { id: 'Operator', name: 'Operator' },
+                { id: 'Admin', name: 'Admin' },
+                { id: 'Kepala Fasyankes', name: 'Kepala Fasyankes' },
+                { id: 'Dinas Kesehatan', name: 'Dinas Kesehatan' }
             ]} />
             <TextInput source="nip"/>
             <TextInput source="email" validate={validateEmail}/>
             <TextInput source="phonenumber" validate={validatePhoneNumber}/>
             <TextInput source="password" validate={validatePassword}/>
             <TextInput source="job_title" validate={validateJobTitle}/>
-            <ReferenceInput label="Fasyankes" source="institution" reference="institution">
+            <ReferenceInput label="Fasyankes" source="user_institution" reference="institution">
                     <SelectInput source="name"/>
                 </ReferenceInput>
         </SimpleForm>
@@ -85,9 +87,10 @@ export const UserShow = props => {
             <TextField source="full_name" />
             <EmailField source="email" />
             <TextField source="phonenumber" />
-            <ReferenceField label="Fasyankes" source="institution" reference="institution">
+            <ReferenceField label="Fasyankes" source="user_institution" reference="institution">
                     <TextField source="name"/>
             </ReferenceField>
+            <TextField source="job_title" />
         </SimpleShowLayout>
     </Show>
 );

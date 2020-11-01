@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useNotify, Notification } from 'react-admin';
+import { Notification } from 'react-admin';
 import { ThemeProvider } from '@material-ui/styles';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';

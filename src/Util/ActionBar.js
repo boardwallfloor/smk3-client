@@ -1,7 +1,6 @@
 import React from 'react'
 import Button from '@material-ui/core/Button';
 import { EditButton, TopToolbar, downloadCSV } from 'react-admin';
-import GetAppIcon from '@material-ui/icons/GetApp';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import jsonExport from 'jsonexport/dist';
 
@@ -15,7 +14,7 @@ const ActionBar = ({ basePath, data, resource }) => {
         const {author:{full_name}, institution:{name}, _id, __v, ...exportData} = json
         exportData.author = full_name
         exportData.institution = name
-        console.log(exportData)
+        // console.log(exportData)
         jsonExport(exportData, {
             // headers: ['author', 'date', 'institution','validated','report'],
             // rename:['Username Operator', 'Tanggal Pembuatan','Fasyankes','Status Laporan','Jumlah SDM Fasyankes','Keterangan'],

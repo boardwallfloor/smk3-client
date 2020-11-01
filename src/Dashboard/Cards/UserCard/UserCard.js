@@ -55,7 +55,7 @@ export const UserCard = () => {
         const resource = "user"
         const fetchData = async () => {
             //Remember to Populate in Backend
-            const result = await fetch(`http://192.168.100.62:9000/${resource}`)
+            const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}`)
             const json = await result.json();
             setData(json);
       }

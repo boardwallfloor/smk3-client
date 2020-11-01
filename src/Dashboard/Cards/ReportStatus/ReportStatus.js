@@ -31,9 +31,9 @@ const useStyles = makeStyles({
 const AlertDialog = (props) => {
 	const [open, setOpen] = React.useState(true);
 
-	const handleClickOpen = () => {
-	setOpen(true);
-	};
+	// const handleClickOpen = () => {
+	// setOpen(true);
+	// };
 
 	const handleClose = () => {
 	setOpen(false);
@@ -109,7 +109,7 @@ export const ReportStatusCard = () => {
 
         	const id = localStorage.getItem('userid')
             const query = `filter={"remindee":"${id}", "complete_status":"false"}`
-            const result = await fetch(`http://192.168.100.62:9000/${resource}/db?${query}`)
+            const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/db?${query}`)
             const json = await result.json();
             setData(json.data);
             setCount(json.count)

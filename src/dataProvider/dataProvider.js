@@ -1,9 +1,8 @@
 import { fetchUtils } from 'react-admin';
 import { stringify } from 'query-string';
 
-// const apiUrl = `${process.env.REACT_APP_API_CODE}`;
-// const apiUrl = 'http://localhost:9000';
-const apiUrl = 'http://192.168.100.62:9000';
+const apiUrl = `${process.env.REACT_APP_API_LINK}`
+// const apiUrl = 'http://192.168.100.82:9000'
 const httpClient = fetchUtils.fetchJson;
 
 
@@ -75,7 +74,7 @@ export default {
 
         return httpClient(url).then(({ headers, json }) => {
 
-            // console.log(headers)
+            // console.log('headers')
             if (!headers.has('content-range')) {
                 throw new Error(
                     'The Content-Range header is missing in the HTTP Response. The simple REST data provider expects responses for lists of resources to contain this header with the total number of results to build the pagination. If you are using CORS, did you declare Content-Range in the Access-Control-Expose-Headers header?'
@@ -184,7 +183,7 @@ export default {
             body: JSON.stringify(params.data),
         }).then(({json}) => {
             // console.log('json')
-            // console.log(json)
+            console.log(json)
             return {
                  data: { ...params.data, id: json._id },
             }

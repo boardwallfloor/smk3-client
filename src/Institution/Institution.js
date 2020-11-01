@@ -1,16 +1,22 @@
 import React from 'react';
-import {Create, Edit, List, Show, Datagrid, SimpleShowLayout, SimpleForm, TextField, TextInput, EditButton, DeleteButton} from 'react-admin'
+import {Create, Edit, List, Show, Datagrid, SimpleShowLayout, SimpleForm, TextField, TextInput, EditButton, DeleteButton, ShowButton} from 'react-admin'
 import PageTitle from '../Util/PageTitle';
 
-export const InstitutionList = props => (
+export const InstitutionList = ({permissions, ...props}) => (
     <List title="Fasyankes" {...props} bulkActionButtons={false}>
         <Datagrid rowClick="show">
             <TextField source="name" label="Nama Fasyankes"/>
             <TextField source="address" label="Alamat"/>
             <TextField source="city" label="Kabupaten/Kota"/>
             <TextField source="province" label="Provinsi"/>
-            <EditButton />
-            <DeleteButton />
+            { permissions === 'Operator' || permissions === 'Admin' ?
+            <div>
+                <EditButton />
+                <DeleteButton />
+            </div>
+            :
+            <ShowButton />
+            }
         </Datagrid>
     </List>
 );

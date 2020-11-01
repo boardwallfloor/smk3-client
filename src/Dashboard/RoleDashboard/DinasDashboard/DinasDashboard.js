@@ -1,10 +1,9 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-
 import { makeStyles } from '@material-ui/core/styles';
 
-import {ReportStatusCard} from '../../Cards/ReportStatus/ReportStatus';
+import {InstitutionCard} from '../../Cards/InstitutionCard/InstitutionCard';
 import {ReportSemesterCardUser, ReportYearCardUser} from '../../Cards/ReportCardUser/ReportCardUser';
 import {ReportChart} from '../../Chart/ReportChart';
 
@@ -36,6 +35,9 @@ const DinasDashboard = () => {
       <Grid item xs={6}>
         <ReportSemesterCardUser query='{}'/>
       </Grid>
+      <Grid item xs={3}>
+          <InstitutionCard />
+        </Grid>
     </Grid>
 	)
 }

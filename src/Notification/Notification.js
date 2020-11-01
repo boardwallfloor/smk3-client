@@ -1,5 +1,5 @@
 import React from 'react';
-import {Create, Edit, List, Show, BooleanField, DateField, ReferenceField, Datagrid, SimpleShowLayout, SimpleForm, TextField, EditButton, DeleteButton, BooleanInput, ReferenceInput, SelectInput, DateInput, SelectField} from 'react-admin'
+import {Create, Edit, List, Show, BooleanField, DateField, ReferenceField, Datagrid, SimpleShowLayout, SimpleForm, TextField, EditButton, DeleteButton, BooleanInput, ReferenceInput, SelectInput, DateInput, SelectField, useNotify} from 'react-admin'
 import PageTitle from '../Util/PageTitle';
 
 export const NotifList = props => (
@@ -8,7 +8,7 @@ export const NotifList = props => (
             <ReferenceField label="Reminder maker" source="remindee" reference="user">
                 <TextField source="first_name" />
             </ReferenceField>
-            <BooleanField source="complete_status" />
+            <BooleanField source="complete_status" label='Status' />
             <DateField source="remind_date" />
             <SelectField source="report_type" choices={[
                { id: 'yearly', name: 'Laporan Per Tahun' },
@@ -23,7 +23,7 @@ export const NotifList = props => (
 export const NotifEdit = props => (
     <Edit title={<PageTitle action="Editing"/>} {...props}>
         <SimpleForm>
-            <BooleanInput source="complete_status" />
+            <BooleanInput source="complete_status" label='Status' />
             <ReferenceInput label="Author" source="remindee" reference="user">
                 <SelectInput optionText="username"/>
             </ReferenceInput>
@@ -36,8 +36,16 @@ export const NotifEdit = props => (
     </Edit>
 );
 
-export const NotifCreate = props => (
-    <Create title={<PageTitle action="Creating"/>} {...props}>
+export const NotifCreate = props => {
+    const notify = useNotify();
+    const onFailure = (error) => {
+        console.log(error)
+        // if (error.code === '123') {
+            notify(`${error.message}`, 'warning');
+        // }
+    }
+    return (
+    <Create title={<PageTitle action="Creating"/>} {...props} onFailure={onFailure}>
         <SimpleForm>
             <ReferenceInput label="Author" source="remindee" reference="user">
                 <SelectInput optionText="username"/>
@@ -49,7 +57,8 @@ export const NotifCreate = props => (
             ]} />
         </SimpleForm>
     </Create>
-);
+    )
+}
 
 export const NotifShow = props => (
     <Show title={<PageTitle action="Show"/>} {...props}>
@@ -60,7 +69,7 @@ export const NotifShow = props => (
             <ReferenceField label="Reminder maker" source="remindee" reference="user">
                 <TextField source="username" />
             </ReferenceField>
-            <BooleanField source="complete_status" />
+            <BooleanField source="complete_status" label='Status' />
             <DateField source="remind_date" />
             <SelectField source="report_type" choices={[
                { id: 'yearly', name: 'Laporan Per Tahun' },

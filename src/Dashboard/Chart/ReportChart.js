@@ -12,10 +12,10 @@ export const ReportChart = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await fetch(`http://192.168.100.62:9000/chart`)
+      const result = await fetch(`${process.env.REACT_APP_API_LINK}/chart`)
       const json = await result.json();
       setReport(json.data);
-      console.log(report)
+      // console.log(report)
         // console.log(data)
         // console.log(result)
     }
@@ -23,7 +23,7 @@ export const ReportChart = (props) => {
     }, []);
   return (
   	<Card >
-      <CardHeader title='Laporan per Tahun' />
+      <CardHeader title='Jumlah Laporan' />
       <CardContent>
       <ResponsiveContainer width={'100%'} height={300}>
     		<BarChart  data={report} margin={{top: 5, right: 30, left: 20, bottom: 5,}}>
@@ -33,7 +33,7 @@ export const ReportChart = (props) => {
           <Tooltip />
           <Legend />
           <Bar dataKey="Tahun" fill="#82ca9d" />
-          <Bar dataKey="Semester" fill="#82ca9d" />
+          <Bar dataKey="Semester" fill="#61af64" />
           <Bar dataKey="Total" fill="#8884d8" />
   			</BarChart>
      </ResponsiveContainer>

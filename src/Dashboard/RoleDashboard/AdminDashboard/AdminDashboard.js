@@ -45,7 +45,7 @@ const AdminDashboard = () => {
         <Grid item xs={3}>
         	<InstitutionCard />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <UserCard />
         </Grid>
       </Grid>	

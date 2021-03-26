@@ -18,7 +18,6 @@ export const ReportsemesterList = ({permissions, record, ...props}) => (
             </ReferenceField>
             <DateField source="date" label='Tanggal pembuatan laporan' options={{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }} locales="id-ID" />
             <BooleanField source="validated" label='Status Validasi' />
-            {record && record.validated ? <p>Sudah Validasi</p> : <p>Belum Validasi </p>}
             { permissions === 'Operator' || permissions === 'Admin' ?
             <div>
                 <EditButton />
@@ -227,7 +226,7 @@ export const ReportsemesterCreate = props => {
                 <QuestionAccordion text="ID Penulis Laporan tidak dapat diubah" question='ID Penulis Laporan'/>
                 <TextInput source='author' initialValue={userId} disabled/>
                 <QuestionAccordion text="Tanggal pembuatan laporan" question='Tanggal Laporan'/>
-                <DateInput source="dates" />
+                <DateInput source="date" />
             </FormTab>
             <FormTab label="Fasyankes" path="institution">
                 <QuestionAccordion text="ID Fasyankes hanya dapat diubah oleh administrator" question='ID Fasyankes Pelapor'/>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Create, Edit, List, Show, BooleanField, DateField, ReferenceField, Datagrid, SimpleShowLayout, SimpleForm, TextField, EditButton, DeleteButton, BooleanInput, ReferenceInput, SelectInput, DateInput, SelectField, useNotify} from 'react-admin'
+import {Create, Edit, List, Show, DateField, ReferenceField, Datagrid, SimpleShowLayout, SimpleForm, TextField, EditButton, DeleteButton, ReferenceInput, SelectInput, DateInput, SelectField, useNotify} from 'react-admin'
 import PageTitle from '../Util/PageTitle';
 
 export const NotifList = props => (
@@ -8,7 +8,7 @@ export const NotifList = props => (
             <ReferenceField label="Reminder maker" source="remindee" reference="user">
                 <TextField source="first_name" />
             </ReferenceField>
-            <BooleanField source="complete_status" label='Status' />
+            <TextField source="notification_status" label='Status' />
             <DateField source="remind_date" />
             <SelectField source="report_type" choices={[
                { id: 'yearly', name: 'Laporan Per Tahun' },
@@ -23,7 +23,11 @@ export const NotifList = props => (
 export const NotifEdit = props => (
     <Edit title={<PageTitle action="Editing"/>} {...props}>
         <SimpleForm>
-            <BooleanInput source="complete_status" label='Status' />
+            <SelectInput source="notification_status" label='Status' choices={[
+                { id: 'Belum Dikirim', name: 'Belum Dikirim' },
+                { id: 'Peringatan Dikirim', name: 'Peringatan Dikirim' },
+                { id: 'Laporan Dibuat', name: 'Laporan Dibuat' }
+            ]} />
             <ReferenceInput label="Author" source="remindee" reference="user">
                 <SelectInput optionText="username"/>
             </ReferenceInput>
@@ -69,7 +73,6 @@ export const NotifShow = props => (
             <ReferenceField label="Reminder maker" source="remindee" reference="user">
                 <TextField source="username" />
             </ReferenceField>
-            <BooleanField source="complete_status" label='Status' />
             <DateField source="remind_date" />
             <SelectField source="report_type" choices={[
                { id: 'yearly', name: 'Laporan Per Tahun' },

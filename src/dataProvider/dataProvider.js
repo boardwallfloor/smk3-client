@@ -70,6 +70,7 @@ export default {
         };
 
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
+        // console.log(url)
 
 
         return httpClient(url).then(({ headers, json }) => {

@@ -6,6 +6,7 @@ import PageTitle from '../Util/PageTitle';
 import FileUpload from '../Util/FileUpload';
 import ActionBar from '../Util/ActionBar';
 import QuestionAccordion from '../Util/QuestionAccordion';
+import {NoDeleteToolbar} from '../Util/CustomToolbar'
 
 export const ReportsemesterList = ({permissions, record, ...props}) => (
     <List title="Laporan per Semester" {...props} bulkActionButtons={false}>
@@ -19,12 +20,14 @@ export const ReportsemesterList = ({permissions, record, ...props}) => (
             <DateField source="date" label='Tanggal pembuatan laporan' options={{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }} locales="id-ID" />
             <BooleanField source="validated" label='Status Validasi' />
             { permissions === 'Operator' || permissions === 'Admin' ?
-            <div>
-                <EditButton />
-                <DeleteButton />
-            </div>
+            <EditButton />
             :
             <ShowButton />
+            }
+            {permissions === 'Admin' ?
+            <DeleteButton />
+            :
+            null
             }
         </Datagrid>
     </List>
@@ -33,7 +36,7 @@ export const ReportsemesterList = ({permissions, record, ...props}) => (
 export const ReportsemesterEdit = ({permissions, ...props}) => {
     return(
     <Edit title={<PageTitle action="Editing"/>} {...props}>
-        <TabbedForm>
+        <TabbedForm toolbar={<NoDeleteToolbar/>}>
             { permissions ==='Kepala Fasyankes' && 
             <FormTab label="Validasi">
             <QuestionAccordion text="Aktifkan apabila laporan telah sesuai standar" question="Validasi Laporan" />
@@ -166,49 +169,49 @@ export const ReportsemesterShow = props => (
                 {/* Question 1*/}
                 <p>1. Jumlah SDM Fasyankes </p>
                 <NumberField source="report.question1.total" label="Jumlah"/>
-                <FileField source="report.question1.file.src" label='File' title="report.question1.file.title" />
+                <FileField source="report.question1.file.src" label='File terlampir' title="report.question1.file.title" />
                 <TextField source="report.question1.detail" label="Keterangan"/>
                 
                 {/* Question 2 */}
                 <p>2. Jumlah SDM Fasyankes yang sakit </p>
                 <NumberField source="report.question1.total" label="Jumlah"/>
-                <FileField source="report.question1.file.src" title="report.question1.file.title"  label='File' />
+                <FileField source="report.question1.file.src" title="report.question1.file.title"  label='File terlampir' />
                 <TextField source="report.question1.detail" label="Keterangan"/>
 
                 {/* Question 3 */}
                 <p>3. Jumlah kasus penyakit umum pada SDM Fasyankes </p>
                 <NumberField source="report.question2.total" label="Jumlah"/>
-                <FileField source="report.question2.file.src" title="report.question2.file.title"  label='File' />
+                <FileField source="report.question2.file.src" title="report.question2.file.title"  label='File terlampir' />
                 <TextField source="report.question2.detail" label="Keterangan"/>
 
                 {/* Question 4 */}
                 <p>4. Jumlah kasus dugaan penyakit akibat kerja pada suatu SDM Fasyankes </p>
                 <NumberField source="report.question3.total" label="Jumlah"/>
-                <FileField source="report.question3.file.src" title="report.question3.file.title"  label='File' />
+                <FileField source="report.question3.file.src" title="report.question3.file.title"  label='File terlampir' />
                 <TextField source="report.question3.detail" label="Keterangan"/>
 
                 {/* Question 5 */}
                 <p>5. Jumlah kasus penyakit akibat kerja pada SDM Fasyankes</p>
                 <NumberField source="report.question5.total" label="Jumlah"/>
-                <FileField source="report.question5.file.src" title="report.question5.file.title"  label='File' />
+                <FileField source="report.question5.file.src" title="report.question5.file.title"  label='File terlampir' />
                 <TextField source="report.question5.detail" label="Keterangan"/>
 
                 {/* Question 6 */}
                 <p>6. Jumlah kasus kecelakaan akibat kerja pada SDM Fasyankes</p>
                 <NumberField source="report.question6.total" label="Jumlah"/>
-                <FileField source="report.question6.file.src" title="report.question6.file.title"  label='File' />
+                <FileField source="report.question6.file.src" title="report.question6.file.title"  label='File terlampir' />
                 <TextField source="report.question6.detail" label="Keterangan"/>
                 
                 {/* Question 7 */}
                 <p>7. Jumlah kasus kejadian hampir celaka(<i>near misses</i>) pada SDM Fasyankes</p>
                 <NumberField source="report.question7.total" label="Jumlah"/>
-                <FileField source="report.question7.file.src" title="report.question7.file.title"  label='File' />
+                <FileField source="report.question7.file.src" title="report.question7.file.title"  label='File terlampir' />
                 <TextField source="report.question7.detail" label="Keterangan"/>
                 
                 {/* Qustion 8 */}
                 <p>8. Jumlah hari absen SDM Fasyankes karena sakit</p>
                 <NumberField source="report.question8.total" label="Jumlah"/>
-                <FileField source="report.question8.file.src" title="report.question8.file.title"  label='File' />
+                <FileField source="report.question8.file.src" title="report.question8.file.title"  label='File terlampir' />
                 <TextField source="report.question8.detail" label="Keterangan"/>
 
             </Tab>

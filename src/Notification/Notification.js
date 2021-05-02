@@ -1,28 +1,35 @@
 import React from 'react';
 import {Create, Edit, List, Show, DateField, ReferenceField, Datagrid, SimpleShowLayout, SimpleForm, TextField, EditButton, DeleteButton, ReferenceInput, SelectInput, DateInput, SelectField, useNotify} from 'react-admin'
-import PageTitle from '../Util/PageTitle';
+import { usePermissions } from 'react-admin';
 
-export const NotifList = props => (
+import PageTitle from '../Util/PageTitle';
+import {NoDeleteToolbar} from '../Util/CustomToolbar'
+
+export const NotifList = props => {
+const {permissions} = usePermissions();
+console.log(permissions)
+return(
     <List title="Reminder" {...props} bulkActionButtons={false}>
         <Datagrid rowClick="show">
-            <ReferenceField label="Reminder maker" source="remindee" reference="user">
+            <ReferenceField label="Operator Ditugaskan" source="remindee" reference="user">
                 <TextField source="first_name" />
             </ReferenceField>
-            <TextField source="notification_status" label='Status' />
-            <DateField source="remind_date" />
-            <SelectField source="report_type" choices={[
+            <TextField source="notification_status" label='Status Laporan' />
+            <DateField source="remind_date" label="Tanggal Peringatan Aktif" />
+            <SelectField label="Tipe Laporan" source="report_type" choices={[
                { id: 'yearly', name: 'Laporan Per Tahun' },
                { id: 'semesterly', name: 'Laporan Per Semester' },
             ]} />
             <EditButton />
-            <DeleteButton />
+            { permissions === 'Kepala Fasyankes' || permissions === 'Admin' ? <DeleteButton /> : null}
         </Datagrid>
     </List>
-);
+)
+}
 
 export const NotifEdit = props => (
     <Edit title={<PageTitle action="Editing"/>} {...props}>
-        <SimpleForm>
+        <SimpleForm toolbar={<NoDeleteToolbar/>}>
             <SelectInput source="notification_status" label='Status' choices={[
                 { id: 'Belum Dikirim', name: 'Belum Dikirim' },
                 { id: 'Peringatan Dikirim', name: 'Peringatan Dikirim' },
@@ -67,9 +74,6 @@ export const NotifCreate = props => {
 export const NotifShow = props => (
     <Show title={<PageTitle action="Show"/>} {...props}>
         <SimpleShowLayout>
-            <ReferenceField label="Reminder maker" source="remindee" reference="user">
-                <TextField source="first_name" />
-            </ReferenceField>
             <ReferenceField label="Reminder maker" source="remindee" reference="user">
                 <TextField source="username" />
             </ReferenceField>

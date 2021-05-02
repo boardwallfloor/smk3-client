@@ -44,7 +44,7 @@ const InstitutionTable = (props) => {
 	                	{item.report_type === 'yearly' ? "Per Tahun" : "Per Semester"}
 	              	</TableCell>
 	              	<TableCell component="th" scope="item">
-	                	{item.complete_status ? "Selesai" : "Belum Selesai"}
+	                	{item.notification_status}
 	              	</TableCell>
 	            	</TableRow>
 	          	))}
@@ -60,8 +60,7 @@ export const NotificationCard = () => {
     useEffect(() => {
         const resource = "notif"
         const fetchData = async () => {
-            //Remember to Populate in Backend
-            const result = await fetch(`http://192.168.100.82:9000/${resource}/db`)
+            const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/db`)
             const json = await result.json();
             setData(json.data);
             setCount(json.count)

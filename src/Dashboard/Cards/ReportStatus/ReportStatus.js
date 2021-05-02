@@ -30,11 +30,6 @@ const useStyles = makeStyles({
 
 const AlertDialog = (props) => {
 	const [open, setOpen] = React.useState(true);
-
-	// const handleClickOpen = () => {
-	// setOpen(true);
-	// };
-
 	const handleClose = () => {
 	setOpen(false);
 	};
@@ -54,7 +49,7 @@ const AlertDialog = (props) => {
           	{props.data.map(item => (
           <DialogContentText>
 	                	{item.report_type === 'yearly' ? "Laporan Per Tahun"  : "Laporan Per Semester"}
-	                	{" untuk tanggal "+moment(item.remind_date).format("MMMM YYYY")}
+	                	{" untuk "+moment(item.remind_date).format("MMMM YYYY")}
           </DialogContentText>
 	          	))}
         </DialogContent>
@@ -106,9 +101,9 @@ export const ReportStatusCard = () => {
     useEffect(() => {
         const resource = "notif";
         const fetchData = async () => {
-
+        	
         	const id = localStorage.getItem('userid')
-            const query = `filter={"remindee":"${id}", "complete_status":"false"}`
+            const query = `filter={"remindee":"${id}", "notification_status":"Belum Dikirim"}`
             const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/db?${query}`)
             const json = await result.json();
             setData(json.data);

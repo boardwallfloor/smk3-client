@@ -50,18 +50,21 @@ const UserTable = (props) => {
 
 export const UserCard = () => {
 	const [data, setData] = useState([]);
+	const [count, setCount] = useState(0);
 
     useEffect(() => {
         const resource = "user"
         const fetchData = async () => {
             //Remember to Populate in Backend
-            const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}`)
+            const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/db`)
             const json = await result.json();
-            setData(json);
+            console.log(json)
+            setData(json.data);
+            setCount(json.count);
       }
     fetchData();
   	}, []);
 	return (
-		<CardWithIcon icon={GroupIcon} link="#/user" bgcolor="#f44336" name="User" data={<UserTable data={data}/>} length={data.length}/>
+		<CardWithIcon icon={GroupIcon} link="#/user" bgcolor="#f44336" name="User" data={<UserTable data={data}/>} length={count}/>
 		)
 }

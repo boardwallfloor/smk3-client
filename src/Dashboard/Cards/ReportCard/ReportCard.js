@@ -74,10 +74,10 @@ const ReportSemesterTable = (props) => {
 	                	{item.author.username}
 	              	</TableCell>
 	              	<TableCell component="th" scope="item">
-	                	{item.month}
+	                	{moment(item.date).format("MMMM")}
 	              	</TableCell>
 	              	<TableCell component="th" scope="item">
-	                	{moment(item.year).format("YYYY")}
+	                	{moment(item.date).format("YYYY")}
 	              	</TableCell>
 	            	</TableRow>
 	          	))}

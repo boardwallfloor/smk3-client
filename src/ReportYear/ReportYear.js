@@ -1,10 +1,11 @@
 import React from 'react';
-import {Create, Edit, List, Show, Datagrid, BooleanField, BooleanInput, DateInput, DateField, ReferenceField, TextField, TextInput, ShowButton, NumberField, NumberInput, EditButton, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, SelectInput, ReferenceInput, FileField, FormDataConsumer} from 'react-admin'
+import {Create, Edit, List, Show, Datagrid, BooleanField, BooleanInput, DateInput, DateField, ReferenceField, TextField, TextInput, ShowButton, NumberField, NumberInput, EditButton, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, SelectInput, ReferenceInput, FileField , FormDataConsumer} from 'react-admin'
 
 import PageTitle from '../Util/PageTitle';  
 import ActionBar from '../Util/ActionBar';
 import FileUpload from '../Util/FileUpload';
 import QuestionAccordion from '../Util/QuestionAccordion';
+import {NoDeleteToolbar} from '../Util/CustomToolbar'
 
 export const ReportyearList = ({permissions, record, ...props}) => (
     <List title="Laporan per Tahun" {...props} bulkActionButtons={false}>
@@ -18,13 +19,12 @@ export const ReportyearList = ({permissions, record, ...props}) => (
             <NumberField source="totalSDM" label='Total SDM' />
             <DateField source="year" />
             <BooleanField source="validated" label='Status Validasi' />
-            {record && record.validated ? <p>Sudah Validasi</p> : <p>Belum Validasi </p>}
             { permissions === 'Operator' || permissions === 'Admin' ?
             <EditButton />
             :
             <ShowButton />
             }
-            { permissions === 'Operator' || permissions === 'Admin' ?
+            {permissions === 'Admin' ?
             <DeleteButton />
             :
             null
@@ -36,7 +36,7 @@ export const ReportyearList = ({permissions, record, ...props}) => (
 
 export const ReportyearEdit = ({permissions, ...props}) => (
     <Edit title={<PageTitle action="Editing"/>} {...props}>
-        <TabbedForm>
+        <TabbedForm toolbar={<NoDeleteToolbar/>}>
             { permissions ==='Kepala Fasyankes' && 
             <FormTab label="Validasi">
             <QuestionAccordion text="Aktifkan apabila laporan telah sesuai standar" question="Validasi Laporan" />
@@ -142,10 +142,11 @@ export const ReportyearShow = props => (
     <Show title={<PageTitle action="Show"/>} actions={<ActionBar />} {...props}>
     <TabbedShowLayout>
             <Tab label="Penulis">
-                <TextField source="author" />
+                <ReferenceField label="Penulis" source="author" reference="user">
+                    <TextField source="username"/>
+                </ReferenceField>
                 <NumberField source="totalSDM" label="Jumlah SDM" />
-                <TextField source="institution" />
-                <DateField source="year" label="Tahun Penulisan"/>
+                <DateField source="year" label="Tanggal Penulisan"/>
             </Tab>
             <Tab label="Fasyankes" path="institution">
                 <ReferenceField label="Fasyankes" source="institution" reference="institution">
@@ -156,100 +157,100 @@ export const ReportyearShow = props => (
                 {/* Question 1*/}
                 <p>1. SMK3 di Fasyankes</p>
                 <BooleanField source="report.question1.a.information" label="a. Ada komitmen/kebijakan"/>
-                <FileField source="report.question1.a.file.src" title="report.question1.a.file.title" />
+                <FileField label='File terlampir' source="report.question1.a.file.src" title="report.question1.a.file.title" />
                 <BooleanField source="report.question1.b.information" label="b. Dokumen rencana kegiatan K3"/>
-                <FileField source="report.question1.b.file.src" title="report.question1.b.file.title" />
+                <FileField label='File terlampir'  source="report.question1.b.file.src" title="report.question1.b.file.title" />
                 <BooleanField source="report.question1.c.information" label="c. Ada Tim K3/Pengelola  K3"/>
-                <FileField source="report.question1.c.file.src" title="report.question1.c.file.title" />
+                <FileField label='File terlampir'  source="report.question1.c.file.src" title="report.question1.c.file.title" />
                 
                 {/* Question 2 */}
                 <p>2. Pengenalan Potensi Bahaya dan Pengendalian Resiko</p>
                 <BooleanField source="report.question2.a.information" label="a. Identifikasi potensi bahaya"/>
-                <FileField source="report.question2.a.file.src" title="report.question2.a.file.title" />
+                <FileField label='File terlampir'  source="report.question2.a.file.src" title="report.question2.a.file.title" />
                 <BooleanField source="report.question2.b.information" label="b. Penilaian risiko"/>
-                <FileField source="report.question2.b.file.src" title="report.question2.b.file.title" />
+                <FileField label='File terlampir'  source="report.question2.b.file.src" title="report.question2.b.file.title" />
                 <BooleanField source="report.question2.c.information" label="c. Pengendalian Risiko"/>
-                <FileField source="report.question2.c.file.src" title="report.question2.c.file.title" />
+                <FileField label='File terlampir'  source="report.question2.c.file.src" title="report.question2.c.file.title" />
 
                 {/* Question 3 */}
                 <p>3. Penerapan Kewaspadaan Standar </p>
                 <BooleanField source="report.question3.a.information" label="a. Sarana dan Prasarana Kebersihan Tangan"/>
-                <FileField source="report.question3.a.file.src" title="report.question3.a.file.title" />
+                <FileField label='File terlampir'  source="report.question3.a.file.src" title="report.question3.a.file.title" />
                 <BooleanField source="report.question3.b.information" label="b. Penyediaan APD"/>
-                <FileField source="report.question3.b.file.src" title="report.question3.b.file.title" />
+                <FileField label='File terlampir'  source="report.question3.b.file.src" title="report.question3.b.file.title" />
                 <BooleanField source="report.question3.c.information" label="c. Pengelolaan jarun dan alat tajam"/>
-                <FileField source="report.question3.c.file.src" title="report.question3.c.file.title" />
+                <FileField label='File terlampir'  source="report.question3.c.file.src" title="report.question3.c.file.title" />
                 <BooleanField source="report.question3.d.information" label="d. Dekontaminasi peralatan"/>
-                <FileField source="report.question3.d.file.src" title="report.question3.d.file.title" />
+                <FileField label='File terlampir'  source="report.question3.d.file.src" title="report.question3.d.file.title" />
 
                 {/* Question 4 */}
                 <p>4. Penerapan Prinsip Ergonomi Pada </p>
                 <BooleanField source="report.question4.a.information" label="a. Angkat angkut pasien (pasien, barang, dan lain-lain), postur kerja"/>
-                <FileField source="report.question4.a.file.src" title="report.question4.a.file.title" />
+                <FileField label='File terlampir'  source="report.question4.a.file.src" title="report.question4.a.file.title" />
                 <BooleanField source="report.question4.b.information" label="b. Pengaturan shift kerja"/>
-                <FileField source="report.question4.b.file.src" title="report.question4.b.file.title" />
+                <FileField label='File terlampir'  source="report.question4.b.file.src" title="report.question4.b.file.title" />
                 <BooleanField source="report.question4.c.information" label="c. Pengaturan Tata Ruang Kerja"/>
-                <FileField source="report.question4.c.file.src" title="report.question4.c.file.title" />
+                <FileField label='File terlampir'  source="report.question4.c.file.src" title="report.question4.c.file.title" />
 
                 {/* Question 5 */}
                 <p>5. Pelayanan Kesehatan Kerja dan Imunisasi</p>
                 <BooleanField source="report.question5.a.information" label="Pemeriksaan kesehatan SDM  Fasyankes"/>
-                <FileField source="report.question5.a.file.src" title="report.question5.a.file.title" />
+                <FileField label='File terlampir'  source="report.question5.a.file.src" title="report.question5.a.file.title" />
                 <BooleanField source="report.question5.b.information" label="a. Fasyankes melakukan pemeriksaan kesehatan berkala"/>
-                <FileField source="report.question5.b.file.src" title="report.question5.b.file.title" />
+                <FileField label='File terlampir'  source="report.question5.b.file.src" title="report.question5.b.file.title" />
                 <BooleanField source="report.question5.c.information" label="b. Fasyankes melakukan imunisasi pada SDM Fasyankes yang beresiko"/>
-                <FileField source="report.question5.c.file.src" title="report.question5.c.file.title" />
+                <FileField label='File terlampir'  source="report.question5.c.file.src" title="report.question5.c.file.title" />
 
                 {/* Question 6 */}
                 <p>6. Pembudayaan PHBS di Fasyankes</p>
                 <BooleanField source="report.question6.a.information" label="a. Melakukan sosialisasi"/>
-                <FileField source="report.question6.a.file.src" title="report.question6.a.file.title" />
+                <FileField label='File terlampir'  source="report.question6.a.file.src" title="report.question6.a.file.title" />
                 <BooleanField source="report.question6.b.information" label="b. Media KIE"/>
-                <FileField source="report.question6.b.file.src" title="report.question6.b.file.title" />
+                <FileField label='File terlampir'  source="report.question6.b.file.src" title="report.question6.b.file.title" />
                 
                 {/* Question 7 */}
                 <p>7. Aspek Keselamatan dan Kesehatan  Kerja  pada Pengelolaan Bahan Beracun dan Berbahaya (B3)  dan Limbah Domestik</p>
                 <BooleanField source="report.question7.a.information" label="a. Daftar inventaris B3"/>
-                <FileField source="report.question7.a.file.src" title="report.question7.a.file.title" />
+                <FileField label='File terlampir'  source="report.question7.a.file.src" title="report.question7.a.file.title" />
                 <BooleanField source="report.question7.b.information" label="b. SPO penggunaan B3"/>
-                <FileField source="report.question7.b.file.src" title="report.question7.b.file.title" />
+                <FileField label='File terlampir'  source="report.question7.b.file.src" title="report.question7.b.file.title" />
                 <BooleanField source="report.question7.c.information" label="c. Penyimpanan dan Pembuangan limbah B3 dan domestik sesuai persyaratan"/>
-                <FileField source="report.question7.c.file.src" title="report.question7.c.file.title" />
+                <FileField label='File terlampir'  source="report.question7.c.file.src" title="report.question7.c.file.title" />
                 
                 {/* Qustion 8 */}
                 <p>8. Pengelolaan Sarana dan Prasarana dari Aspek K3</p>
                 <BooleanField source="report.question8.a.information" label="a. Pengukuran pencahayaan, kualitas air, kualitas udara"/>
-                <FileField source="report.question8.a.file.src" title="report.question8.a.file.title" />
+                <FileField label='File terlampir'  source="report.question8.a.file.src" title="report.question8.a.file.title" />
                 <BooleanField source="report.question8.b.information" label="b. Pemeliharaan Kebersihan Bangunan"/>
-                <FileField source="report.question8.b.file.src" title="report.question8.b.file.title" />
+                <FileField label='File terlampir'  source="report.question8.b.file.src" title="report.question8.b.file.title" />
                 <BooleanField source="report.question8.c.information" label="c. Ketersediaan air dan listrik"/>
-                <FileField source="report.question8.c.file.src" title="report.question8.c.file.title" />
+                <FileField label='File terlampir'  source="report.question8.c.file.src" title="report.question8.c.file.title" />
                 <BooleanField source="report.question8.d.information" label="d. Ketersediaan toilet sesuai standar"/>
-                <FileField source="report.question8.d.file.src" title="report.question8.d.file.title" />
+                <FileField label='File terlampir'  source="report.question8.d.file.src" title="report.question8.d.file.title" />
                 
                 {/* Question 9 */}
                 <p>9. Pengelolaan Peralatan Medis Dari Aspek K3</p>
                 <BooleanField source="report.question9.information" label="a. Pemeliharaan pada peralatan medis"/>
-                <FileField source="report.question9.file.src" title="report.question9.file.title" />
+                <FileField label='File terlampir'  source="report.question9.file.src" title="report.question9.file.title" />
                 
                 {/* Question 10 */}
                 <p>10. Kesiapsiagaan menghadapi kondisi darurat/bencana</p>
                 <BooleanField source="report.question10.a.information" label="a. SPO Penanganan Kondisi Darurat / Bencana"/>
-                <FileField source="report.question10.a.file.src" title="report.question10.a.file.title" />
+                <FileField label='File terlampir'  source="report.question10.a.file.src" title="report.question10.a.file.title" />
                 <BooleanField source="report.question10.b.a.information" label="b. Proteksi kebakaran"/>
-                <FileField source="report.question10.b.a.file.src" title="report.question10.b.a.file.title" />
+                <FileField label='File terlampir'  source="report.question10.b.a.file.src" title="report.question10.b.a.file.title" />
                 <TextField source="report.question10.b.b.information" label="- Aktif ( Jumlah APAR dan alat pemadam lainnya)"/>
                 <TextField source="report.question10.b.c.information" label="- Pasif ( pintu dan tangga darurat, jalur evakuasi)"/>
                 <p>c. Simulasi</p>
                 <BooleanField source="report.question10.c.a.information" label="- Darurat Bencana"/>
-                <FileField source="report.question10.c.a.file.src" title="report.question10.c.a.file.title" />
+                <FileField label='File terlampir'  source="report.question10.c.a.file.src" title="report.question10.c.a.file.title" />
                 <BooleanField source="report.question10.c.b.information" label="- Penggunaan APAR"/>
-                <FileField source="report.question10.c.a.file.src" title="report.question10.c.a.file.title" />
+                <FileField label='File terlampir'  source="report.question10.c.a.file.src" title="report.question10.c.a.file.title" />
                 
                 {/* Question 11 */}
                 <p>11. Pelatihan</p>
                 <BooleanField source="report.question11.a.information" label="a. SDM Fasyankes terlatih K3"/>
-                <FileField source="report.question11.a.file.src" title="report.question11.a.file.title" />
+                <FileField label='File terlampir'  source="report.question11.a.file.src" title="report.question11.a.file.title" />
                 <TextField source="report.question11.b.information" label="b. Jumlah SDM Fasyankes yang terlatih K3"/>
 
             </Tab>

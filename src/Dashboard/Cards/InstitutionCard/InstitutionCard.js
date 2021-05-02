@@ -46,18 +46,20 @@ const InstitutionTable = (props) => {
 
 export const InstitutionCard = () => {
 	const [data, setData] = useState([]);
+	const [count, setCount] = useState(0);
 
     useEffect(() => {
         const resource = "institution"
         const fetchData = async () => {
             //Remember to Populate in Backend
-            const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}`)
+            const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/db`)
             const json = await result.json();
-            setData(json);
+            setData(json.data);
+            setCount(json.count);
       }
     fetchData();
   	}, []);
 	return (
-		<CardWithIcon icon={LocalHospitalIcon} link="#/institution" bgcolor="#f44336" name="Fasyankes" data={<InstitutionTable data={data}/>} length={data.length}/>
+		<CardWithIcon icon={LocalHospitalIcon} link="#/institution" bgcolor="#f44336" name="Fasyankes" data={<InstitutionTable data={data}/>} length={count}/>
 		)
 }

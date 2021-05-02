@@ -6,7 +6,7 @@ const httpClient = fetchUtils.fetchJson;
 const authProvider = {
     login: async ({username, password}) => {
         
-            await httpClient('http://192.168.100.62:9000/auth/login',{
+            await httpClient(`${process.env.REACT_APP_API_LINK}/auth/login`,{
                 method: 'POST',
                 body: JSON.stringify({ username, password }),
                 headers: new Headers({ 'Content-Type': 'application/json' }),

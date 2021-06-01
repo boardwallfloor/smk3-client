@@ -4,7 +4,7 @@ import {Create, Edit, List, Show, Datagrid, ReferenceField, TextField, TextInput
 
 import PageTitle from '../Util/PageTitle';
 import FileUpload from '../Util/FileUpload';
-import ActionBar from '../Util/ActionBar';
+import exportButtonShow from '../Util/ActionBar';
 import QuestionAccordion from '../Util/QuestionAccordion';
 import {NoDeleteToolbar} from '../Util/CustomToolbar'
 
@@ -152,7 +152,7 @@ export const ReportsemesterEdit = ({permissions, ...props}) => {
 )};
 
 export const ReportsemesterShow = props => (
-    <Show title={<PageTitle action="Show"/>} actions={<ActionBar />} {...props}>
+    <Show title={<PageTitle action="Show"/>} actions={<exportButtonShow />} {...props}>
         <TabbedShowLayout>
             <Tab label="Penulis">
                 <DateField source="date" label='Tanggal pembuatan laporan' options={{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }} locales="id-ID" />

@@ -184,7 +184,7 @@ export default {
             body: JSON.stringify(params.data),
         }).then(({json}) => {
             // console.log('json')
-            console.log(json)
+            // console.log(json)
             return {
                  data: { ...params.data, id: json._id },
             }

@@ -5,7 +5,7 @@ import { EditButton, TopToolbar} from 'react-admin';
 import moment from 'moment';
 
 
-const ActionBar = ({ basePath, data, resource }) => {
+export const exportButtonShow = ({ basePath, data, resource }) => {
 
     const getData = () => {
         const dateReformatted = moment(data.date).format("L")
@@ -25,13 +25,15 @@ const ActionBar = ({ basePath, data, resource }) => {
         a.download = fileName;
         a.click();
         window.URL.revokeObjectURL(fileInBlob);
-            } 
+    } 
 
 	return (
     <TopToolbar>
         <EditButton basePath={basePath} record={data} />
         <Button size='small' startIcon={<GridOnIcon />} color="primary" onClick={exportData}>Export Data to Spreadsheet</Button>
     </TopToolbar>
-)};
+    )
 
-export default ActionBar;
+}
+
+export default exportButtonShow

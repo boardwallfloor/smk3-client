@@ -1,15 +1,14 @@
 import React from 'react';
 import {Create, Edit, List, Show, Datagrid, ReferenceField, TextField, TextInput, DateInput, DateField, NumberField, NumberInput, BooleanField, ShowButton, EditButton, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, FileField, BooleanInput, FormDataConsumer} from 'react-admin'
 
-
 import PageTitle from '../Util/PageTitle';
 import FileUpload from '../Util/FileUpload';
-import exportButtonShow from '../Util/ActionBar';
 import QuestionAccordion from '../Util/QuestionAccordion';
+import {ExportButtonShow, ListActions} from '../Util/ActionBar';
 import {NoDeleteToolbar} from '../Util/CustomToolbar'
 
 export const ReportsemesterList = ({permissions, record, ...props}) => (
-    <List title="Laporan per Semester" {...props} bulkActionButtons={false}>
+    <List title="Laporan per Semester" actions={<ListActions />} {...props} bulkActionButtons={false}>
         <Datagrid rowClick={permissions !== 'Kepala Fasyankes' ? "show" : "edit"}>
             <ReferenceField label="Penulis" source="author" reference="user">
                 <TextField source="username"/>
@@ -152,7 +151,7 @@ export const ReportsemesterEdit = ({permissions, ...props}) => {
 )};
 
 export const ReportsemesterShow = props => (
-    <Show title={<PageTitle action="Show"/>} actions={<exportButtonShow />} {...props}>
+    <Show title={<PageTitle action="Show"/>} actions={<ExportButtonShow />} {...props}>
         <TabbedShowLayout>
             <Tab label="Penulis">
                 <DateField source="date" label='Tanggal pembuatan laporan' options={{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }} locales="id-ID" />

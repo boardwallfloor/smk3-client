@@ -6,12 +6,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { makeStyles } from '@material-ui/core/styles';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import Button from '@material-ui/core/Button';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import moment from 'moment';
 
 import CardWithIcon from '../CardWithIcon';
@@ -28,43 +22,7 @@ const useStyles = makeStyles({
   	}
 });
 
-const AlertDialog = (props) => {
-	const [open, setOpen] = React.useState(true);
-	const handleClose = () => {
-	setOpen(false);
-	};
-  return (
-    <div>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Peringatan Laporan"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Anda belum mengirim laporan anda. Mohon cek email anda. Laporan yang belum anda kirim adalah :
-          </DialogContentText>
-          	{props.data.map(item => (
-          <DialogContentText>
-	                	{item.report_type === 'yearly' ? "Laporan Per Tahun"  : "Laporan Per Semester"}
-	                	{" untuk "+moment(item.remind_date).format("MMMM YYYY")}
-          </DialogContentText>
-	          	))}
-        </DialogContent>
-        <DialogActions>
-	    	<Button href='#/reportsemester' color="primary">
-	            Buat Laporan Semester
-	      	</Button>
-	      	<Button href='#/reportyear' color="primary">
-	            Buat Laporan Tahunan
-	      	</Button>
-        </DialogActions>
-      </Dialog>
-    </div>
-  );
-}
+
 
 const InstitutionTable = (props) => {
 
@@ -94,6 +52,7 @@ const InstitutionTable = (props) => {
 		)
 }
 
+
 export const ReportStatusCard = () => {
 	const [data, setData] = useState([]);
 	const [count, setCount] = useState(0);
@@ -103,18 +62,18 @@ export const ReportStatusCard = () => {
         const fetchData = async () => {
         	
         	const id = localStorage.getItem('userid')
-            const query = `filter={"remindee":"${id}", "notification_status":"Belum Dikirim"}`
-            const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/db?${query}`)
-            const json = await result.json();
-            setData(json.data);
-            setCount(json.count)
+          const query = `filter={"remindee":"${id}", "notification_status":"Belum Dikirim"}`
+          const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/db?${query}`)
+          const json = await result.json();
+          setData(json.data);
+          setCount(json.count)
       }
-    fetchData();
+    	fetchData();
   	}, []);
 	return (
 		<div>
 			<CardWithIcon icon={NotificationsActiveIcon} link="#/notif" bgcolor="#f44336" name="Peringatan Laporan" data={<InstitutionTable data={data}/>} length={count}/>
-			{count>0 ? <AlertDialog data={data}/>: null}
+			
 		</div>
 		)
 }

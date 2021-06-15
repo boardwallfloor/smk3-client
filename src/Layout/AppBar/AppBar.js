@@ -1,10 +1,11 @@
-import * as React from "react";
+import React from "react";
 import { AppBar } from 'react-admin';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 import {MyUserMenu} from './UserMenu'
 import {Logo} from './Logo';
+import {NotificationBadge} from '../../Dashboard/PopUpAlert'
 
 const useStyles = makeStyles({
     title: {
@@ -21,8 +22,11 @@ const useStyles = makeStyles({
     }
 });
 
+
+
 export const CustomAppBar = props => {
     const classes = useStyles();
+    
     return (
         <AppBar  {...props} userMenu={<MyUserMenu />}>
             <Typography
@@ -33,6 +37,7 @@ export const CustomAppBar = props => {
             />
             <Logo />
             <span className={classes.spacer} />
+            <NotificationBadge />
         </AppBar>
     );
 };

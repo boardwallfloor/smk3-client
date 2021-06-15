@@ -2,13 +2,13 @@ import React from 'react';
 import {Create, Edit, List, Show, Datagrid, BooleanField, BooleanInput, DateInput, DateField, ReferenceField, TextField, TextInput, ShowButton, NumberField, NumberInput, EditButton, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, SelectInput, ReferenceInput, FileField , FormDataConsumer} from 'react-admin'
 
 import PageTitle from '../Util/PageTitle';  
-import ActionBar from '../Util/ActionBar';
+import {ExportButtonShow, ListActions} from '../Util/ActionBar';
 import FileUpload from '../Util/FileUpload';
 import QuestionAccordion from '../Util/QuestionAccordion';
 import {NoDeleteToolbar} from '../Util/CustomToolbar'
 
 export const ReportyearList = ({permissions, record, ...props}) => (
-    <List title="Laporan per Tahun" {...props} bulkActionButtons={false}>
+    <List title="Laporan per Tahun" actions={<ListActions />} {...props} bulkActionButtons={false}>
         <Datagrid rowClick={permissions !== 'Kepala Fasyankes' ? "show" : "edit"}>
             <ReferenceField label="Penulis" source="author" reference="user" emptyText="test">
                 <TextField source="username" />
@@ -139,7 +139,7 @@ export const ReportyearEdit = ({permissions, ...props}) => (
 );
 
 export const ReportyearShow = props => (
-    <Show title={<PageTitle action="Show"/>} actions={<ActionBar />} {...props}>
+    <Show title={<PageTitle action="Show"/>} actions={<ExportButtonShow />} {...props}>
     <TabbedShowLayout>
             <Tab label="Penulis">
                 <ReferenceField label="Penulis" source="author" reference="user">

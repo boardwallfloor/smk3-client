@@ -1,11 +1,12 @@
 import React from 'react'
+import cloneElement from 'react'
 import Button from '@material-ui/core/Button';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import { EditButton, TopToolbar} from 'react-admin';
 import moment from 'moment';
+import {CreateButton, sanitizeListRestProps} from 'react-admin';
 
-
-export const exportButtonShow = ({ basePath, data, resource }) => {
+export const ExportButtonShow = ({ basePath, data, resource }) => {
 
     const getData = () => {
         const dateReformatted = moment(data.date).format("L")
@@ -27,13 +28,51 @@ export const exportButtonShow = ({ basePath, data, resource }) => {
         window.URL.revokeObjectURL(fileInBlob);
     } 
 
-	return (
+	return(
     <TopToolbar>
         <EditButton basePath={basePath} record={data} />
-        <Button size='small' startIcon={<GridOnIcon />} color="primary" onClick={exportData}>Export Data to Spreadsheet</Button>
+        <Button size='small' startIcon={<GridOnIcon />} color="primary" onClick={exportData}>Export Spreadsheet</Button>
     </TopToolbar>
     )
 
 }
 
-export default exportButtonShow
+
+export const ListActions = ({currentSort, className, resource, filters, displayedFilters, filterValues, basePath, selectedIds, onUnselectItems, showFilter, data, ...rest}) => {
+    
+    const massExport = async () => {
+        const file = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/exportall`)
+        const fileInBlob = await file.blob()
+        const fileUrl = window.URL.createObjectURL(fileInBlob);
+
+        const fileName = `${resource}.xlsx`
+        let a = document.createElement('a');
+        a.href = fileUrl;
+        a.download = fileName;
+        a.click();
+        window.URL.revokeObjectURL(fileInBlob);
+    }
+    const ExportButton = () => {
+        return(
+            <Button size='small' startIcon={<GridOnIcon />} color="primary" onClick={massExport}>Export Spreadsheet</Button>
+        )
+    }
+    return(
+        <TopToolbar className={className} {...sanitizeListRestProps(rest)}>
+            {filters && cloneElement(filters, {
+                resource,
+                showFilter,
+                displayedFilters,
+                filterValues,
+                context: 'button',
+            })}
+            <CreateButton basePath={basePath} />
+            <ExportButton />
+        </TopToolbar>
+    )
+}
+
+ListActions.defaultProps = {
+    selectedIds: [],
+    onUnselectItems: () => null,
+};

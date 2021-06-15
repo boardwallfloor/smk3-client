@@ -6,25 +6,24 @@ import PageTitle from '../Util/PageTitle';
 import {NoDeleteToolbar} from '../Util/CustomToolbar'
 
 export const NotifList = props => {
-const {permissions} = usePermissions();
-console.log(permissions)
-return(
-    <List title="Reminder" {...props} bulkActionButtons={false}>
-        <Datagrid rowClick="show">
-            <ReferenceField label="Operator Ditugaskan" source="remindee" reference="user">
-                <TextField source="first_name" />
-            </ReferenceField>
-            <TextField source="notification_status" label='Status Laporan' />
-            <DateField source="remind_date" label="Tanggal Peringatan Aktif" />
-            <SelectField label="Tipe Laporan" source="report_type" choices={[
-               { id: 'yearly', name: 'Laporan Per Tahun' },
-               { id: 'semesterly', name: 'Laporan Per Semester' },
-            ]} />
-            <EditButton />
-            { permissions === 'Kepala Fasyankes' || permissions === 'Admin' ? <DeleteButton /> : null}
-        </Datagrid>
-    </List>
-)
+    const {permissions} = usePermissions();
+    return(
+        <List title="Reminder" {...props} bulkActionButtons={false}>
+            <Datagrid rowClick="show">
+                <ReferenceField label="Operator Ditugaskan" source="remindee" reference="user">
+                    <TextField source="first_name" />
+                </ReferenceField>
+                <TextField source="notification_status" label='Status Laporan' />
+                <DateField source="remind_date" label="Tanggal Peringatan Aktif" />
+                <SelectField label="Tipe Laporan" source="report_type" choices={[
+                   { id: 'yearly', name: 'Laporan Per Tahun' },
+                   { id: 'semesterly', name: 'Laporan Per Semester' },
+                ]} />
+                { permissions === 'Kepala Fasyankes' || permissions === 'Admin' ? <EditButton /> : null}
+                { permissions === 'Kepala Fasyankes' || permissions === 'Admin' ? <DeleteButton /> : null}
+            </Datagrid>
+        </List>
+    )
 }
 
 export const NotifEdit = props => (

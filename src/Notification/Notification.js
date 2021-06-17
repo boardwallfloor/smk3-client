@@ -1,14 +1,14 @@
 import React from 'react';
 import {Create, Edit, List, Show, DateField, ReferenceField, Datagrid, SimpleShowLayout, SimpleForm, TextField, EditButton, DeleteButton, ReferenceInput, SelectInput, DateInput, SelectField, useNotify} from 'react-admin'
 import { usePermissions } from 'react-admin';
-
+import {ExportButtonShow, ListActions} from '../Util/ActionBar';
 import PageTitle from '../Util/PageTitle';
 import {NoDeleteToolbar} from '../Util/CustomToolbar'
 
 export const NotifList = props => {
     const {permissions} = usePermissions();
     return(
-        <List title="Reminder" {...props} bulkActionButtons={false}>
+        <List title="Reminder" {...props} actions={<ListActions />} bulkActionButtons={false}>
             <Datagrid rowClick="show">
                 <ReferenceField label="Operator Ditugaskan" source="remindee" reference="user">
                     <TextField source="first_name" />
@@ -71,7 +71,7 @@ export const NotifCreate = props => {
 }
 
 export const NotifShow = props => (
-    <Show title={<PageTitle action="Show"/>} {...props}>
+    <Show title={<PageTitle action="Show"/>} actions={<ExportButtonShow />} {...props}>
         <SimpleShowLayout>
             <ReferenceField label="Reminder maker" source="remindee" reference="user">
                 <TextField source="username" />

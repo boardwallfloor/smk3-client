@@ -11,24 +11,23 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import moment from 'moment';
 
 const AlertDialog = (props) => {
-	const [open, setOpen] = React.useState(true);
-	const handleClose = () => {
-	setOpen(false);
-	};
+  const handleClose = () => {
+    props.onClose(false);
+  }
+
   return (
-    <div>
-      <Dialog open={props.open} onClose={handleClose} >
+      <Dialog open={props.open} onClose={handleClose}>
         <DialogTitle id="alert-dialog-title">{"Peringatan Laporan"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Anda belum mengirim laporan anda. Mohon cek email anda. Laporan yang belum anda kirim adalah :
           </DialogContentText>
-          	{props.data.map(item => (
-          <DialogContentText>
-	                	{item.report_type === 'yearly' ? "Laporan Per Tahun"  : "Laporan Per Semester"}
-	                	{" untuk "+moment(item.remind_date).format("MMMM YYYY")}
-          </DialogContentText>
-	          	))}
+        	{Object.values(props.data).map(item => (
+            <DialogContentText>
+            	{item.report_type === 'yearly' ? "Laporan Per Tahun"  : "Laporan Per Semester"}
+            	{" untuk "+moment(item.remind_date).format("MMMM YYYY")}
+            </DialogContentText>
+        	))}
         </DialogContent>
         <DialogActions>
 	    	<Button href='#/reportsemester' color="primary">
@@ -39,39 +38,46 @@ const AlertDialog = (props) => {
 	      	</Button>
         </DialogActions>
       </Dialog>
-    </div>
   );
 }
 
 export const NotificationBadge = () => {
     const [count, setCount] = useState(0)
     const [data, setData] = useState(0)
+    const [open, setOpen] = useState(false)
+
     const showNotification = () => {
-        alert(`Todo : Notification ${count}`)
-        // setCount(count+1)
+      // alert(`Todo : Notification ${count}`)
+      // setCount(count+1)
+      setOpen(true)
+    }
+
+    const handleClose = () => {
+      setOpen(false);
     }
     useEffect(() => {
-        const resource = "notif";
-        const fetchData = async () => {
-            
-            const id = localStorage.getItem('userid')
-            const query = `filter={"remindee":"${id}", "notification_status":"Belum Dikirim"}`
-            const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/count?${query}`)
-            const json = await result.json();
-            setCount(json.count)
-            setData(json.data)
+      const resource = "notif";
+      const fetchData = async () => {
+          const id = localStorage.getItem('userid')
+          const query = `filter={"remindee":"${id}", "notification_status":"Belum Dikirim"}`
+          const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/count?${query}`)
+          const json = await result.json();
+          setCount(json.count)
+          setData(json.data)
       }
-        fetchData()
+      fetchData()
     }, []);
 
     return (
       <div>
-        <IconButton onClick={<AlertDialog data={data} open={'open'}/>}>
+        <IconButton onClick={showNotification}>
           <Badge badgeContent={count} color="error">
             <NotificationsNoneOutlinedIcon style={{ color: 'white' }}/>
           </Badge>
-      </IconButton>
-      {/*{count>0 ? <AlertDialog data={data}/>: null}*/}
+        </IconButton>
+        <AlertDialog open={open} data={data} onClose={handleClose}/>
+                
       </div>
     )
 }
+

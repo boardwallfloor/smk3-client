@@ -9,10 +9,10 @@ const Footer = () => {
 		<div>
 			<Grid container spacing={0}>
 				<Grid item xs>
-					<img src={K3_1} alt='K3' width='240px'/>
+					<img src={K3_1} alt='K3' width='310px' height="163px"/>
 				</Grid>
 				<Grid item xs>
-					<img src={UGM2} alt='UGM' width='240px'/>
+					<img src={UGM2} alt='UGM' />
 				</Grid>
 				
 			</Grid>

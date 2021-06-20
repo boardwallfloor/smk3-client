@@ -5,6 +5,7 @@ import GridOnIcon from '@material-ui/icons/GridOn';
 import { EditButton, TopToolbar} from 'react-admin';
 import moment from 'moment';
 import {CreateButton, sanitizeListRestProps} from 'react-admin';
+import { usePermissions } from 'react-admin';
 
 export const ExportButtonShow = ({ basePath, data, resource }) => {
 
@@ -57,6 +58,7 @@ export const ListActions = ({currentSort, className, resource, filters, displaye
             <Button size='small' startIcon={<GridOnIcon />} color="primary" onClick={massExport}>Export Spreadsheet</Button>
         )
     }
+    const {permissions} = usePermissions();
     return(
         <TopToolbar className={className} {...sanitizeListRestProps(rest)}>
             {filters && cloneElement(filters, {
@@ -66,7 +68,7 @@ export const ListActions = ({currentSort, className, resource, filters, displaye
                 filterValues,
                 context: 'button',
             })}
-            <CreateButton basePath={basePath} />
+            {permissions === "Dinas Kesehatan"  ? null : <CreateButton basePath={basePath} />}
             <ExportButton />
         </TopToolbar>
     )

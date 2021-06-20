@@ -1,9 +1,11 @@
 import React from 'react';
 import {Create, Edit, List, Show, Datagrid, SimpleShowLayout, SimpleForm, TextField, TextInput, EditButton, DeleteButton, ShowButton} from 'react-admin'
+
 import PageTitle from '../Util/PageTitle';
+import {ExportButtonShow, ListActions} from '../Util/ActionBar';
 
 export const InstitutionList = ({permissions, ...props}) => (
-    <List title="Fasyankes" {...props} bulkActionButtons={false}>
+    <List title="Fasyankes" {...props} actions={<ListActions />} bulkActionButtons={false}>
         <Datagrid rowClick="show">
             <TextField source="name" label="Nama Fasyankes"/>
             <TextField source="address" label="Alamat"/>
@@ -22,7 +24,7 @@ export const InstitutionList = ({permissions, ...props}) => (
 );
 
 export const InstitutionShow = props => (
-    <Show title={<PageTitle action="Show"/>}  {...props}>
+    <Show actions={<ExportButtonShow />} title={<PageTitle action="Show"/>}  {...props}>
         <SimpleShowLayout>
             <TextField source="name" />
             <TextField source="address" />

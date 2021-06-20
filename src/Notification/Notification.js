@@ -1,5 +1,5 @@
 import React from 'react';
-import {Create, Edit, List, Show, DateField, ReferenceField, Datagrid, SimpleShowLayout, SimpleForm, TextField, EditButton, DeleteButton, ReferenceInput, SelectInput, DateInput, SelectField, useNotify} from 'react-admin'
+import {Create, Edit, List, Show, DateField, ReferenceField, Datagrid, ShowButton, SimpleShowLayout, SimpleForm, TextField, EditButton, DeleteButton, ReferenceInput, SelectInput, DateInput, SelectField, useNotify} from 'react-admin'
 import { usePermissions } from 'react-admin';
 import {ExportButtonShow, ListActions} from '../Util/ActionBar';
 import PageTitle from '../Util/PageTitle';
@@ -21,6 +21,7 @@ export const NotifList = props => {
                 ]} />
                 { permissions === 'Kepala Fasyankes' || permissions === 'Admin' ? <EditButton /> : null}
                 { permissions === 'Kepala Fasyankes' || permissions === 'Admin' ? <DeleteButton /> : null}
+            <ShowButton />
             </Datagrid>
         </List>
     )

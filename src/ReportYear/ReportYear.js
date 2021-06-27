@@ -17,7 +17,7 @@ export const ReportyearList = ({permissions, record, ...props}) => (
                 <TextField source="name"/>
             </ReferenceField>
             <NumberField source="totalSDM" label='Total SDM' />
-            <DateField source="year" />
+            <DateField source="year" options={{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }} locales="id-ID"/>
             <BooleanField source="validated" label='Status Validasi' />
             { permissions === 'Operator' || permissions === 'Admin' ?
             <EditButton />

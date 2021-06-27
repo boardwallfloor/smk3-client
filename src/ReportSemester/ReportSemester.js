@@ -1,5 +1,6 @@
 import React from 'react';
 import {Create, Edit, List, Show, Datagrid, ReferenceField, TextField, TextInput, DateInput, DateField, NumberField, NumberInput, BooleanField, ShowButton, EditButton, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, FileField, BooleanInput, FormDataConsumer} from 'react-admin'
+import { makeStyles } from '@material-ui/core';
 
 import PageTitle from '../Util/PageTitle';
 import FileUpload from '../Util/FileUpload';
@@ -7,30 +8,41 @@ import QuestionAccordion from '../Util/QuestionAccordion';
 import {ExportButtonShow, ListActions} from '../Util/ActionBar';
 import {NoDeleteToolbar} from '../Util/CustomToolbar'
 
-export const ReportsemesterList = ({permissions, record, ...props}) => (
-    <List title="Laporan per Semester" actions={<ListActions />} {...props} bulkActionButtons={false}>
-        <Datagrid rowClick={permissions !== 'Kepala Fasyankes' ? "show" : "edit"}>
-            <ReferenceField label="Penulis" source="author" reference="user">
-                <TextField source="username"/>
-            </ReferenceField>
-            <ReferenceField label="Fasyankes" source="institution" reference="institution">
-                <TextField source="name"/>
-            </ReferenceField>
-            <DateField source="date" label='Tanggal pembuatan laporan' options={{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }} locales="id-ID" />
-            <BooleanField source="validated" label='Status Validasi' />
-            { permissions === 'Operator' || permissions === 'Admin' ?
-            <EditButton />
-            :
-            <ShowButton />
-            }
-            {permissions === 'Admin' ?
-            <DeleteButton />
-            :
-            null
-            }
-        </Datagrid>
-    </List>
-);
+
+const useStyles = makeStyles({
+    headerCell: {
+        fontWeight: 'bold'
+    },
+});
+
+export const ReportsemesterList = ({permissions, record, ...props}) => {
+    const classes = useStyles();
+    return(
+        <List {...props} title="Laporan per Semester" actions={<ListActions />}  bulkActionButtons={false}>
+            <Datagrid classes={{ headerCell: classes.headerCell }} rowClick={permissions !== 'Kepala Fasyankes' ? "show" : "edit"}>
+                <ReferenceField label="Penulis" source="author" reference="user">
+                    <TextField source="username"/>
+                </ReferenceField>
+                <ReferenceField label="Fasyankes" source="institution" reference="institution">
+                    <TextField source="name"/>
+                </ReferenceField>
+                <DateField source="date" label='Tanggal pembuatan laporan' options={{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }} locales="id-ID" />
+                
+                <BooleanField source="validated" label='Status Validasi' />
+                { permissions === 'Operator' || permissions === 'Admin' ?
+                <EditButton />
+                :
+                <ShowButton />
+                }
+                {permissions === 'Admin' ?
+                <DeleteButton />
+                :
+                null
+                }
+            </Datagrid>
+        </List>
+    )
+}
 
 export const ReportsemesterEdit = ({permissions, ...props}) => {
     return(

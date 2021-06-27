@@ -60,6 +60,7 @@ const ReportSemesterTable = (props) => {
 		<Table className={classes.table} size="small" aria-label="simple table">
 	        <TableHead>
           		<TableRow>
+		            <TableCell className={classes.bold}>Fasyankes</TableCell>
 		            <TableCell className={classes.bold}>Semester</TableCell>
 		            <TableCell className={classes.bold}>Bulan</TableCell>
 		            <TableCell className={classes.bold}>Tahun</TableCell>
@@ -68,15 +69,18 @@ const ReportSemesterTable = (props) => {
 	        <TableBody>
 	          	{props.data.map((item, index) => (
 	            	<TableRow key={item._id}>
-	              	<TableCell component="th" scope="item">
-	                	{parseInt(moment(item.year).format("M")) < 6 ? 'Ganjil' : 'Genap'}
-	              	</TableCell>
-	              	<TableCell component="th" scope="item">
-	                	{moment(item.year).format("MMMM")}
-	              	</TableCell>
-	              	<TableCell component="th" scope="item">
-	                	{moment(item.year).format("YYYY")}
-	              	</TableCell>
+		              	<TableCell component="th" scope="item">
+		                	{item.institution.name}
+		              	</TableCell>
+		              	<TableCell component="th" scope="item">
+		                	{parseInt(moment(item.year).format("M")) < 6 ? 'Ganjil' : 'Genap'}
+		              	</TableCell>
+		              	<TableCell component="th" scope="item">
+		                	{moment(item.year).format("MMMM")}
+		              	</TableCell>
+		              	<TableCell component="th" scope="item">
+		                	{moment(item.year).format("YYYY")}
+		              	</TableCell>
 	            	</TableRow>
 	          	))}
 	        </TableBody>

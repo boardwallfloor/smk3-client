@@ -32,10 +32,10 @@ const OperatorDashboard = () => {
         <Grid item xs={4}>
           <ReportStatusCard query={remindee}/>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <ReportYearCardUser query={query}/>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={5}>
           <ReportSemesterCardUser query={query}/>
         </Grid>
     </Grid>

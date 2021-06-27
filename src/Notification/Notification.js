@@ -15,9 +15,10 @@ export const NotifList = props => {
                 </ReferenceField>
                 <TextField source="notification_status" label='Status Laporan' />
                 <DateField source="remind_date" label="Tanggal Peringatan Aktif" />
+                <DateField source="created_at" label="Tanggal Pembuatan Peringatan" />
                 <SelectField label="Tipe Laporan" source="report_type" choices={[
-                   { id: 'yearly', name: 'Laporan Per Tahun' },
-                   { id: 'semesterly', name: 'Laporan Per Semester' },
+                   { id: 'yearly', name: 'Per Tahun' },
+                   { id: 'semesterly', name: 'Per Semester' },
                 ]} />
                 { permissions === 'Kepala Fasyankes' || permissions === 'Admin' ? <EditButton /> : null}
                 { permissions === 'Kepala Fasyankes' || permissions === 'Admin' ? <DeleteButton /> : null}

@@ -21,7 +21,14 @@ const useStyles = makeStyles({
     padding: {
         padding: 16,        
     },
-    title: {},
+    title: {
+        fontWeight: "bold",
+        color: "black"
+    },
+    count: {
+        // color: "rgba(255, 255, 255, 0.7)"
+        color: "#9e9e9e"
+    },
     table: {
         width: '100%',
         padding: 0,
@@ -39,7 +46,7 @@ const useStyles = makeStyles({
                     <Typography className={classes.title} color="textSecondary">
                         {props.name}
                     </Typography>
-                    <Typography  variant="h4" component="h4">
+                    <Typography  className={classes.count} variant="h4" component="h4">
                         {props.length}
                     </Typography>
                 </CardContent>

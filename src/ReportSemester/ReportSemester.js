@@ -1,5 +1,6 @@
 import React from 'react';
 import {Create, Edit, List, Show, Datagrid, ReferenceField, TextField, TextInput, DateInput, DateField, NumberField, NumberInput, BooleanField, ShowButton, EditButton, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, FileField, BooleanInput, FormDataConsumer} from 'react-admin'
+
 import { makeStyles } from '@material-ui/core';
 
 import PageTitle from '../Util/PageTitle';
@@ -7,6 +8,7 @@ import FileUpload from '../Util/FileUpload';
 import QuestionAccordion from '../Util/QuestionAccordion';
 import {ExportButtonShow, ListActions} from '../Util/ActionBar';
 import {NoDeleteToolbar} from '../Util/CustomToolbar'
+import {ReportSemesterListFilter} from '../Util/Filter'
 
 
 const useStyles = makeStyles({
@@ -18,7 +20,7 @@ const useStyles = makeStyles({
 export const ReportsemesterList = ({permissions, record, ...props}) => {
     const classes = useStyles();
     return(
-        <List {...props} title="Laporan per Semester" actions={<ListActions />}  bulkActionButtons={false}>
+        <List {...props} title="Laporan per Semester" filters={<ReportSemesterListFilter />} actions={<ListActions />}  bulkActionButtons={false}>
             <Datagrid classes={{ headerCell: classes.headerCell }} rowClick={permissions !== 'Kepala Fasyankes' ? "show" : "edit"}>
                 <ReferenceField label="Penulis" source="author" reference="user">
                     <TextField source="username"/>

@@ -1,5 +1,4 @@
 import React from 'react'
-import cloneElement from 'react'
 import Button from '@material-ui/core/Button';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import { EditButton, TopToolbar} from 'react-admin';
@@ -8,7 +7,7 @@ import {CreateButton, sanitizeListRestProps} from 'react-admin';
 import { usePermissions } from 'react-admin';
 
 //Test
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import TextField from '@material-ui/core/TextField';
 import Popover from '@material-ui/core/Popover';
 import { makeStyles } from '@material-ui/core/styles';
@@ -23,10 +22,22 @@ const useStyles = makeStyles((theme) =>({
     marginLeft: theme.spacing(1),
     marginTop: theme.spacing(1),
   },
+  input1: {
+    marginRight: theme.spacing(1),
+    marginLeft: theme.spacing(1),
+    marginTop: theme.spacing(1),
+    width: '200px'
+  },
+  input2: {
+    marginRight: theme.spacing(1),
+    marginLeft: theme.spacing(1),
+    marginTop: theme.spacing(1),
+    width: '200px'
+  },
   popup:{
     display: "flex",
     flexWrap: "wrap",
-    width: "1250px"
+    width: "2000px"
   },
   margin: {
     margin: theme.spacing(1),
@@ -34,11 +45,14 @@ const useStyles = makeStyles((theme) =>({
 }))
 
 
-export function CustomizedSelects() {
-    const [name, setName] = useState('')
-    const [date, setDate] = useState('')
+const FilterPrompt = (props) => {
+    const [name, setName] = useState("")
+    const [date, setDate] = useState("")
     const [validation, setValidation] = useState(true)
+    const [institutionOption, setInstitutionOption] = useState([])
+    const [institution, setInstitution] = useState({})
     const classes = useStyles()
+
     const validationOption = [
         {
             value:true,
@@ -50,9 +64,49 @@ export function CustomizedSelects() {
         }
     ]
 
-    const downloadFile = () =>{
-        alert(name + " " + date + " " + validation)
+    const massExport = async () => {
+        const query = await constructQuery()
+        const file = await fetch(query)
+        const fileInBlob = await file.blob()
+        const fileUrl = window.URL.createObjectURL(fileInBlob);
+
+        const fileName = `${props.resource}.xlsx`
+        let a = document.createElement('a');
+        a.href = fileUrl;
+        a.download = fileName;
+        a.click();
+        window.URL.revokeObjectURL(fileInBlob);
     }
+
+    const constructQuery = () =>{
+        let filter = {}
+        if(name !== ''){
+            filter.username = name
+        }
+        if(date !== ''){
+            filter.date = date
+        }
+        if(validation !== ''){
+            filter.validated = validation
+        }
+        if(validation !== ''){
+            filter.institution = institution
+        }
+        
+        return (`${process.env.REACT_APP_API_LINK}/${props.resource}/exportall?filter=${JSON.stringify(filter)}`)
+    }
+
+    useEffect( () => {
+
+        const fetchInstitution = async() => {
+            const institutionData = await fetch(`${process.env.REACT_APP_API_LINK}/institution?select=_id+name`)
+            const institutionDataJson = await institutionData.json()
+            setInstitutionOption(institutionDataJson)
+
+
+        }
+        fetchInstitution()
+    },[institution])
 
     const handleChangeName = (event) => {
         setName(event.target.value)
@@ -65,24 +119,36 @@ export function CustomizedSelects() {
     const handleChangeValidation = (event) => {
         setValidation(event.target.value);
     }
+    const handleChangeInstitution = (event) => {
+        setInstitution(event.target.value);
+    }
   
   return (
     <form  noValidate className={classes.root}  autoComplete="off">
         <TextField value={name} onChange={handleChangeName}  className={classes.input} size="small" label="Penulis" variant="outlined" />
+        {props.permissions === "Dinas Kesehatan" ?
+            <TextField select value={institution} onChange={handleChangeInstitution} className={classes.input1} size="small" label="Institution" variant="outlined" >
+                {institutionOption.map((option) => (
+                    <MenuItem key={option._id} value={option._id}>
+                      {option.name}
+                    </MenuItem>
+                  ))}
+            </TextField>
+        : null}
         <TextField value={date} onChange={handleChangeDate}  className={classes.input} size="small" type="date" label="Tanggal" variant="outlined" InputLabelProps={{ shrink: true }}/>
-        <TextField value={validation} onChange={handleChangeValidation} InputLabelProps={{ shrink: true }} select className={classes.input} size="small" label="Status Validasi" variant="outlined" >
+        <TextField value={validation} onChange={handleChangeValidation} InputLabelProps={{ shrink: true }} select className={classes.input2} size="small" label="Status Validasi" variant="outlined" >
             {validationOption.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
                 </MenuItem>
               ))}
         </TextField>
-        <Button className={classes.margin} size="large" variant="contained" color="primary" onClick={downloadFile}>Download</Button>
+        <Button className={classes.margin} size="large" variant="contained" color="primary" onClick={massExport}>Download</Button>
     </form>
   );
 }
 
-const SearchPopUp = () =>{
+const ExportButtonList = (props) =>{
     const [open, setOpen] = useState(false)
     const classes = useStyles()
 
@@ -94,9 +160,11 @@ const SearchPopUp = () =>{
       setOpen(true)
     }
 
+    
+    
     return(
     <div>
-        <Button size='small' startIcon={<GridOnIcon />} color="primary" onClick={showNotification}>Test Export Spreadsheet</Button>
+        <Button size='small' startIcon={<GridOnIcon />} color="primary" onClick={showNotification}>Export Spreadsheet</Button>
         <Popover className={classes.popup} open={open} onClose={handleClose}
         anchorOrigin={{
         vertical: 'top',
@@ -107,7 +175,7 @@ const SearchPopUp = () =>{
         horizontal: 'left',
         }}
         >
-            <CustomizedSelects />
+            <FilterPrompt resource={props.resource} permissions={props.permissions}/>
         </Popover>
     </div>
     )
@@ -124,7 +192,7 @@ export const ExportButtonShow = ({ basePath, data, resource }) => {
     }
 
     const exportData = async () => {
-        const file = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/send/${data.id}`)
+        const file = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/export/${data.id}`)
         const fileInBlob = await file.blob()
         const fileUrl = window.URL.createObjectURL(fileInBlob);
 
@@ -150,36 +218,14 @@ export const ExportButtonShow = ({ basePath, data, resource }) => {
 
 export const ListActions = ({currentSort, className, resource, filters, displayedFilters, filterValues, basePath, selectedIds, onUnselectItems, showFilter, data, ...rest}) => {
     
-    const massExport = async () => {
-        const file = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/exportall`)
-        const fileInBlob = await file.blob()
-        const fileUrl = window.URL.createObjectURL(fileInBlob);
 
-        const fileName = `${resource}.xlsx`
-        let a = document.createElement('a');
-        a.href = fileUrl;
-        a.download = fileName;
-        a.click();
-        window.URL.revokeObjectURL(fileInBlob);
-    }
-    const ExportButton = () => {
-        return(
-            <Button size='small' startIcon={<GridOnIcon />} color="primary" onClick={massExport}>Export Spreadsheet</Button>
-        )
-    }
     const {permissions} = usePermissions();
     return(
         <TopToolbar className={className} {...sanitizeListRestProps(rest)}>
-            {filters && cloneElement(filters, {
-                resource,
-                showFilter,
-                displayedFilters,
-                filterValues,
-                context: 'button',
-            })}
+            
             {permissions === "Dinas Kesehatan"  ? null : <CreateButton basePath={basePath} />}
-            <ExportButton />
-            <SearchPopUp />
+            {/*<ExportButton />*/}
+            <ExportButtonList resource={resource} permissions={permissions}/>
 
         </TopToolbar>
     )

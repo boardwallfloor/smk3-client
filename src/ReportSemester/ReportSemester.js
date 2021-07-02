@@ -1,6 +1,5 @@
 import React from 'react';
 import {Create, Edit, List, Show, Datagrid, ReferenceField, TextField, TextInput, DateInput, DateField, NumberField, NumberInput, BooleanField, ShowButton, EditButton, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, FileField, BooleanInput, FormDataConsumer} from 'react-admin'
-
 import { makeStyles } from '@material-ui/core';
 
 import PageTitle from '../Util/PageTitle';
@@ -8,8 +7,7 @@ import FileUpload from '../Util/FileUpload';
 import QuestionAccordion from '../Util/QuestionAccordion';
 import {ExportButtonShow, ListActions} from '../Util/ActionBar';
 import {NoDeleteToolbar} from '../Util/CustomToolbar'
-import {ReportSemesterListFilter} from '../Util/Filter'
-
+import {ReportListFilter} from '../Util/Filter'
 
 const useStyles = makeStyles({
     headerCell: {
@@ -19,8 +17,17 @@ const useStyles = makeStyles({
 
 export const ReportsemesterList = ({permissions, record, ...props}) => {
     const classes = useStyles();
+
+    const handleFilterPermanent = () => {
+        if(permissions === "Operator"){
+            const userid = localStorage.getItem('userid')
+            return {author:userid}
+            // return {}
+        }
+    }
+    
     return(
-        <List {...props} title="Laporan per Semester" filters={<ReportSemesterListFilter />} actions={<ListActions />}  bulkActionButtons={false}>
+        <List {...props} filter={handleFilterPermanent()} title="Laporan per Semester" filters={<ReportListFilter permissions={permissions} />} actions={<ListActions />}  bulkActionButtons={false}>
             <Datagrid classes={{ headerCell: classes.headerCell }} rowClick={permissions !== 'Kepala Fasyankes' ? "show" : "edit"}>
                 <ReferenceField label="Penulis" source="author" reference="user">
                     <TextField source="username"/>
@@ -28,7 +35,7 @@ export const ReportsemesterList = ({permissions, record, ...props}) => {
                 <ReferenceField label="Fasyankes" source="institution" reference="institution">
                     <TextField source="name"/>
                 </ReferenceField>
-                <DateField source="date" label='Tanggal pembuatan laporan' options={{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }} locales="id-ID" />
+                <DateField source="date" label='Tanggal Laporan' options={{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }} locales="id-ID" />
                 
                 <BooleanField source="validated" label='Status Validasi' />
                 { permissions === 'Operator' || permissions === 'Admin' ?
@@ -58,7 +65,9 @@ export const ReportsemesterEdit = ({permissions, ...props}) => {
             }
             { permissions === 'Operator' ?
             <FormTab label="Tanggal">
+                <QuestionAccordion text="ID Penulis Laporan tidak dapat diubah" question='ID Penulis Laporan'/>
                 <TextInput source='author' disabled/>
+                <QuestionAccordion text="Tanggal Laporan" question='Tanggal Laporan'/>
                 <DateInput source="date" />
             </FormTab>
             : null}
@@ -168,7 +177,7 @@ export const ReportsemesterShow = props => (
     <Show title={<PageTitle action="Show"/>} actions={<ExportButtonShow />} {...props}>
         <TabbedShowLayout>
             <Tab label="Penulis">
-                <DateField source="date" label='Tanggal pembuatan laporan' options={{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }} locales="id-ID" />
+                <DateField source="date" label='Tanggal Laporan' options={{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }} locales="id-ID" />
                 <ReferenceField label="Penulis" source="author" reference="user">
                     <TextField source="username"/>
                 </ReferenceField>
@@ -241,7 +250,7 @@ export const ReportsemesterCreate = props => {
             <FormTab label="Tanggal">
                 <QuestionAccordion text="ID Penulis Laporan tidak dapat diubah" question='ID Penulis Laporan'/>
                 <TextInput source='author' initialValue={userId} disabled/>
-                <QuestionAccordion text="Tanggal pembuatan laporan" question='Tanggal Laporan'/>
+                <QuestionAccordion text="Tanggal Laporan" question='Tanggal Laporan'/>
                 <DateInput source="date" />
             </FormTab>
             <FormTab label="Fasyankes" path="institution">

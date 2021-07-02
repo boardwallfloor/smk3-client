@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) =>({
   popup:{
     display: "flex",
     flexWrap: "wrap",
-    width: "2000px"
+    // width: "2000px"
   },
   margin: {
     margin: theme.spacing(1),
@@ -47,13 +47,19 @@ const useStyles = makeStyles((theme) =>({
 
 const FilterPrompt = (props) => {
     const [name, setName] = useState("")
-    const [date, setDate] = useState("")
-    const [validation, setValidation] = useState(true)
+    const [dateStart, setDateStart] = useState("")
+    const [dateEnd, setDateEnd] = useState("")
+    const [validation, setValidation] = useState("")
     const [institutionOption, setInstitutionOption] = useState([])
-    const [institution, setInstitution] = useState({})
+    const [institution, setInstitution] = useState()
+    const username = localStorage.getItem('username')
     const classes = useStyles()
 
     const validationOption = [
+        {
+            value:'',
+            label:''
+        },
         {
             value:true,
             label: 'Tervalidasi'
@@ -65,12 +71,12 @@ const FilterPrompt = (props) => {
     ]
 
     const massExport = async () => {
-        const query = await constructQuery()
+        const query = await constructQuery(props.permissions)
         const file = await fetch(query)
         const fileInBlob = await file.blob()
         const fileUrl = window.URL.createObjectURL(fileInBlob);
-
-        const fileName = `${props.resource}.xlsx`
+        const currentDate = new Date()
+        const fileName = `${props.resource} - ${currentDate.getFullYear()}.${currentDate.getMonth()}.${currentDate.getDate()}.xlsx`
         let a = document.createElement('a');
         a.href = fileUrl;
         a.download = fileName;
@@ -78,13 +84,16 @@ const FilterPrompt = (props) => {
         window.URL.revokeObjectURL(fileInBlob);
     }
 
-    const constructQuery = () =>{
+    const constructQuery = (permissions) =>{
         let filter = {}
         if(name !== ''){
             filter.username = name
         }
-        if(date !== ''){
-            filter.date = date
+        if(permissions === "Operator"){
+            filter.username = username
+        }
+        if(dateStart !== ''){
+            filter.date = [dateStart,dateEnd]
         }
         if(validation !== ''){
             filter.validated = validation
@@ -112,8 +121,12 @@ const FilterPrompt = (props) => {
         setName(event.target.value)
     }
 
-    const handleChangeDate = (event) => {
-        setDate(event.target.value)
+    const handleChangeDateStart = (event) => {
+        setDateStart(event.target.value)
+    }
+
+    const handleChangeDateEnd = (event) => {
+        setDateEnd(event.target.value)
     }
 
     const handleChangeValidation = (event) => {
@@ -125,7 +138,9 @@ const FilterPrompt = (props) => {
   
   return (
     <form  noValidate className={classes.root}  autoComplete="off">
+        {props.permissions !== "Operator" ? 
         <TextField value={name} onChange={handleChangeName}  className={classes.input} size="small" label="Penulis" variant="outlined" />
+         : null}
         {props.permissions === "Dinas Kesehatan" ?
             <TextField select value={institution} onChange={handleChangeInstitution} className={classes.input1} size="small" label="Institution" variant="outlined" >
                 {institutionOption.map((option) => (
@@ -135,14 +150,17 @@ const FilterPrompt = (props) => {
                   ))}
             </TextField>
         : null}
-        <TextField value={date} onChange={handleChangeDate}  className={classes.input} size="small" type="date" label="Tanggal" variant="outlined" InputLabelProps={{ shrink: true }}/>
-        <TextField value={validation} onChange={handleChangeValidation} InputLabelProps={{ shrink: true }} select className={classes.input2} size="small" label="Status Validasi" variant="outlined" >
+        <TextField value={dateStart} onChange={handleChangeDateStart}  className={classes.input} size="small" type="date" label="Tanggal Awal" variant="outlined" InputLabelProps={{ shrink: true }}/>
+        {dateStart !== "" ? <TextField value={dateEnd} onChange={handleChangeDateEnd}  className={classes.input} size="small" type="date" label="Tanggal Akhir" variant="outlined" InputLabelProps={{ shrink: true }}/>
+        : null}
+        {props.resource !== 'notif' ? <TextField value={validation} onChange={handleChangeValidation} InputLabelProps={{ shrink: true }} select className={classes.input2} size="small" label="Status Validasi" variant="outlined" >
             {validationOption.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
                 </MenuItem>
               ))}
         </TextField>
+        : null}
         <Button className={classes.margin} size="large" variant="contained" color="primary" onClick={massExport}>Download</Button>
     </form>
   );
@@ -183,7 +201,14 @@ const ExportButtonList = (props) =>{
 //Test
 
 export const ExportButtonShow = ({ basePath, data, resource }) => {
-    
+    const [access, setAccess] = useState(true)
+    const {permissions} = usePermissions();
+
+    useEffect(() => {
+
+        const getAccessLevel = handleAccess(permissions, resource)
+        setAccess(getAccessLevel)
+    },[permissions, resource])
 
     const getData = () => {
         const dateReformatted = moment(data.date).format("L")
@@ -207,7 +232,7 @@ export const ExportButtonShow = ({ basePath, data, resource }) => {
 
 	return(
     <TopToolbar>
-        <EditButton basePath={basePath} record={data} />
+        {access === true ? <EditButton basePath={basePath} record={data} /> : null}
         <Button size='small' startIcon={<GridOnIcon />} color="primary" onClick={exportData}>Export Spreadsheet</Button>
         
     </TopToolbar>
@@ -215,16 +240,33 @@ export const ExportButtonShow = ({ basePath, data, resource }) => {
 
 }
 
+const handleAccess = (permissions, resource) => {
+    if(permissions === 'Dinas Keseatan'){
+        return false
+    }
+    if(permissions === 'Operator' && resource === 'notif'){
+        return false
+    }
+    return true
+    }
 
 export const ListActions = ({currentSort, className, resource, filters, displayedFilters, filterValues, basePath, selectedIds, onUnselectItems, showFilter, data, ...rest}) => {
     
-
+    const [access, setAccess] = useState(true)
     const {permissions} = usePermissions();
+
+    useEffect(() => {
+
+        const getAccessLevel = handleAccess(permissions, resource)
+        setAccess(getAccessLevel)
+    },[permissions,resource])
+
     return(
         <TopToolbar className={className} {...sanitizeListRestProps(rest)}>
             
-            {permissions === "Dinas Kesehatan"  ? null : <CreateButton basePath={basePath} />}
+            
             {/*<ExportButton />*/}
+            {access === true ? <CreateButton basePath={basePath} /> : null}
             <ExportButtonList resource={resource} permissions={permissions}/>
 
         </TopToolbar>
@@ -235,3 +277,4 @@ ListActions.defaultProps = {
     selectedIds: [],
     onUnselectItems: () => null,
 };
+

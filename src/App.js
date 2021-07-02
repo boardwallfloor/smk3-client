@@ -36,8 +36,8 @@ const App = () => (
 
         <Resource name="notif" icon={NotificationsActiveIcon} 
         list={NotifList} 
-        edit={permissions !== 'Dinas Kesehatan' || permissions === 'Kepala Fasyankes' ? NotifEdit : null} 
-        create={permissions !== 'Dinas Kesehatan' || permissions === 'Kepala Fasyankes' ? NotifCreate : null} 
+        edit={permissions === 'Admin' || permissions === 'Kepala Fasyankes' ? NotifCreate : null} 
+        create={permissions === 'Admin' || permissions === 'Kepala Fasyankes' ? NotifCreate : null} 
         show={NotifShow} 
         options={{ label:'Reminder' }} />,
 

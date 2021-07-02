@@ -1,15 +1,34 @@
 import React from 'react';
 import {Create, Edit, List, Show, DateField, ReferenceField, Datagrid, ShowButton, SimpleShowLayout, SimpleForm, TextField, EditButton, DeleteButton, ReferenceInput, SelectInput, DateInput, SelectField, useNotify} from 'react-admin'
 import { usePermissions } from 'react-admin';
-import {ExportButtonShow, ListActions} from '../Util/ActionBar';
+import { makeStyles } from '@material-ui/core';
+
 import PageTitle from '../Util/PageTitle';
+import {ExportButtonShow, ListActions} from '../Util/ActionBar';
 import {NoDeleteToolbar} from '../Util/CustomToolbar'
+import {NotifListFilter} from '../Util/Filter'
+
+const useStyles = makeStyles({
+    headerCell: {
+        fontWeight: 'bold'
+    },
+});
 
 export const NotifList = props => {
     const {permissions} = usePermissions();
+    const classes = useStyles();
+
+    const handleFilterPermanent = () => {
+        if(permissions === "Operator"){
+            const userid = localStorage.getItem('userid')
+            return {remindee:userid}
+            // return {}
+        }
+    }
+
     return(
-        <List title="Reminder" {...props} actions={<ListActions />} bulkActionButtons={false}>
-            <Datagrid rowClick="show">
+        <List title="Reminder" filter={handleFilterPermanent()} filters={<NotifListFilter />} {...props} actions={<ListActions />} bulkActionButtons={false}>
+            <Datagrid classes={{ headerCell: classes.headerCell }} rowClick="show">
                 <ReferenceField label="Operator Ditugaskan" source="remindee" reference="user">
                     <TextField source="first_name" />
                 </ReferenceField>

@@ -1,60 +1,83 @@
 import React from 'react';
 import {Create, Edit, List, Show, Datagrid, BooleanField, BooleanInput, DateInput, DateField, ReferenceField, TextField, TextInput, ShowButton, NumberField, NumberInput, EditButton, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, SelectInput, ReferenceInput, FileField , FormDataConsumer} from 'react-admin'
+import { makeStyles } from '@material-ui/core';
 
 import PageTitle from '../Util/PageTitle';  
-import {ExportButtonShow, ListActions} from '../Util/ActionBar';
 import FileUpload from '../Util/FileUpload';
 import QuestionAccordion from '../Util/QuestionAccordion';
+import {ExportButtonShow, ListActions} from '../Util/ActionBar';
 import {NoDeleteToolbar} from '../Util/CustomToolbar'
+import {ReportListFilter} from '../Util/Filter'
 
-export const ReportyearList = ({permissions, record, ...props}) => (
-    <List title="Laporan per Tahun" actions={<ListActions />} {...props} bulkActionButtons={false}>
-        <Datagrid rowClick={permissions !== 'Kepala Fasyankes' ? "show" : "edit"}>
-            <ReferenceField label="Penulis" source="author" reference="user" emptyText="test">
-                <TextField source="username" />
-            </ReferenceField>
-            <ReferenceField label="Fasyankes" source="institution" reference="institution">
-                <TextField source="name"/>
-            </ReferenceField>
-            <NumberField source="totalSDM" label='Total SDM' />
-            <DateField source="year" options={{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }} locales="id-ID"/>
-            <BooleanField source="validated" label='Status Validasi' />
-            { permissions === 'Operator' || permissions === 'Admin' ?
-            <EditButton />
-            :
-            <ShowButton />
-            }
-            {permissions === 'Admin' ?
-            <DeleteButton />
-            :
-            null
-            }
-            
-        </Datagrid>
-    </List>
-);
+const useStyles = makeStyles({
+    headerCell: {
+        fontWeight: 'bold'
+    },
+});
+
+
+export const ReportyearList = ({permissions, record, ...props}) => {
+    const classes = useStyles();
+
+    const handleFilterPermanent = () => {
+        if(permissions === "Operator"){
+            const userid = localStorage.getItem('userid')
+            return {author:userid}
+            // return {}
+        }
+    }
+
+    return(
+        <List title="Laporan per Tahun" filter={handleFilterPermanent()} filters={<ReportListFilter />} actions={<ListActions />} {...props} bulkActionButtons={false}>
+            <Datagrid classes={{ headerCell: classes.headerCell }} rowClick={permissions !== 'Kepala Fasyankes' ? "show" : "edit"}>
+                <ReferenceField label="Penulis" source="author" reference="user" emptyText="test">
+                    <TextField source="username" />
+                </ReferenceField>
+                <ReferenceField label="Fasyankes" source="institution" reference="institution">
+                    <TextField source="name"/>
+                </ReferenceField>
+                <NumberField source="totalSDM" label='Total SDM' />
+                <DateField label="Tanggal Laporan" source="year" options={{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }} locales="id-ID"/>
+                <BooleanField source="validated" label='Status Validasi' />
+                { permissions === 'Operator' || permissions === 'Admin' ?
+                <EditButton />
+                :
+                <ShowButton />
+                }
+                {permissions === 'Admin' ?
+                <DeleteButton />
+                :
+                null
+                }
+                
+            </Datagrid>
+        </List>
+    )
+}
 
 export const ReportyearEdit = ({permissions, ...props}) => (
     <Edit title={<PageTitle action="Editing"/>} {...props}>
         <TabbedForm toolbar={<NoDeleteToolbar/>}>
             { permissions ==='Kepala Fasyankes' && 
             <FormTab label="Validasi">
-            <QuestionAccordion text="Aktifkan apabila laporan telah sesuai standar" question="Validasi Laporan" />
+                <QuestionAccordion text="Aktifkan apabila laporan telah sesuai standar" question="Validasi Laporan" />
                 <BooleanInput source='validated' label='Status Laporan'/>
             </FormTab>
             }
             { permissions === 'Operator' ?
             <FormTab label="Tanggal">
+                <QuestionAccordion text="ID Penulis Laporan tidak dapat diubah" question='ID Penulis Laporan'/>
                 <TextInput source='author' disabled/>
+                <QuestionAccordion text="Jumlah Sumber Daya Manusia yang berada pada Fasyankes" question='Jumlah Sumber Daya Manusia'/>
                 <NumberInput source="totalSDM" label='Jumlah Sumber Daya Manusia'/>
-                <DateInput source="year" />
+                <QuestionAccordion text="Tanggal Laporan" question='Tanggal Laporan'/>
+                <DateInput source="year" label="Tanggal Laporan"/>
             </FormTab>
             : null}
             { permissions === 'Operator' ?
             <FormTab label="Fasyankes" path="institution">
-                <ReferenceInput label="Fasyankes" source="institution" reference="institution">
-                    <SelectInput source="name"/>
-                </ReferenceInput>
+                <QuestionAccordion text="ID Fasyankes hanya dapat diubah oleh administrator" question='ID Fasyankes Pelapor'/>
+                <TextInput source='institution' disabled/>
             </FormTab>
             : null}
             { permissions === 'Operator' ? 
@@ -146,7 +169,7 @@ export const ReportyearShow = props => (
                     <TextField source="username"/>
                 </ReferenceField>
                 <NumberField source="totalSDM" label="Jumlah SDM" />
-                <DateField source="year" label="Tanggal Penulisan"/>
+                <DateField label="Tanggal Laporan" source="year" options={{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }} locales="id-ID"/>
             </Tab>
             <Tab label="Fasyankes" path="institution">
                 <ReferenceField label="Fasyankes" source="institution" reference="institution">
@@ -266,9 +289,12 @@ export const ReportyearCreate = props => {
     <Create title={<PageTitle action="Creating"/>} {...props}>
         <TabbedForm redirect="show">
             <FormTab label="Tanggal">
+                <QuestionAccordion text="ID Penulis Laporan tidak dapat diubah" question='ID Penulis Laporan'/>
                 <TextInput source='author' initialValue={userId} disabled/>
+                <QuestionAccordion text="Jumlah Sumber Daya Manusia yang berada pada Fasyankes" question='Jumlah Sumber Daya Manusia'/>
                 <NumberInput source="totalSDM" label='Jumlah Sumber Daya Manusia'/>
-                <DateInput source="year" />
+                <QuestionAccordion text="Tanggal Laporan" question='Tanggal Laporan'/>
+                <DateInput source="year" label="Tanggal Laporan"/>
             </FormTab>
             <FormTab label="Fasyankes" path="institution">
                 <QuestionAccordion text="ID Fasyankes hanya dapat diubah oleh administrator" question='ID Fasyankes Pelapor'/>

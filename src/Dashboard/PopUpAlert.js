@@ -82,12 +82,17 @@ export const NotificationBadge = () => {
     const id = localStorage.getItem('userid')
     // console.log(id +" "+ institution)
     const fetchData = async () => {
- 
+      const token = localStorage.getItem('jwt');
+      let myHeaders = new Headers()
+      myHeaders.append('Authorization', `Bearer ${token}`);
+      const option = {
+          method: 'GET',
+          headers: myHeaders,
+      }
       if(permissions === 'Kepala Fasyankes'){
         const uri = `filter={"institution":"${institution}","validated":"false"}&select=validated`
-        const reportYear = await fetch(`${process.env.REACT_APP_API_LINK}/reportyear?${uri}+year&sort=["year","ASC"]`)
-        const reportSemester = await fetch(`${process.env.REACT_APP_API_LINK}/reportsemester?${uri}+date&sort=["date","ASC"]`)
-        // console.log(`${process.env.REACT_APP_API_LINK}/reportsemester?${uri}`)
+        const reportYear = await fetch(`${process.env.REACT_APP_API_LINK}/reportyear?${uri}+year&sort=["year","ASC"]`,option)
+        const reportSemester = await fetch(`${process.env.REACT_APP_API_LINK}/reportsemester?${uri}+date&sort=["date","ASC"]`,option)
         
         const reportYearJson = await reportYear.json()
         const reportSemesterJson = await reportSemester.json()
@@ -104,7 +109,7 @@ export const NotificationBadge = () => {
       }
       if(permissions === 'Operator'){
         const uri =  `filter={"remindee":"${id}", "notification_status":"Belum Dikirim"}`
-        const notif = await fetch(`${process.env.REACT_APP_API_LINK}/notif?${uri}`)
+        const notif = await fetch(`${process.env.REACT_APP_API_LINK}/notif?${uri}`,option)
         const notifJson = await notif.json()
         const notifCount = notifJson.length
         setMessage( "Anda belum mengirim laporan anda. Mohon cek email anda. Laporan yang belum anda kirim adalah :")

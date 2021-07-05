@@ -94,9 +94,15 @@ export const ReportYearCardUser = (props) => {
 
     useEffect(() => {
         const resource = "reportyear"
-     
+	 	const token = localStorage.getItem('jwt');
+        let myHeaders = new Headers()
+        myHeaders.append('Authorization', `Bearer ${token}`);
+        const option = {
+            method: 'GET',
+            headers: myHeaders,
+        }
         const fetchData = async () => {
-            const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/db?${props.query}`)
+            const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/db?${props.query}`,option)
             const json = await result.json();
             setData(json.data);
             setCount(json.count)
@@ -114,9 +120,15 @@ export const ReportSemesterCardUser = (props) => {
 
     useEffect(() => {
         const resource = "reportsemester"
-     
+		const token = localStorage.getItem('jwt');
+        let myHeaders = new Headers()
+        myHeaders.append('Authorization', `Bearer ${token}`);
+        const option = {
+            method: 'GET',
+            headers: myHeaders,
+        }
         const fetchData = async () => {
-            const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/db?${props.query}`)
+            const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/db?${props.query}`,option)
             const json = await result.json();
             setData(json.data);
             setCount(json.count)

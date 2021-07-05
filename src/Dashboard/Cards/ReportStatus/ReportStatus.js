@@ -61,12 +61,19 @@ export const ReportStatusCard = () => {
         const resource = "notif";
         const fetchData = async () => {
         	
-        	const id = localStorage.getItem('userid')
-          const query = `filter={"remindee":"${id}", "notification_status":"Belum Dikirim"}`
-          const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/db?${query}`)
-          const json = await result.json();
-          setData(json.data);
-          setCount(json.count)
+    	const id = localStorage.getItem('userid')
+		const query = `filter={"remindee":"${id}", "notification_status":"Belum Dikirim"}`
+	 	const token = localStorage.getItem('jwt');
+        let myHeaders = new Headers()
+        myHeaders.append('Authorization', `Bearer ${token}`);
+        const option = {
+            method: 'GET',
+            headers: myHeaders,
+        }
+		const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/db?${query}`,option)
+		const json = await result.json();
+		setData(json.data);
+		setCount(json.count)
       }
     	fetchData();
   	}, []);

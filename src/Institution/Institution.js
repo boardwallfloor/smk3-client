@@ -26,10 +26,10 @@ export const InstitutionList = ({permissions, ...props}) => (
 export const InstitutionShow = props => (
     <Show actions={<ExportButtonShow />} title={<PageTitle action="Show"/>}  {...props}>
         <SimpleShowLayout>
-            <TextField source="name" />
-            <TextField source="address" />
-            <TextField source="city" />
-            <TextField source="province" />
+            <TextField source="name" label="Nama Fasyankes"/>
+            <TextField source="address" label="Alamat"/>
+            <TextField source="city" label="Kabupaten/Kota" />
+            <TextField source="province" label="Provinsi"/>
         </SimpleShowLayout>
     </Show>
 );
@@ -37,20 +37,20 @@ export const InstitutionShow = props => (
 export const InstitutionEdit = props => (
     <Edit title={<PageTitle action="Edit"/>} {...props}>
         <SimpleForm>
-            <TextInput source="name" />
-            <TextInput source="address" />
-            <TextInput source="city" />
-            <TextInput source="province" />
+            <TextInput source="name" label="Nama Fasyankes" />
+            <TextInput source="address" label="Alamat"/>
+            <TextInput source="city" label="Kabupaten/Kota" />
+            <TextInput source="province" label="Provinsi" />
         </SimpleForm>
     </Edit>
 );
 export const InstitutionCreate = props => (
     <Create title={<PageTitle action="Create"/>} {...props}>
         <SimpleForm>
-            <TextInput source="name" />
-            <TextInput source="address" />
-            <TextInput source="city" />
-            <TextInput source="province" />
+            <TextInput source="name" label="Nama Fasyankes" />
+            <TextInput source="address" label="Alamat"/>
+            <TextInput source="city" label="Kabupaten/Kota" />
+            <TextInput source="province" label="Provinsi" />
         </SimpleForm>
     </Create>
 );

@@ -13,8 +13,8 @@ export const UserList = props => (
         <Datagrid rowClick="show">
             <TextField source="full_name" label="Nama"/>
             <TextField source="privilege" label="Jenis User"/>
-            <EmailField source="email" label="Email"/>
-            <ReferenceField label="Fasyankes" source="user_institution" reference="institution">
+            <TextField source="email" label="Email"/>
+            <ReferenceField link={false} label="Fasyankes" source="user_institution" reference="institution">
                 <TextField source="name"/>
             </ReferenceField>
             <EditButton />
@@ -87,7 +87,7 @@ export const UserShow = props => {
             <TextField source="full_name" />
             <EmailField source="email" />
             <TextField source="phonenumber" />
-            <ReferenceField label="Fasyankes" source="user_institution" reference="institution">
+            <ReferenceField link={false} label="Fasyankes" source="user_institution" reference="institution">
                     <TextField source="name"/>
             </ReferenceField>
             <TextField source="job_title" />

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Create, Edit, List, Show, Datagrid, ReferenceField, TextField, TextInput, DateInput, DateField, NumberField, NumberInput, BooleanField, ShowButton, EditButton, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, FileField, BooleanInput, FormDataConsumer} from 'react-admin'
+import {Create, Edit, List, Show, Datagrid, TextField, ReferenceField, TextInput, DateInput, DateField, NumberField, NumberInput, FunctionField, ShowButton, EditButton, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, FileField, BooleanInput, FormDataConsumer} from 'react-admin'
 import { makeStyles } from '@material-ui/core';
 
 import PageTitle from '../Util/PageTitle';
@@ -11,7 +11,8 @@ import {ReportListFilter} from '../Util/Filter'
 
 const useStyles = makeStyles({
     headerCell: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        borderBottom: 'solid black'
     },
 });
 
@@ -24,20 +25,31 @@ export const ReportsemesterList = ({permissions, record, ...props}) => {
             return {author:userid}
             // return {}
         }
+        if(permissions === 'Kepala Fasyankes'){
+            const institution = localStorage.getItem('institution')
+            return {institution:institution}
+        }
+    }
+
+    const renderValidation = (record) => {
+        if(record.validated === true){
+            return 'Tervalidasi'
+        }else{
+            return 'Belum Tervalidasi'
+        }
     }
     
     return(
         <List {...props} filter={handleFilterPermanent()} title="Laporan per Semester" filters={<ReportListFilter permissions={permissions} />} actions={<ListActions />}  bulkActionButtons={false}>
             <Datagrid classes={{ headerCell: classes.headerCell }} rowClick={permissions !== 'Kepala Fasyankes' ? "show" : "edit"}>
-                <ReferenceField label="Penulis" source="author" reference="user">
+                <ReferenceField link={false}  label="Penulis" source="author" reference="user">
                     <TextField source="username"/>
                 </ReferenceField>
-                <ReferenceField label="Fasyankes" source="institution" reference="institution">
+                <ReferenceField link={false} label="Fasyankes" source="institution" reference="institution">
                     <TextField source="name"/>
                 </ReferenceField>
-                <DateField source="date" label='Tanggal Laporan' options={{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }} locales="id-ID" />
-                
-                <BooleanField source="validated" label='Status Validasi' />
+                <DateField source="date" label='Tanggal Laporan' options={{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }} locales="id-ID" />                
+                <FunctionField sortBy='validated' label="Status Validasi" render={record => renderValidation(record)} />
                 { permissions === 'Operator' || permissions === 'Admin' ?
                 <EditButton />
                 :
@@ -61,7 +73,7 @@ export const ReportsemesterEdit = ({permissions, ...props}) => {
             <FormTab label="Validasi">
             <QuestionAccordion text="Aktifkan apabila laporan telah sesuai standar" question="Validasi Laporan" />
                 <BooleanInput source='validated' label='Status Laporan'/>
-            </FormTab>
+             </FormTab>
             }
             { permissions === 'Operator' ?
             <FormTab label="Tanggal">
@@ -178,12 +190,12 @@ export const ReportsemesterShow = props => (
         <TabbedShowLayout>
             <Tab label="Penulis">
                 <DateField source="date" label='Tanggal Laporan' options={{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }} locales="id-ID" />
-                <ReferenceField label="Penulis" source="author" reference="user">
+                <ReferenceField link={false} label="Penulis" source="author" reference="user">
                     <TextField source="username"/>
                 </ReferenceField>
             </Tab>
             <Tab label="Fasyankes" path="institution">
-                <ReferenceField label="Fasyankes" source="institution" reference="institution">
+                <ReferenceField link={false} label="Fasyankes" source="institution" reference="institution">
                     <TextField source="name"/>
                 </ReferenceField>
             </Tab>

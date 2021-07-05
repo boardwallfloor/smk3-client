@@ -1,5 +1,5 @@
 import React from 'react';
-import {Create, Edit, List, Show, Datagrid, BooleanField, BooleanInput, DateInput, DateField, ReferenceField, TextField, TextInput, ShowButton, NumberField, NumberInput, EditButton, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, SelectInput, ReferenceInput, FileField , FormDataConsumer} from 'react-admin'
+import {Create, Edit, List, Show, Datagrid, BooleanField, BooleanInput, DateInput, DateField, ReferenceField, TextField, TextInput, ShowButton, NumberField, NumberInput, EditButton, FunctionField, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, FileField , FormDataConsumer} from 'react-admin'
 import { makeStyles } from '@material-ui/core';
 
 import PageTitle from '../Util/PageTitle';  
@@ -11,7 +11,8 @@ import {ReportListFilter} from '../Util/Filter'
 
 const useStyles = makeStyles({
     headerCell: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        borderBottom: 'solid black'
     },
 });
 
@@ -27,18 +28,26 @@ export const ReportyearList = ({permissions, record, ...props}) => {
         }
     }
 
+    const renderValidation = (record) => {
+        if(record.validated === true){
+            return 'Tervalidasi'
+        }else{
+            return 'Belum Tervalidasi'
+        }
+    }
+
     return(
         <List title="Laporan per Tahun" filter={handleFilterPermanent()} filters={<ReportListFilter />} actions={<ListActions />} {...props} bulkActionButtons={false}>
             <Datagrid classes={{ headerCell: classes.headerCell }} rowClick={permissions !== 'Kepala Fasyankes' ? "show" : "edit"}>
-                <ReferenceField label="Penulis" source="author" reference="user" emptyText="test">
+                <ReferenceField link={false} label="Penulis" source="author" reference="user" emptyText="test">
                     <TextField source="username" />
                 </ReferenceField>
-                <ReferenceField label="Fasyankes" source="institution" reference="institution">
+                <ReferenceField link={false} label="Fasyankes" source="institution" reference="institution">
                     <TextField source="name"/>
                 </ReferenceField>
                 <NumberField source="totalSDM" label='Total SDM' />
                 <DateField label="Tanggal Laporan" source="year" options={{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }} locales="id-ID"/>
-                <BooleanField source="validated" label='Status Validasi' />
+                <FunctionField sortBy='validated' label="Status Validasi" render={record => renderValidation(record)} />
                 { permissions === 'Operator' || permissions === 'Admin' ?
                 <EditButton />
                 :
@@ -165,14 +174,14 @@ export const ReportyearShow = props => (
     <Show title={<PageTitle action="Show"/>} actions={<ExportButtonShow />} {...props}>
     <TabbedShowLayout>
             <Tab label="Penulis">
-                <ReferenceField label="Penulis" source="author" reference="user">
+                <ReferenceField link={false} label="Penulis" source="author" reference="user">
                     <TextField source="username"/>
                 </ReferenceField>
                 <NumberField source="totalSDM" label="Jumlah SDM" />
                 <DateField label="Tanggal Laporan" source="year" options={{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }} locales="id-ID"/>
             </Tab>
             <Tab label="Fasyankes" path="institution">
-                <ReferenceField label="Fasyankes" source="institution" reference="institution">
+                <ReferenceField link={false} label="Fasyankes" source="institution" reference="institution">
                     <TextField source="name"/>
                 </ReferenceField>
             </Tab>

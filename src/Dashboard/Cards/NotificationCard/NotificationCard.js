@@ -60,7 +60,14 @@ export const NotificationCard = () => {
     useEffect(() => {
         const resource = "notif"
         const fetchData = async () => {
-            const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/db`)
+        	const token = localStorage.getItem('jwt');
+	        let myHeaders = new Headers()
+	        myHeaders.append('Authorization', `Bearer ${token}`);
+	        const option = {
+	            method: 'GET',
+	            headers: myHeaders,
+	        }
+            const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/db`,option)
             const json = await result.json();
             setData(json.data);
             setCount(json.count)

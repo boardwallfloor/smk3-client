@@ -8,11 +8,17 @@ import CardContent from '@material-ui/core/CardContent';
 
 export const ReportChart = (props) => {
   const [report, setReport] = useState([])
-  // console.log(report)
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await fetch(`${process.env.REACT_APP_API_LINK}/chart`)
+      const token = localStorage.getItem('jwt');
+        let myHeaders = new Headers()
+        myHeaders.append('Authorization', `Bearer ${token}`);
+        const option = {
+            method: 'GET',
+            headers: myHeaders,
+        }
+      const result = await fetch(`${process.env.REACT_APP_API_LINK}/chart`,option)
       const json = await result.json();
       setReport(json.data);
       // console.log(report)

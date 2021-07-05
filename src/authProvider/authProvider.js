@@ -41,7 +41,15 @@ const authProvider = {
         return Promise.resolve()
 
     },
-    checkAuth: () => {
+    checkAuth: async() => {
+        // await httpClient(`${process.env.REACT_APP_API_LINK}/auth/checkAuth`,{
+        //         method: 'POST',
+        //         // body: JSON.stringify({ username, password }),
+        //         headers: new Headers({
+        //          'Content-Type': 'application/json',
+        //          'Authorization' : `${localStorage.getItem('jwt')}`
+        //      }),
+        //     })
         return localStorage.getItem('jwt') ? Promise.resolve() : Promise.reject();
             },
     checkError: () => {

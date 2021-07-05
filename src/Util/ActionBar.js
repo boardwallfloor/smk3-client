@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) =>({
     marginRight: theme.spacing(1),
     marginLeft: theme.spacing(1),
     marginTop: theme.spacing(1),
+    width : "200px"
   },
   input1: {
     marginRight: theme.spacing(1),
@@ -47,6 +48,7 @@ const useStyles = makeStyles((theme) =>({
 
 const FilterPrompt = (props) => {
     const [name, setName] = useState("")
+    const [nameOption, setNameOption] = useState([])
     const [dateStart, setDateStart] = useState("")
     const [dateEnd, setDateEnd] = useState("")
     const [validation, setValidation] = useState("")
@@ -58,7 +60,7 @@ const FilterPrompt = (props) => {
     const validationOption = [
         {
             value:'',
-            label:''
+            label: null
         },
         {
             value:true,
@@ -111,11 +113,24 @@ const FilterPrompt = (props) => {
             const institutionData = await fetch(`${process.env.REACT_APP_API_LINK}/institution?select=_id+name`)
             const institutionDataJson = await institutionData.json()
             setInstitutionOption(institutionDataJson)
-
-
         }
+
+        const fetchUser = async() => {
+            const institution = localStorage.getItem('institution')
+            let limitInstitution = ''
+            if(props.permissions === 'Kepala Fasyankes'){
+                limitInstitution = `{"user_institution" : "${institution}", "privilege": "Operator"}`
+            }
+            console.log(limitInstitution)
+            console.log(`${process.env.REACT_APP_API_LINK}/user?select=_id+username&filter=${limitInstitution}`)
+            const userData = await fetch(`${process.env.REACT_APP_API_LINK}/user?select=_id+username&filter=${limitInstitution}`)
+            const userDataJson = await userData.json()
+            setNameOption(userDataJson)
+        }
+        fetchUser()
         fetchInstitution()
-    },[institution])
+
+    },[institution, props.permissions])
 
     const handleChangeName = (event) => {
         setName(event.target.value)
@@ -138,9 +153,17 @@ const FilterPrompt = (props) => {
   
   return (
     <form  noValidate className={classes.root}  autoComplete="off">
+        
         {props.permissions !== "Operator" ? 
-        <TextField value={name} onChange={handleChangeName}  className={classes.input} size="small" label="Penulis" variant="outlined" />
+        <TextField select value={name} onChange={handleChangeName}  className={classes.input} size="small" label="Penulis" variant="outlined" >
+            {nameOption.map((option) => (
+                <MenuItem key={option._id} value={option._id}>
+                  {option.username}
+                </MenuItem>
+              ))}
+        </TextField>
          : null}
+
         {props.permissions === "Dinas Kesehatan" ?
             <TextField select value={institution} onChange={handleChangeInstitution} className={classes.input1} size="small" label="Institution" variant="outlined" >
                 {institutionOption.map((option) => (
@@ -150,9 +173,12 @@ const FilterPrompt = (props) => {
                   ))}
             </TextField>
         : null}
+
         <TextField value={dateStart} onChange={handleChangeDateStart}  className={classes.input} size="small" type="date" label="Tanggal Awal" variant="outlined" InputLabelProps={{ shrink: true }}/>
+
         {dateStart !== "" ? <TextField value={dateEnd} onChange={handleChangeDateEnd}  className={classes.input} size="small" type="date" label="Tanggal Akhir" variant="outlined" InputLabelProps={{ shrink: true }}/>
         : null}
+
         {props.resource !== 'notif' ? <TextField value={validation} onChange={handleChangeValidation} InputLabelProps={{ shrink: true }} select className={classes.input2} size="small" label="Status Validasi" variant="outlined" >
             {validationOption.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
@@ -161,6 +187,7 @@ const FilterPrompt = (props) => {
               ))}
         </TextField>
         : null}
+
         <Button className={classes.margin} size="large" variant="contained" color="primary" onClick={massExport}>Download</Button>
     </form>
   );
@@ -241,7 +268,11 @@ export const ExportButtonShow = ({ basePath, data, resource }) => {
 }
 
 const handleAccess = (permissions, resource) => {
-    if(permissions === 'Dinas Keseatan'){
+    // console.log(permissions)
+    if(permissions === 'Dinas Kesehatan'){
+        return false
+    }
+    if(permissions === 'Kepala Fasyankes' && resource !== 'notif'){
         return false
     }
     if(permissions === 'Operator' && resource === 'notif'){
@@ -259,6 +290,7 @@ export const ListActions = ({currentSort, className, resource, filters, displaye
 
         const getAccessLevel = handleAccess(permissions, resource)
         setAccess(getAccessLevel)
+
     },[permissions,resource])
 
     return(

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Image from '../../asset/K3/k3_sm.png';
+import Image2 from '../../asset/K3/k3_logo.png';
 
 export const Logo = () => (
-	<img src={Image} alt='React Admin 💙' style={{height: 32}}/>
+	<img src={Image2} alt='React Admin 💙' style={{height: 32}}/>
 	)

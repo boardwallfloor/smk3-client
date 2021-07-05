@@ -69,13 +69,19 @@ export default {
             filter: JSON.stringify(params.filter),
         };
 
+        // console.log(query.sort)
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
-        // console.log(url)
+        const token = localStorage.getItem('jwt');
+        let myHeaders = new Headers()
+        myHeaders.append('Authorization', `Bearer ${token}`);
+        const option = {
+            method: 'GET',
+            headers: myHeaders,
+        }
 
+        return httpClient(url, option).then(({ headers, json }) => {
 
-        return httpClient(url).then(({ headers, json }) => {
-
-            // console.log('headers')
+            // console.log(headers)
             if (!headers.has('content-range')) {
                 throw new Error(
                     'The Content-Range header is missing in the HTTP Response. The simple REST data provider expects responses for lists of resources to contain this header with the total number of results to build the pagination. If you are using CORS, did you declare Content-Range in the Access-Control-Expose-Headers header?'
@@ -104,8 +110,15 @@ export default {
         if(resource === 'profile'){
             // console.log("Get One Profile")
             const userId = localStorage.getItem('userid')
+             const token = localStorage.getItem('jwt');
+            let myHeaders = new Headers()
+            myHeaders.append('Authorization', `Bearer ${token}`);
+            const option = {
+                method: 'GET',
+                headers: myHeaders,
+            }
             // console.log(userId)
-             return httpClient(`${apiUrl}/user/${userId}`).then(({ json }) => ({
+             return httpClient(`${apiUrl}/user/${userId}`,option).then(({ json }) => ({
             data:  { ...json, id: json._id },
         }))
             // profileHandler(resource, params);
@@ -124,8 +137,15 @@ export default {
         // console.log(query)
         // console.log("Get Many")
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
+        const token = localStorage.getItem('jwt');
+        let myHeaders = new Headers()
+        myHeaders.append('Authorization', `Bearer ${token}`);
+        const option = {
+            method: 'GET',
+            headers: myHeaders,
+        }
         // console.log(url)
-        return httpClient(url).then(({ json }) => ({ data: json.map(resource => ({ ...resource, id: resource._id }) ), }));
+        return httpClient(url,option).then(({ json }) => ({ data: json.map(resource => ({ ...resource, id: resource._id }) ), }));
     },
 
     getManyReference: (resource, params) => {
@@ -141,8 +161,14 @@ export default {
             }),
         };
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
-
-        return httpClient(url).then(({ headers, json }) => ({
+        const token = localStorage.getItem('jwt');
+        let myHeaders = new Headers()
+        myHeaders.append('Authorization', `Bearer ${token}`);
+        const option = {
+            method: 'GET',
+            headers: myHeaders,
+        }
+        return httpClient(url,option).then(({ headers, json }) => ({
             data: json.map(resource => ({ ...resource, id: resource._id }) ),
             total: parseInt(headers.get('content-range').split('/').pop(), 10),
         }));

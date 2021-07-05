@@ -51,8 +51,15 @@ export const InstitutionCard = () => {
     useEffect(() => {
         const resource = "institution"
         const fetchData = async () => {
-            //Remember to Populate in Backend
-            const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/db`)
+	        //Remember to Populate in Backend
+	        const token = localStorage.getItem('jwt');
+	        let myHeaders = new Headers()
+	        myHeaders.append('Authorization', `Bearer ${token}`);
+	        const option = {
+	            method: 'GET',
+	            headers: myHeaders,
+	        }
+            const result = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/db`,option)
             const json = await result.json();
             setData(json.data);
             setCount(json.count);

@@ -36,7 +36,7 @@ const App = () => (
 
         <Resource name="notif" icon={NotificationsActiveIcon} 
         list={NotifList} 
-        edit={permissions === 'Admin' || permissions === 'Kepala Fasyankes' ? NotifCreate : null} 
+        edit={permissions === 'Admin' || permissions === 'Kepala Fasyankes' ? NotifEdit : null} 
         create={permissions === 'Admin' || permissions === 'Kepala Fasyankes' ? NotifCreate : null} 
         show={NotifShow} 
         options={{ label:'Reminder' }} />,
@@ -46,7 +46,7 @@ const App = () => (
         create={permissions !== 'Dinas Kesehatan' ? UserCreate : null} 
         show={UserShow} options={{ label: 'User' }}/> : <Resource name="user" />,
 
-       	permissions !== 'Operator' ? <Resource name="institution" icon={LocalHospitalIcon} list={InstitutionList} show={InstitutionShow} 
+       	permissions === 'Dinas Kesehatan'  || permissions === 'Admin' ? <Resource name="institution" icon={LocalHospitalIcon} list={InstitutionList} show={InstitutionShow} 
         edit={permissions !== 'Dinas Kesehatan' ? InstitutionEdit : null} 
         create={permissions !== 'Dinas Kesehatan' ? InstitutionCreate : null} options={{ label: 'Fasyankes' }}/> : <Resource name="institution" />,
 

@@ -1,15 +1,25 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles'
 
-import K3_1 from '../../asset/K3/K3_1.jpg';
+import K3_2 from '../../asset/K3/k3_sm.png'
 import UGM2 from '../../asset/UGM/(PNG Image, 310 × 163 pixels).png'
 
+const useStyles = makeStyles((theme) =>({
+  root: {
+    '& img': {
+    	margin : theme.spacing(1)
+    },
+  }
+}))
+
 const Footer = () => {
+	const classes = useStyles()
 	return (
-		<div>
-			<Grid container spacing={0}>
+		<div >
+			<Grid className={classes.root} container spacing={0}>
 				<Grid item xs>
-					<img src={K3_1} alt='K3' width='310px' height="163px"/>
+					<img  src={K3_2} alt='K3'/>
 				</Grid>
 				<Grid item xs>
 					<img src={UGM2} alt='UGM' />

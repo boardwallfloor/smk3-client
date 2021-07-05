@@ -12,9 +12,24 @@ import moment from 'moment';
 import { usePermissions } from 'react-admin';
 
 const AlertDialog = (props) => {
+  const [reportSemester, setReportSemester] = useState({laporan:'Semester'})
+  const [reportYear, setReportYear] = useState({laporan:'Tahun'})
+
+  // console.log(props.data)
+  // console.log(reportYear)
   const handleClose = () => {
     props.onClose(false);
   }
+
+  useEffect(() => {
+
+    if(props.data.year !== undefined){
+      setReportYear(props.data.year)
+    }
+    if(props.data.semester !== undefined){
+      setReportSemester(props.data.semester)
+    }
+  },[props.data.year,props.data.semester])
 
   return (
       <Dialog open={props.open} onClose={handleClose}>
@@ -23,12 +38,17 @@ const AlertDialog = (props) => {
           <DialogContentText id="alert-dialog-description">
             {props.message}
           </DialogContentText>
-        	{Object.values(props.data).map(item => (
+        	{Object.values(reportSemester).map(item => (
             <DialogContentText>
-            	{item.report_type === 'yearly' ? "Laporan Per Tahun"  : "Laporan Per Semester"}
-            	{" untuk "+moment(item.remind_date).format("MMMM YYYY")}
+            	{"Laporan Per Semester untuk "+moment(item.date).format("MMMM YYYY")}
             </DialogContentText>
         	))}
+          
+          {Object.values(reportYear).map(item => (
+            <DialogContentText>
+              {"Laporan Per Tahun untuk "+moment(item.year).format("MMMM YYYY")}
+            </DialogContentText>
+          ))}
         </DialogContent>
         <DialogActions>
 	    	<Button href='#/reportsemester' color="primary" onClick={handleClose}>
@@ -65,15 +85,19 @@ export const NotificationBadge = () => {
  
       if(permissions === 'Kepala Fasyankes'){
         const uri = `filter={"institution":"${institution}","validated":"false"}&select=validated`
-        const reportYear = await fetch(`${process.env.REACT_APP_API_LINK}/reportyear?${uri}`)
-        const reportSemester = await fetch(`${process.env.REACT_APP_API_LINK}/reportsemester?${uri}`)
+        const reportYear = await fetch(`${process.env.REACT_APP_API_LINK}/reportyear?${uri}+year&sort=["year","ASC"]`)
+        const reportSemester = await fetch(`${process.env.REACT_APP_API_LINK}/reportsemester?${uri}+date&sort=["date","ASC"]`)
+        // console.log(`${process.env.REACT_APP_API_LINK}/reportsemester?${uri}`)
         
         const reportYearJson = await reportYear.json()
         const reportSemesterJson = await reportSemester.json()
-        setMessage("Terdapat laporan yang belum tervalidasi. Laporan yang belum tersebut adalah :")
-        const combinedCount = reportSemesterJson.length + reportYearJson.length
-        const combinedReports = reportYearJson.concat(reportSemesterJson)
+        const combinedCount = await reportSemesterJson.length + reportYearJson.length
+        const combinedReports = {
+          year : Object.values(reportYearJson),
+          semester : Object.values(reportSemesterJson)
+        }
 
+        setMessage("Terdapat laporan yang belum tervalidasi. Laporan yang belum tersebut adalah :")
         setData(combinedReports)
         setCount(combinedCount)
       

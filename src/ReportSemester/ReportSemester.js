@@ -72,7 +72,7 @@ export const ReportsemesterEdit = ({permissions, ...props}) => {
             { permissions ==='Kepala Fasyankes' && 
             <FormTab label="Validasi">
             <QuestionAccordion text="Aktifkan apabila laporan telah sesuai standar" question="Validasi Laporan" />
-                <BooleanInput source='validated' label='Status Laporan'/>
+                <BooleanInput source='validated' label='Status Laporan' />
              </FormTab>
             }
             { permissions === 'Operator' ?

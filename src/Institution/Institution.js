@@ -1,27 +1,42 @@
 import React from 'react';
 import {Create, Edit, List, Show, Datagrid, SimpleShowLayout, SimpleForm, TextField, TextInput, EditButton, DeleteButton, ShowButton} from 'react-admin'
+import { makeStyles } from '@material-ui/core';
 
 import PageTitle from '../Util/PageTitle';
 import {ExportButtonShow, ListActions} from '../Util/ActionBar';
 
-export const InstitutionList = ({permissions, ...props}) => (
-    <List title="Fasyankes" {...props} actions={<ListActions />} bulkActionButtons={false}>
-        <Datagrid rowClick="show">
-            <TextField source="name" label="Nama Fasyankes"/>
-            <TextField source="address" label="Alamat"/>
-            <TextField source="city" label="Kabupaten/Kota"/>
-            <TextField source="province" label="Provinsi"/>
-            { permissions === 'Operator' || permissions === 'Admin' ?
-            <div>
-                <EditButton />
-                <DeleteButton />
-            </div>
-            :
-            <ShowButton />
-            }
-        </Datagrid>
-    </List>
-);
+const useStyles = makeStyles({
+    headerCell: {
+        fontWeight: 'bold',
+        borderBottom: 'solid black'
+    },
+});
+
+
+export const InstitutionList = ({permissions, ...props}) => {
+    console.log(permissions)
+    const classes = useStyles();
+    return(
+        <List title="Fasyankes" {...props} actions={<ListActions />} bulkActionButtons={false}>
+            <Datagrid classes={{ headerCell: classes.headerCell }} rowClick="show">
+                <TextField source="name" label="Nama Fasyankes"/>
+                <TextField source="address" label="Alamat"/>
+                <TextField source="city" label="Kabupaten/Kota"/>
+                <TextField source="province" label="Provinsi"/>
+                { permissions === 'Admin' ?
+                <EditButton />                   
+                :
+                <ShowButton />
+                }
+                { permissions === 'Admin' ?
+                <DeleteButton />                 
+                :null
+                }
+                
+            </Datagrid>
+        </List>
+    );
+}
 
 export const InstitutionShow = props => (
     <Show actions={<ExportButtonShow />} title={<PageTitle action="Show"/>}  {...props}>

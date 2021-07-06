@@ -4,7 +4,9 @@ import { stringify } from 'query-string';
 const apiUrl = `${process.env.REACT_APP_API_LINK}`
 // const apiUrl = 'http://192.168.100.82:9000'
 const httpClient = fetchUtils.fetchJson;
-
+const token = localStorage.getItem('jwt');
+let myHeaders = new Headers()
+myHeaders.append('Authorization', `Bearer ${token}`);
 
 const changeBlobToBase64 =async (files) => {
     const blobFetch = await fetch(files).then(r => r.blob());
@@ -59,7 +61,7 @@ const handleParamForFileUpload = async (params, resource) => {
 
 export default {
     getList: (resource, params) => {
-
+        // console.log('Get List')
         const { page, perPage } = params.pagination;
         // console.log(apiUrl)
         const { field, order } = params.sort;
@@ -71,9 +73,6 @@ export default {
 
         // console.log(query.sort)
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
-        const token = localStorage.getItem('jwt');
-        let myHeaders = new Headers()
-        myHeaders.append('Authorization', `Bearer ${token}`);
         const option = {
             method: 'GET',
             headers: myHeaders,
@@ -110,21 +109,24 @@ export default {
         if(resource === 'profile'){
             // console.log("Get One Profile")
             const userId = localStorage.getItem('userid')
-             const token = localStorage.getItem('jwt');
-            let myHeaders = new Headers()
-            myHeaders.append('Authorization', `Bearer ${token}`);
             const option = {
                 method: 'GET',
                 headers: myHeaders,
             }
+            // console.log(option)
             // console.log(userId)
              return httpClient(`${apiUrl}/user/${userId}`,option).then(({ json }) => ({
             data:  { ...json, id: json._id },
         }))
             // profileHandler(resource, params);
         }else{
+            // console.log("Get One User")
+            const option = {
+                method: 'GET',
+                headers: myHeaders,
+            }
             // console.log("Get One")
-        return httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => ({
+        return httpClient(`${apiUrl}/${resource}/${params.id}`,option).then(({ json }) => ({
             data:  { ...json, id: json._id },
         }))
         }
@@ -137,9 +139,6 @@ export default {
         // console.log(query)
         // console.log("Get Many")
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
-        const token = localStorage.getItem('jwt');
-        let myHeaders = new Headers()
-        myHeaders.append('Authorization', `Bearer ${token}`);
         const option = {
             method: 'GET',
             headers: myHeaders,
@@ -161,9 +160,6 @@ export default {
             }),
         };
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
-        const token = localStorage.getItem('jwt');
-        let myHeaders = new Headers()
-        myHeaders.append('Authorization', `Bearer ${token}`);
         const option = {
             method: 'GET',
             headers: myHeaders,
@@ -178,6 +174,7 @@ export default {
         httpClient(`${apiUrl}/${resource}/${params.id}`, {
             method: 'PUT',
             body: JSON.stringify(params.data),
+            headers: myHeaders,
         }).then(({ json }) => ({ data: json })),
 
     updateMany: (resource, params) => {

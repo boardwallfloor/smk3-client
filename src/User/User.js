@@ -1,5 +1,5 @@
 import React from 'react';
-import {Create, Edit, List, Show, Datagrid, SimpleShowLayout, SimpleForm, SelectInput, EmailField, TextField, TextInput, EditButton, DeleteButton, ReferenceField, ReferenceInput} from 'react-admin'
+import {Create, Edit, List, Show, Datagrid, SimpleShowLayout, SimpleForm, SelectInput, EmailField, TextField, TextInput, PasswordInput, EditButton, DeleteButton, ReferenceField, ReferenceInput} from 'react-admin'
 import {
     required,
     minValue,
@@ -26,15 +26,15 @@ export const UserList = props => (
 export const UserEdit = props => (
     <Edit title={<PageTitle action="Editing"/>} {...props}>
         <SimpleForm>
-            <TextInput source="username" />
-            <TextInput source="first_name" />
-            <TextInput source="full_name" />
-            <TextInput source="privilege" />
-            <TextInput source="nip" />
-            <TextInput source="email" />
-            <TextInput source="phonenumber" />
-            <TextInput source="password" />
-            <TextInput source="job_title" />
+            <TextInput source="username" label="Usernameama"/>
+            <TextInput source="first_name" label="Nama Depan"/>
+            <TextInput source="full_name" label="Nama Penuh"/>
+            <TextInput source="privilege" label="Jenis User"/>
+            <TextInput source="nip" label="NIP"/>
+            <TextInput source="email" label="Email"/>
+            <TextInput source="phonenumber" label="Nomor HP"/>
+            <PasswordInput source="password" label="Password" />
+            <TextInput source="job_title" label="Jenis Pegawai"/>
             <ReferenceInput label="Fasyankes" source="user_institution" reference="institution">
                     <SelectInput source="name"/>
             </ReferenceInput>
@@ -66,7 +66,7 @@ export const UserCreate = props => (
             <TextInput source="nip"/>
             <TextInput source="email" validate={validateEmail}/>
             <TextInput source="phonenumber" validate={validatePhoneNumber}/>
-            <TextInput source="password" validate={validatePassword}/>
+            <PasswordInput source="password" validate={validatePassword}/>
             <TextInput source="job_title" validate={validateJobTitle}/>
             <ReferenceInput label="Fasyankes" source="user_institution" reference="institution">
                     <SelectInput source="name"/>
@@ -76,7 +76,7 @@ export const UserCreate = props => (
 );
 
 export const UserShow = props => {
-    console.log(props.record)
+    // console.log(props.record)
     return (
     <Show title={<PageTitle action="Show"/>} {...props}>
         <SimpleShowLayout>

@@ -153,8 +153,10 @@ export const ReportyearEdit = ({permissions, ...props}) => (
                 <p>10. Kesiapsiagaan menghadapi kondisi darurat/bencana</p>
                 <BooleanInput source="report.question10.a.information" label="a. SPO Penanganan Kondisi Darurat / Bencana"/>
                 <BooleanInput source="report.question10.b.a.information" label="b. Proteksi kebakaran"/>
-                <TextInput source="report.question10.b.b.information" label="- Aktif ( Jumlah APAR dan alat pemadam lainnya)"/>
-                <TextInput source="report.question10.b.c.information" label="- Pasif ( pintu dan tangga darurat, jalur evakuasi)"/>
+                <QuestionAccordion text="Jumlah APAR dan alat pemadam lainnya" question='- Aktif'/>
+                <TextInput source="report.question10.b.b.information" label="Aktif"/>
+                <QuestionAccordion text="Pintu, tangga darurat, jalur evakuasi" question='- Pasif'/>
+                <TextInput source="report.question10.b.c.information" label="Pasif "/>
                 <p>c. Simulasi</p>
                 <BooleanInput source="report.question10.c.a.information" label="- Darurat Bencana"/>
                 <BooleanInput source="report.question10.c.b.information" label="- Penggunaan APAR"/>
@@ -162,7 +164,8 @@ export const ReportyearEdit = ({permissions, ...props}) => (
                 {/* Question 11 */}
                 <p>11. Pelatihan</p>
                 <BooleanInput source="report.question11.a.information" label="a. SDM Fasyankes terlatih K3"/>
-                <TextInput source="report.question11.b.information" label="b. Jumlah SDM Fasyankes yang terlatih K3"/>
+                <p>b. Jumlah SDM Fasyankes yang terlatih K3</p>
+                <TextInput source="report.question11.b.information" label="Jumlah SDM"/>
 
             </FormTab>
             : null}
@@ -271,8 +274,8 @@ export const ReportyearShow = props => (
                 <FileField label='File terlampir'  source="report.question10.a.file.src" title="report.question10.a.file.title" />
                 <BooleanField source="report.question10.b.a.information" label="b. Proteksi kebakaran"/>
                 <FileField label='File terlampir'  source="report.question10.b.a.file.src" title="report.question10.b.a.file.title" />
-                <TextField source="report.question10.b.b.information" label="- Aktif ( Jumlah APAR dan alat pemadam lainnya)"/>
-                <TextField source="report.question10.b.c.information" label="- Pasif ( pintu dan tangga darurat, jalur evakuasi)"/>
+                <TextField source="report.question10.b.b.information" label="Aktif"/>               
+                <TextField source="report.question10.b.c.information" label="Pasif"/>
                 <p>c. Simulasi</p>
                 <BooleanField source="report.question10.c.a.information" label="- Darurat Bencana"/>
                 <FileField label='File terlampir'  source="report.question10.c.a.file.src" title="report.question10.c.a.file.title" />
@@ -283,6 +286,7 @@ export const ReportyearShow = props => (
                 <p>11. Pelatihan</p>
                 <BooleanField source="report.question11.a.information" label="a. SDM Fasyankes terlatih K3"/>
                 <FileField label='File terlampir'  source="report.question11.a.file.src" title="report.question11.a.file.title" />
+
                 <TextField source="report.question11.b.information" label="b. Jumlah SDM Fasyankes yang terlatih K3"/>
 
             </Tab>

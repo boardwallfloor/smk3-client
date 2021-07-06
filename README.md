@@ -87,6 +87,7 @@ Naturally, there's many thing this project lacked, however I intend to updated i
 
 This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 * [ReactJS](https://reactjs.org/)
+* [Create React App](https://create-react-app.dev/)
 * [ReactAdmin](https://marmelab.com/react-admin/)
 
 <!-- GETTING STARTED -->

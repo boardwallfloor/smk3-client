@@ -110,6 +110,11 @@ This is an example of how to list things you need to use the software and how to
    ```sh
    npm install
    ```
+3. Set up .env configution
+  ```.env
+  REACT_APP_API_LINK=Client_server_IP
+
+  ```
 
 
 

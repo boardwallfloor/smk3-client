@@ -13,7 +13,7 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
-
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5ead58cf-5f8c-4a99-b483-29532f333468/deploy-status)](https://app.netlify.com/sites/romantic-minsky-edb781/deploys)
 
 
 <!-- PROJECT LOGO -->

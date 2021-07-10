@@ -38,7 +38,7 @@ const MyLoginPage = () => {
             .catch( (err) => {
                 setLoading(false)
                 const errString = err.toString();
-                notify(errString)
+                notify("Username atau Password salah")
                 if(errString === "Error: Username is not found" || errString === "Error: Incorrect username"){
                     setErrorUsername(true);
                 }

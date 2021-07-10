@@ -205,6 +205,7 @@ export default {
         return httpClient(`${apiUrl}/${resource}`, {
             method: 'POST',
             body: JSON.stringify(params.data),
+            headers: myHeaders,
         }).then(({json}) => {
             // console.log('json')
             // console.log(json)
@@ -216,6 +217,7 @@ export default {
     delete: (resource, params) =>
         httpClient(`${apiUrl}/${resource}/${params.id}`, {
             method: 'DELETE',
+            headers: myHeaders,
         }).then(({ json }) => ({ 
                data: { ...json, id: json._id },
         })),

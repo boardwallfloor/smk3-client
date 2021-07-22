@@ -8,25 +8,29 @@ import UGM2 from '../../asset/UGM/(PNG Image, 310 × 163 pixels).png'
 const useStyles = makeStyles((theme) =>({
   root: {
     '& img': {
-    	margin : theme.spacing(1)
+    	margin : theme.spacing(0)
     },
+  },
+  alignContent : {
+  	display: 'flex',
+  	justifyContent : 'center'
   }
 }))
 
 const Footer = () => {
 	const classes = useStyles()
 	return (
-		<div >
-			<Grid className={classes.root} container spacing={0}>
-				<Grid item xs>
-					<img  src={K3_2} alt='K3'/>
+		
+			<Grid className={classes.root} container>
+				<Grid className={classes.alignContent} item xs={6}  >
+					<img  src={K3_2} width='200px' alt='K3'/>
 				</Grid>
-				<Grid item xs>
-					<img src={UGM2} alt='UGM' />
+				<Grid item xs={6}>
+					<img src={UGM2} alt='UGM' width='200px'/>
 				</Grid>
 				
 			</Grid>
-		</div>
+		
 	)
 }
 

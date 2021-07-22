@@ -5,10 +5,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
-import LockIcon from '@material-ui/icons/Lock';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 import LoginForm from './LoginForm';
 import Footer from './Footer';
+
 
 var useStyles = makeStyles(function (theme) { return ({
     main: {
@@ -47,7 +48,8 @@ const MyLoginPage = ({ theme }) => {
                     <Paper>
                         <div className={classes.avatar}>
                             <Avatar className={classes.icon}>
-                                <LockIcon />
+                                
+                                <SettingsIcon />
                             </Avatar>
                         </div>
                         <LoginForm />

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Create, Edit, List, Show, Datagrid, BooleanField, BooleanInput, DateInput, DateField, ReferenceField, TextField, TextInput, ShowButton, NumberField, NumberInput, EditButton, FunctionField, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, FileField , FormDataConsumer} from 'react-admin'
+import {Create, Edit, List, Show, Datagrid, BooleanField, BooleanInput, DateInput, DateField, ReferenceField, TextField, TextInput, ShowButton, NumberField, EditButton, FunctionField, DeleteButton, TabbedShowLayout, Tab, TabbedForm, FormTab, FileField , FormDataConsumer} from 'react-admin'
 import { makeStyles } from '@material-ui/core';
 
 import PageTitle from '../Util/PageTitle';  
@@ -8,14 +8,18 @@ import QuestionAccordion from '../Util/QuestionAccordion';
 import {ExportButtonShow, ListActions} from '../Util/ActionBar';
 import {NoDeleteToolbar} from '../Util/CustomToolbar'
 import {ReportListFilter} from '../Util/Filter'
+import {reportYearQuestion} from './reportYearQuestion'
+
 
 const useStyles = makeStyles({
     headerCell: {
         fontWeight: 'bold',
         borderBottom: 'solid black'
     },
+    leftPadding : {
+        marginLeft: '20px'
+    }
 });
-
 
 export const ReportyearList = ({permissions, record, ...props}) => {
     const classes = useStyles();
@@ -77,8 +81,6 @@ export const ReportyearEdit = ({permissions, ...props}) => (
             <FormTab label="Tanggal">
                 <QuestionAccordion text="ID Penulis Laporan tidak dapat diubah" question='ID Penulis Laporan'/>
                 <TextInput source='author' disabled/>
-                <QuestionAccordion text="Jumlah Sumber Daya Manusia yang berada pada Fasyankes" question='Jumlah Sumber Daya Manusia'/>
-                <NumberInput source="totalSDM" label='Jumlah Sumber Daya Manusia'/>
                 <QuestionAccordion text="Tanggal Laporan" question='Tanggal Laporan'/>
                 <DateInput source="year" label="Tanggal Laporan"/>
             </FormTab>
@@ -180,7 +182,6 @@ export const ReportyearShow = props => (
                 <ReferenceField link={false} label="Penulis" source="author" reference="user">
                     <TextField source="username"/>
                 </ReferenceField>
-                <NumberField source="totalSDM" label="Jumlah SDM" />
                 <DateField label="Tanggal Laporan" source="year" options={{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }} locales="id-ID"/>
             </Tab>
             <Tab label="Fasyankes" path="institution">
@@ -296,6 +297,7 @@ export const ReportyearShow = props => (
 );
 
 export const ReportyearCreate = props => {
+    const classes = useStyles()
     const userId = localStorage.getItem('userid')
     const isntitutionid = localStorage.getItem('institution')
     return(
@@ -304,8 +306,6 @@ export const ReportyearCreate = props => {
             <FormTab label="Tanggal">
                 <QuestionAccordion text="ID Penulis Laporan tidak dapat diubah" question='ID Penulis Laporan'/>
                 <TextInput source='author' initialValue={userId} disabled/>
-                <QuestionAccordion text="Jumlah Sumber Daya Manusia yang berada pada Fasyankes" question='Jumlah Sumber Daya Manusia'/>
-                <NumberInput source="totalSDM" label='Jumlah Sumber Daya Manusia'/>
                 <QuestionAccordion text="Tanggal Laporan" question='Tanggal Laporan'/>
                 <DateInput source="year" label="Tanggal Laporan"/>
             </FormTab>
@@ -316,22 +316,22 @@ export const ReportyearCreate = props => {
             <FormTab label="Laporan" path="report">
 
                 {/* Question 1*/}
-                <p>1. SMK3 di Fasyankes</p>
-                <BooleanInput source="report.question1.a.information" label="a. Ada komitmen/kebijakan"/>
+                <p fullWidth>1. {reportYearQuestion[0].prompt}</p>
+                <BooleanInput fullWidth source="report.question1.a.information" label={`a. ${reportYearQuestion[0].question1}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => (formData?.report?.question1?.a?.information) ?
                     <FileUpload sizeLimit="500000" source="report.question1.a.file" {...rest}/>
                  : null
                  }
                 </FormDataConsumer>
-                <BooleanInput source="report.question1.b.information" label="b. Dokumen rencana kegiatan K3"/>
+                <BooleanInput fullWidth  source="report.question1.b.information" label={`b. ${reportYearQuestion[0].question2}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => (formData?.report?.question1?.b?.information) ?
                     <FileUpload sizeLimit="500000" source="report.question1.b.file" {...rest}/>
                  : null
                  }
                 </FormDataConsumer>
-                <BooleanInput source="report.question1.c.information" label="c. Ada Tim K3/Pengelola  K3"/>
+                <BooleanInput fullWidth  source="report.question1.c.information" label={`c. ${reportYearQuestion[0].question3}`}/>
                  <FormDataConsumer >
                  {({ formData, ...rest }) => (formData?.report?.question1?.c?.information) ?
                     <FileUpload sizeLimit="500000" source="report.question1.c.file" {...rest}/>
@@ -341,8 +341,8 @@ export const ReportyearCreate = props => {
 
                 
                 {/* Question 2 */}
-                <p>2. Pengenalan Potensi Bahaya dan Pengendalian Resiko</p>
-                <BooleanInput source="report.question2.a.information" label="a. Identifikasi potensi bahaya"/>
+                <p fullWidth>2. {reportYearQuestion[1].prompt}</p>
+                <BooleanInput fullWidth source="report.question2.a.information" label={`a. ${reportYearQuestion[1].question1}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => (formData?.report?.question2?.a?.information) ?
                     <FileUpload sizeLimit="500000" source="report.question2.a.file" {...rest}/>
@@ -350,7 +350,7 @@ export const ReportyearCreate = props => {
                  }
                 </FormDataConsumer>
 
-                <BooleanInput source="report.question2.b.information" label="b. Penilaian risiko"/>
+                <BooleanInput fullWidth source="report.question2.b.information" label={`b. ${reportYearQuestion[1].question2}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => (formData?.report?.question2?.b?.information) ?
                     <FileUpload sizeLimit="500000" source="report.question2.b.file" {...rest}/>
@@ -359,7 +359,7 @@ export const ReportyearCreate = props => {
                 </FormDataConsumer>
 
 
-                <BooleanInput source="report.question2.c.information" label="c. Pengendalian Risiko"/>
+                <BooleanInput fullWidth source="report.question2.c.information" label={`c. ${reportYearQuestion[1].question3}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => (formData?.report?.question2?.c?.information) ?
                     <FileUpload sizeLimit="500000" source="report.question2.c.file" {...rest}/>
@@ -369,94 +369,92 @@ export const ReportyearCreate = props => {
 
 
                 {/* Question 3 */}
-                <p>3. Penerapan Kewaspadaan Standar </p>
-                <BooleanInput source="report.question3.a.information" label="a. Sarana dan Prasarana Kebersihan Tangan"/>
+                <p fullWidth>3. {reportYearQuestion[2].prompt} </p>
+                <BooleanInput fullWidth source="report.question3.a.information" label={`a. ${reportYearQuestion[2].question1}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question3?.a?.information  &&
                     <FileUpload source="report.question3.a.file" {...rest}/>
                  }
                 </FormDataConsumer>
 
-                <BooleanInput source="report.question3.b.information" label="b. Penyediaan APD"/>
+                <BooleanInput fullWidth source="report.question3.b.information" label={`b. ${reportYearQuestion[2].question2}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question3?.b?.information  &&
                     <FileUpload source="report.question3.b.file" {...rest}/>
                  }
                 </FormDataConsumer>
 
-                <BooleanInput source="report.question3.c.information" label="c. Pengelolaan jarun dan alat tajam"/>
+                <BooleanInput fullWidth source="report.question3.c.information" label={`c. ${reportYearQuestion[2].question3}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question3?.c?.information  &&
                     <FileUpload source="report.question3.c.file" {...rest}/>
                  }
                 </FormDataConsumer>
-                
-                <BooleanInput source="report.question3.d.information" label="d. Dekontaminasi peralatan"/>
+
+                <BooleanInput fullWidth source="report.question3.d.information" label={`d. ${reportYearQuestion[2].question4}`}/>
                 <FormDataConsumer >
-                 {({ formData, ...rest }) => formData?.report?.question3?.d?.information  &&
-                    <FileUpload source="report.question3.d.file" {...rest}/>
+                 {({ formData, ...rest }) => formData?.report?.question4?.d?.information  &&
+                    <FileUpload source="report.question4.d.file" {...rest}/>
                  }
                 </FormDataConsumer>
                 
-
                 {/* Question 4 */}
-                <p>4. Penerapan Prinsip Ergonomi Pada </p>
-                <BooleanInput source="report.question4.a.information" label="a. Angkat angkut pasien (pasien, barang, dan lain-lain), postur kerja"/>
+                <p fullWidth>4. {reportYearQuestion[3].prompt}</p>
+                <BooleanInput fullWidth source="report.question4.a.information" label={`a. ${reportYearQuestion[3].question1}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question4?.a?.information  &&
                     <FileUpload source="report.question4.a.file" {...rest}/>
                  }
                 </FormDataConsumer>
 
-                <BooleanInput source="report.question4.b.information" label="b. Pengaturan shift kerja"/>
+                <BooleanInput fullWidth source="report.question4.b.information" label={`b. ${reportYearQuestion[3].question2}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question4?.b?.information  &&
                     <FileUpload source="report.question4.b.file" {...rest}/>
                  }
                 </FormDataConsumer>
 
-                <BooleanInput source="report.question4.c.information" label="c. Pengaturan Tata Ruang Kerja"/>
+                <BooleanInput fullWidth source="report.question4.c.information" label={`c. ${reportYearQuestion[3].question3}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question4?.c?.information  &&
                     <FileUpload source="report.question4.c.file" {...rest}/>
                  }
                 </FormDataConsumer>
 
+                <BooleanInput fullWidth source="report.question4.d.information" label={`d. ${reportYearQuestion[3].question4}`}/>
+                <FormDataConsumer >
+                 {({ formData, ...rest }) => formData?.report?.question4?.c?.information  &&
+                    <FileUpload source="report.question4.d.file" {...rest}/>
+                 }
+                </FormDataConsumer>
+
 
                 {/* Question 5 */}
-                <p>5. Pelayanan Kesehatan Kerja dan Imunisasi</p>
-                <BooleanInput source="report.question5.a.information" label="a. Pemeriksaan kesehatan SDM  Fasyankes"/>
+                <p fullWidth>5. {reportYearQuestion[4].prompt}</p>
+                <BooleanInput fullWidth source="report.question5.a.information" label={`a. ${reportYearQuestion[4].question1}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question5?.a?.information  &&
                     <FileUpload source="report.question5.a.file" {...rest}/>
                  }
                 </FormDataConsumer>
 
-                <BooleanInput source="report.question5.b.information" label="b. Fasyankes melakukan pemeriksaan kesehatan berkala"/>
+                <BooleanInput fullWidth source="report.question5.b.information" label={`b. ${reportYearQuestion[4].question2}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question5?.b?.information  &&
                     <FileUpload source="report.question5.b.file" {...rest}/>
                  }
                 </FormDataConsumer>
 
-                <BooleanInput source="report.question5.c.information" label="c. Fasyankes melakukan imunisasi pada SDM Fasyankes yang beresiko"/>
-                <FormDataConsumer >
-                 {({ formData, ...rest }) => formData?.report?.question5?.c?.information  &&
-                    <FileUpload source="report.question5.c.file" {...rest}/>
-                 }
-                </FormDataConsumer>
-
-
                 {/* Question 6 */}
-                <p>6. Pembudayaan PHBS di Fasyankes</p>
-                <BooleanInput source="report.question6.a.information" label="a. Melakukan sosialisasi"/>
+                <p fullWidth>6. {reportYearQuestion[5].prompt}</p>
+                <BooleanInput fullWidth source="report.question6.a.information" label={`a. ${reportYearQuestion[5].question1}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question6?.a?.information  &&
                     <FileUpload source="report.question6.a.file" {...rest}/>
                  }
                 </FormDataConsumer>
 
-                <BooleanInput source="report.question6.b.information" label="b. Media KIE"/>
+                <BooleanInput fullWidth source="report.question6.b.information" label={`b. ${reportYearQuestion[5].question2}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question6?.b?.information  &&
                     <FileUpload source="report.question6.b.file" {...rest}/>
@@ -465,22 +463,22 @@ export const ReportyearCreate = props => {
 
                 
                 {/* Question 7 */}
-                <p>7. Aspek Keselamatan dan Kesehatan  Kerja  pada Pengelolaan Bahan Beracun dan Berbahaya (B3)  dan Limbah Domestik</p>
-                <BooleanInput source="report.question7.a.information" label="a. Daftar inventaris B3"/>
+                <p fullWidth>7. {reportYearQuestion[6].prompt}</p>
+                <BooleanInput fullWidth source="report.question7.a.information" label={`a. ${reportYearQuestion[6].question1}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question7?.a?.information  &&
                     <FileUpload source="report.question7.a.file" {...rest}/>
                  }
                 </FormDataConsumer>
 
-                <BooleanInput source="report.question7.b.information" label="b. SPO penggunaan B3"/>
+                <BooleanInput fullWidth source="report.question7.b.information" label={`b. ${reportYearQuestion[6].question2}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question7?.b?.information  &&
                     <FileUpload source="report.question7.b.file" {...rest}/>
                  }
                 </FormDataConsumer>
 
-                <BooleanInput source="report.question7.c.information" label="c. Penyimpanan dan Pembuangan limbah B3 dan domestik sesuai persyaratan"/>
+                <BooleanInput fullWidth source="report.question7.c.information" label={`c. ${reportYearQuestion[6].question3}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question7?.c?.information  &&
                     <FileUpload source="report.question7.c.file" {...rest}/>
@@ -489,29 +487,29 @@ export const ReportyearCreate = props => {
 
                 
                 {/* Qustion 8 */}
-                <p>8. Pengelolaan Sarana dan Prasarana dari Aspek K3</p>
-                <BooleanInput source="report.question8.a.information" label="a. Pengukuran pencahayaan, kualitas air, kualitas udara"/>
+                <p fullWidth>8. {reportYearQuestion[7].prompt}</p>
+                <BooleanInput fullWidth source="report.question8.a.information" label={`a. ${reportYearQuestion[7].question1}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question8?.a?.information  &&
                     <FileUpload source="report.question8.a.file" {...rest}/>
                  }
                 </FormDataConsumer>
 
-                <BooleanInput source="report.question8.b.information" label="b. Pemeliharaan Kebersihan Bangunan"/>
+                <BooleanInput fullWidth source="report.question8.b.information" label={`b. ${reportYearQuestion[7].question2}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question8?.b?.information  &&
                     <FileUpload source="report.question8.b.file" {...rest}/>
                  }
                 </FormDataConsumer>
 
-                <BooleanInput source="report.question8.c.information" label="c. Ketersediaan air dan listrik"/>
+                <BooleanInput fullWidth source="report.question8.c.information" label={`c. ${reportYearQuestion[7].question3}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question8?.c?.information  &&
                     <FileUpload source="report.question8.c.file" {...rest}/>
                  }
                 </FormDataConsumer>
 
-                <BooleanInput source="report.question8.d.information" label="d. Ketersediaan toilet sesuai standar"/>
+                <BooleanInput fullWidth source="report.question8.d.information" label={`d. ${reportYearQuestion[7].question4}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question8?.d?.information  &&
                     <FileUpload source="report.question8.d.file" {...rest}/>
@@ -520,42 +518,54 @@ export const ReportyearCreate = props => {
 
                 
                 {/* Question 9 */}
-                <p>9. Pengelolaan Peralatan Medis Dari Aspek K3</p>
-                <BooleanInput source="report.question9.information" label="a. Pemeliharaan pada peralatan medis"/>
+                <p fullWidth>9. {reportYearQuestion[8].prompt}</p>
+                <p className={classes.leftPadding} fullWidth>a. {reportYearQuestion[8].question1}</p>
+                <BooleanInput className={classes.leftPadding} fullWidth source="report.question9.information" label="Ya/Tidak" />
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question9?.information  &&
                     <FileUpload source="report.question9.file" {...rest}/>
                  }
                 </FormDataConsumer>
-
                 
                 {/* Question 10 */}
-                <p>10. Kesiapsiagaan menghadapi kondisi darurat/bencana</p>
-                <BooleanInput source="report.question10.a.information" label="a. SPO Penanganan Kondisi Darurat / Bencana"/>
+                <p fullWidth>10. {reportYearQuestion[9].prompt}</p>
+                <BooleanInput fullWidth source="report.question10.a.information" label={`a ${reportYearQuestion[9].question1}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question10?.a?.information  &&
                     <FileUpload source="report.question10.a.file" {...rest}/>
                  }
                 </FormDataConsumer>
 
-                <BooleanInput source="report.question10.b.a.information" label="b. Proteksi kebakaran"/>
+                <p fullWidth>b. {reportYearQuestion[9].prompt2}</p>
+                <p fullWidth>- {reportYearQuestion[9].prompt3}</p>
+
+                {/*<BooleanInput fullWidth source="report.question10.b.a.information" label={`- ${reportYearQuestion[9].question2}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question10?.b?.a?.information  &&
                     <FileUpload source="report.question10.b.a.file" {...rest}/>
                  }
+                </FormDataConsumer>*/}
+
+                <TextInput source="report.question10.b.a.information" label={`- ${reportYearQuestion[9].question2}`}/>
+                <TextInput source="report.question10.b.b.information" label={`- ${reportYearQuestion[9].question3}`}/>
+                <TextInput source="report.question10.b.c.information" label={`- ${reportYearQuestion[9].question4}`}/>
+                <TextInput source="report.question10.b.d.information" label={`- ${reportYearQuestion[9].question5}`}/>
+
+                <BooleanInput fullWidth source="report.question10.b.e.information" label={`- ${reportYearQuestion[9].question6}`}/>
+                <FormDataConsumer >
+                 {({ formData, ...rest }) => formData?.report?.question10?.b?.e?.information  &&
+                    <FileUpload source="report.question10.b.e.file" {...rest}/>
+                 }
                 </FormDataConsumer>
 
-                <TextInput source="report.question10.b.b.information" label="- Aktif ( Jumlah APAR dan alat pemadam lainnya)"/>
-                <TextInput source="report.question10.b.c.information" label="- Pasif ( Pintu dan tangga darurat, jalur evakuasi)"/>
-                <p>c. Simulasi</p>
-                <BooleanInput source="report.question10.c.a.information" label="- Darurat Bencana"/>
+                <p fullWidth>c. {reportYearQuestion[9].prompt4}</p>
+                <BooleanInput fullWidth source="report.question10.c.a.information" label={`- ${reportYearQuestion[9].question7}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question10?.c?.a?.information  &&
                     <FileUpload source="report.question10.c.a.file" {...rest}/>
                  }
                 </FormDataConsumer>
-
-                <BooleanInput source="report.question10.c.b.information" label="- Penggunaan APAR"/>
+                <BooleanInput fullWidth source="report.question10.c.b.information" label={`- ${reportYearQuestion[9].question8}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question10?.c?.b?.information  &&
                     <FileUpload source="report.question10.c.b.file" {...rest}/>
@@ -564,15 +574,15 @@ export const ReportyearCreate = props => {
 
                 
                 {/* Question 11 */}
-                <p>11. Pelatihan</p>
-                <BooleanInput source="report.question11.a.information" label="a. SDM Fasyankes terlatih K3"/>
+                <p fullWidth>11. {reportYearQuestion[10].prompt}</p>
+                <BooleanInput fullWidth source="report.question11.a.information" label={`a. ${reportYearQuestion[10].question1}`}/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => formData?.report?.question11?.a?.information  &&
                     <FileUpload source="report.question11.a.file" {...rest}/>
                  }
                 </FormDataConsumer>
 
-                <TextInput source="report.question11.b.information" label="b. Jumlah SDM Fasyankes yang terlatih K3"/>
+                <TextInput source="report.question11.b.information" label={`b. ${reportYearQuestion[10].question2}`}/>
 
 
             </FormTab>

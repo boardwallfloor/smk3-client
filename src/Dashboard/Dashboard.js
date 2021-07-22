@@ -22,7 +22,7 @@ export const Dashboard = () => {
   const { permissions } = usePermissions();
   return (
     <div className={classes.root}>
-    <Title title="SMK3" />
+    <Title title="Sistem Manajemen K3 Fasyankes" />
       {permissions === "Admin" ?
       <AdminDashboard />
       : null}

@@ -8,11 +8,15 @@ import QuestionAccordion from '../Util/QuestionAccordion';
 import {ExportButtonShow, ListActions} from '../Util/ActionBar';
 import {NoDeleteToolbar} from '../Util/CustomToolbar'
 import {ReportListFilter} from '../Util/Filter'
+import {reportSemesterQuestion} from './reportSemesterQuestion'
 
 const useStyles = makeStyles({
     headerCell: {
         fontWeight: 'bold',
         borderBottom: 'solid black'
+    },
+    leftPadding : {
+        marginLeft: '20px'
     },
 });
 
@@ -254,6 +258,7 @@ export const ReportsemesterShow = props => (
 );
 
 export const ReportsemesterCreate = props => {
+    const classes = useStyles()
     const userId = localStorage.getItem('userid')
     const isntitutionid = localStorage.getItem('institution')
     return(
@@ -271,7 +276,7 @@ export const ReportsemesterCreate = props => {
             </FormTab>
             <FormTab label="Laporan" path="report">
                 {/* Question 1*/}
-                <QuestionAccordion text="Jumlah SDM Fasyankes adalah jumlah SDM yang bekerja di Fasilitas Pelayanan Kesehatan." question='1. Jumlah SDM Fasyankes'/>
+                <QuestionAccordion text="Jumlah semua SDM Fasyankes yang ada di Fasilitas Pelayanan Kesehatan." question={`1. ${reportSemesterQuestion[0].question}`}/>
                 <NumberInput source="report.question1.total" label="Jumlah"/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => (formData?.report?.question1?.total === 0 || formData?.report?.question1?.total ) ?
@@ -282,7 +287,7 @@ export const ReportsemesterCreate = props => {
                 <TextInput source="report.question1.detail" label="Keterangan"/>
                 
                 {/* Question 2 */}
-                <QuestionAccordion text="Jumlah SDM Fasyankes yang sakit yaitu jumlah SDM Fasyankes yang sakit" question='2. Jumlah SDM Fasyankes yang sakit'/>
+                <QuestionAccordion text="Jumlah SDM Fasyankes yang sakit yaitu jumlah SDM Fasyankes yang sakit" question={`2. ${reportSemesterQuestion[1].question}`}/>
                 <NumberInput source="report.question2.total" label="Jumlah"/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => (formData?.report?.question2?.total === 0 || formData?.report?.question2?.total ) ?
@@ -293,7 +298,7 @@ export const ReportsemesterCreate = props => {
                 <TextInput source="report.question2.detail" label="Keterangan"/>
 
                 {/* Question 3 */}
-                <QuestionAccordion text="Jumlah  kasus  penyakit  umum  pada  SDM  Fasyankes  yaitu  jumlah  kasuspada  SDM Fasyankes  yang  terdiagnosis  penyakit  umum,  seperti  flu,batuk,  diare  dan  lain-lain (yang  tidak  berhubungan  dengan  pekerjaan)baik  penyakit  menular  maupun  tidak menular dalam pencatatan 1 SDMFasyankes bisa lebih dari 1 kasus penyakit" question='3. Jumlah SDM yang sakit'/>
+                <QuestionAccordion text="Jumlah  kasus  penyakit  umum  pada  SDM  Fasyankes  yaitu  jumlah  kasuspada  SDM Fasyankes  yang  terdiagnosis  penyakit  umum,  seperti  flu,batuk,  diare  dan  lain-lain (yang  tidak  berhubungan  dengan  pekerjaan)baik  penyakit  menular  maupun  tidak menular dalam pencatatan 1 SDMFasyankes bisa lebih dari 1 kasus penyakit" question={`3. ${reportSemesterQuestion[2].question}`}/>
                 <NumberInput source="report.question3.total" label="Jumlah"/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => (formData?.report?.question3?.total === 0 || formData?.report?.question3?.total ) ?
@@ -304,7 +309,7 @@ export const ReportsemesterCreate = props => {
                 <TextInput source="report.question3.detail" label="Keterangan"/>
 
                 {/* Question 4 */}
-                <QuestionAccordion text="Jumlah kasus dugaan penyakit akibat kerja pada SDM Fasyankes yaitu jumlah kasus penyakit yang disebabkan oleh pekerjaan dan/atau lingkungan kerja termasuk penyakit terkait  kerja.  Penyakit  terkait  kerjaa dalah  penyakit  yang  mempunyai  beberapa  agen penyebab  dengan  faktor pekerjaan  dan  atau  lingkungan  kerja  memegang  peranan bersama denganfaktor risiko lainnya." question='4. Jumlah kasus dugaan penyakit akibat kerja pada suatu SDM Fasyankes'/>
+                <QuestionAccordion text="Jumlah kasus dugaan penyakit akibat kerja pada SDM Fasyankes yaitu jumlah kasus penyakit yang disebabkan oleh pekerjaan dan/atau lingkungan kerja termasuk penyakit terkait  kerja.  Penyakit  terkait  kerjaa dalah  penyakit  yang  mempunyai  beberapa  agen penyebab  dengan  faktor pekerjaan  dan  atau  lingkungan  kerja  memegang  peranan bersama denganfaktor risiko lainnya." question={`4. ${reportSemesterQuestion[3].question}`}/>
                 <NumberInput source="report.question4.total" label="Jumlah"/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => (formData?.report?.question4?.total === 0 || formData?.report?.question4?.total ) ?
@@ -315,7 +320,7 @@ export const ReportsemesterCreate = props => {
                 <TextInput source="report.question4.detail" label="Keterangan"/>
 
                 {/* Question 5 */}
-                <QuestionAccordion text="Jumlah kasus penyakit akibat kerja pada SDM Fasyankes yaitu jumlah kasus penyakit akibat  kerja  pada  SDM  Fasyankes  yang  dibuktikan  dengandiagnosis  klinis  Penyakit Akibat Kerja" question='5. Jumlah kasus penyakit akibat kerja pada SDM Fasyankes'/>
+                <QuestionAccordion text="Jumlah kasus penyakit akibat kerja pada SDM Fasyankes yaitu jumlah kasus penyakit akibat  kerja  pada  SDM  Fasyankes  yang  dibuktikan  dengandiagnosis  klinis  Penyakit Akibat Kerja" question={`5. ${reportSemesterQuestion[4].question}`}/>
                 <NumberInput source="report.question5.total" label="Jumlah"/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => (formData?.report?.question5?.total === 0 || formData?.report?.question5?.total ) ?
@@ -326,7 +331,7 @@ export const ReportsemesterCreate = props => {
                 <TextInput source="report.question5.detail" label="Keterangan"/>
 
                 {/* Question 6 */}
-                <QuestionAccordion text="Jumlah  kasus  kecelakaan  akibat  kerja  pada  SDM  Fasyankes  yaitu  jumlahsemua kecelakaan  yang  terjadi  pada  SDM  Fasyankes  yang  berhubungan dengan  kerja, demikian  pula kecelakaan  yang  terjadi  dalam  perjalanan berangkat  kerja  dari  rumah menuju tempat kerja dan pulang ke rumah melalui jalan yang biasa atau wajar dilalui." question='6. Jumlah kasus kecelakaan akibat kerja pada SDM Fasyankes'/>
+                <QuestionAccordion text="Jumlah  kasus  kecelakaan  akibat  kerja  pada  SDM  Fasyankes  yaitu  jumlahsemua kecelakaan  yang  terjadi  pada  SDM  Fasyankes  yang  berhubungan dengan  kerja, demikian  pula kecelakaan  yang  terjadi  dalam  perjalanan berangkat  kerja  dari  rumah menuju tempat kerja dan pulang ke rumah melalui jalan yang biasa atau wajar dilalui." question={`6. ${reportSemesterQuestion[5].question}`}/>
                 <NumberInput source="report.question6.total" label="Jumlah"/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => (formData?.report?.question6?.total === 0 || formData?.report?.question6?.total ) ?
@@ -337,7 +342,7 @@ export const ReportsemesterCreate = props => {
                 <TextInput source="report.question6.detail" label="Keterangan"/>
                 
                 {/* Question 7 */}
-                <QuestionAccordion text="Jumlah  Kasus  kejadian  hampir  celaka  (near  miss)  pada  SDM  Fasyankes yaitu  suatu kejadian  insiden  yang  hampir  menimbulkan  cedera  atau celaka  seperti  terpeleset,kejatuhan benda, namun tidak mengenai manusia" question='7. Jumlah kasus kejadian hampir celaka pada SDM Fasyankes'/>
+                <QuestionAccordion text="Jumlah  Kasus  kejadian  hampir  celaka  (near  miss)  pada  SDM  Fasyankes yaitu  suatu kejadian  insiden  yang  hampir  menimbulkan  cedera  atau celaka  seperti  terpeleset,kejatuhan benda, namun tidak mengenai manusia" question={`7. ${reportSemesterQuestion[6].question}`}/>
                 <NumberInput source="report.question7.total" label="Jumlah"/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => (formData?.report?.question7?.total === 0 || formData?.report?.question7?.total  ) ?
@@ -348,7 +353,7 @@ export const ReportsemesterCreate = props => {
                 <TextInput source="report.question7.detail" label="Keterangan"/>
                 
                 {/* Qustion 8 */}
-                <QuestionAccordion text="Jumlah  hari absen  SDM  Fasyankes  karena  sakit  yaitu  jumlah  hari  kerja hilang  SDM Fasyankes karena sakit" question='8. Jumlah hari absen SDM Fasyankes karena sakit'/>
+                <QuestionAccordion text="Jumlah  hari absen  SDM  Fasyankes  karena  sakit  yaitu  jumlah  hari  kerja hilang  SDM Fasyankes karena sakit" question={`8. ${reportSemesterQuestion[7].question}`}/>
                 <NumberInput source="report.question8.total" label="Jumlah"/>
                 <FormDataConsumer >
                  {({ formData, ...rest }) => (formData?.report?.question8?.total === 0 || formData?.report?.question8?.total  ) ?

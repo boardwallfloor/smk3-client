@@ -138,7 +138,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## Contact
 Faris Takhassuna Zamzani - [LinkdeIn](https://www.linkedin.com/in/faris-t-05b348187) - takhassuna.fz@gmail.com
 
-Project Link: [https://github.com/boardwallfloor/smk3-server](https://github.com/boardwallfloor/smk3-server)
+Project Link: [https://github.com/boardwallfloor/smk3-client](https://github.com/boardwallfloor/smk3-client)
 
 
 

@@ -13,7 +13,7 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
-[![Netlify Status](https://api.netlify.com/api/v1/badges/5ead58cf-5f8c-4a99-b483-29532f333468/deploy-status)](https://app.netlify.com/sites/romantic-minsky-edb781/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5ead58cf-5f8c-4a99-b483-29532f333468/deploy-status)](https://app.netlify.com/sites/smk3-ugm/deploys)
 
 
 <!-- PROJECT LOGO -->
@@ -122,7 +122,7 @@ This is an example of how to list things you need to use the software and how to
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Check the website by clicking [here](https://romantic-minsky-edb781.netlify.app/)
+Check the website by clicking [here](https://smk3-ugm.netlify.app/#/)
 
 <!-- _For more examples, please refer to the [Documentation](https://example.com)_ -->
 

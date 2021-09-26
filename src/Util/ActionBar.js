@@ -244,7 +244,7 @@ export const ExportButtonShow = ({ basePath, data, resource }) => {
     }
 
     const exportData = async () => {
-        const file = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/export/${data.id}`)
+        const file = await fetch(`${process.env.REACT_APP_API_LINK}/${resource}/export/${data.id}`, {headers: {'Authorization' : `Bearer ${localStorage.getItem('jwt')}`}})
         const fileInBlob = await file.blob()
         const fileUrl = window.URL.createObjectURL(fileInBlob);
 

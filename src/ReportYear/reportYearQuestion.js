@@ -1,7 +1,7 @@
 export const reportYearQuestion = [
 	{
 		prompt: 'Pelaksanaan Sistem Manajemen K3 di Fasilitas Pelayanan Kesehatan',
-		question1: 'Apakah terdapat penetapan kebijakan/komitmen pada pelaksanaan K3 di Fasyankes',
+		question1: 'Apakah terdapat penetapan kebijakan/komitmen pada pelaksanaan K3 di Fasyankes?',
 		question2: 'Apakah terdapat dokumen rencana kegiatan K3 di Fasyankes?',
 		question3: 'Apakah terdapat tim K3/pengelola K3 di Fasyankes?'
 	},

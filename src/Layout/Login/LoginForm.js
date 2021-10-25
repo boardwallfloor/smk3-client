@@ -51,8 +51,8 @@ const MyLoginPage = () => {
     const classes = useStyles();
     return (
             <form onSubmit={submit} className={classes.form}>
-                <TextField label="Username" variant='filled' fullWidth className={classes.input} name="username" error={errorUsername} helperText={errorUsername ? 'Username is incorrect' : ''} value={username} onChange={e => setUsername(e.target.value)} /> 
-                <TextField label="Password" variant='filled' error={errorPassword} helperText={errorPassword ? 'Password is incorrect' : ''} fullWidth className={classes.input} name="password" type="password" value={password} onChange={e => setPassword(e.target.value)} />
+                <TextField placeholder="Username" label="Username" variant='filled' fullWidth className={classes.input} name="username" error={errorUsername} helperText={errorUsername ? 'Username is incorrect' : ''} value={username} onChange={e => setUsername(e.target.value)} /> 
+                <TextField placeholder="Password" label="Password" variant='filled' error={errorPassword} helperText={errorPassword ? 'Password is incorrect' : ''} fullWidth className={classes.input} name="password" type="password" value={password} onChange={e => setPassword(e.target.value)} />
             <Button type="submit" variant="contained" color="primary" className={classes.button} disabled={loading}>{loading ? <CircularProgress className={classes.icon} size={18} thickness={2}/> : 'Submit'}</Button>
             </form>
     );

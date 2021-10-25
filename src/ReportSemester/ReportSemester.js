@@ -65,13 +65,13 @@ export const ReportsemesterList = ({ permissions, record, ...props }) => {
     }
   }
 
-  const renderValidation = (record) => {
-    if (record.validated === true) {
-      return 'Tervalidasi'
-    } else {
-      return 'Belum Tervalidasi'
-    }
-  }
+  // const renderValidation = (record) => {
+  //  if (record.validated === true) {
+  //    return 'Tervalidasi'
+  //  } else {
+  //    return 'Belum Tervalidasi'
+  //  }
+  //}
 
   return (
     <List

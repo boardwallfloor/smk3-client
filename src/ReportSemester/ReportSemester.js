@@ -174,7 +174,7 @@ export const ReportsemesterEdit = ({ permissions, ...props }) => {
             {/* Question 1 */}
             <QuestionAccordion
               text='Jumlah SDM Fasyankes adalah jumlah SDM yang bekerja di Fasilitas Pelayanan Kesehatan.'
-              question='1. Jumlah SDM Fasyankes'
+              question={`1. ${reportSemesterQuestion[0].question}`}
             />
             <NumberInput
               source='report.question1.total'
@@ -205,7 +205,7 @@ export const ReportsemesterEdit = ({ permissions, ...props }) => {
             {/* Question 2 */}
             <QuestionAccordion
               text='Jumlah SDM Fasyankes yang sakit yaitu jumlah SDM Fasyankes yang sakit'
-              question='2. Jumlah SDM Fasyankes yang sakit'
+              question={`2. ${reportSemesterQuestion[1].question}`}
             />
             <NumberInput
               source='report.question2.total'
@@ -236,7 +236,7 @@ export const ReportsemesterEdit = ({ permissions, ...props }) => {
             {/* Question 3 */}
             <QuestionAccordion
               text='Jumlah  kasus  penyakit  umum  pada  SDM  Fasyankes  yaitu  jumlah  kasuspada  SDM Fasyankes  yang  terdiagnosis  penyakit  umum,  seperti  flu,batuk,  diare  dan  lain-lain (yang  tidak  berhubungan  dengan  pekerjaan)baik  penyakit  menular  maupun  tidak menular dalam pencatatan 1 SDMFasyankes bisa lebih dari 1 kasus penyakit'
-              question='3. Jumlah SDM yang sakit'
+              question={`3. ${reportSemesterQuestion[2].question}`}
             />
             <NumberInput
               source='report.question3.total'
@@ -267,7 +267,7 @@ export const ReportsemesterEdit = ({ permissions, ...props }) => {
             {/* Question 4 */}
             <QuestionAccordion
               text='Jumlah kasus dugaan penyakit akibat kerja pada SDM Fasyankes yaitu jumlah kasus penyakit yang disebabkan oleh pekerjaan dan/atau lingkungan kerja termasuk penyakit terkait  kerja.  Penyakit  terkait  kerjaa dalah  penyakit  yang  mempunyai  beberapa  agen penyebab  dengan  faktor pekerjaan  dan  atau  lingkungan  kerja  memegang  peranan bersama denganfaktor risiko lainnya.'
-              question='4. Jumlah kasus dugaan penyakit akibat kerja pada suatu SDM Fasyankes'
+              question={`4. ${reportSemesterQuestion[3].question}`}
             />
             <NumberInput
               source='report.question4.total'
@@ -298,7 +298,7 @@ export const ReportsemesterEdit = ({ permissions, ...props }) => {
             {/* Question 5 */}
             <QuestionAccordion
               text='Jumlah kasus penyakit akibat kerja pada SDM Fasyankes yaitu jumlah kasus penyakit akibat  kerja  pada  SDM  Fasyankes  yang  dibuktikan  dengandiagnosis  klinis  Penyakit Akibat Kerja'
-              question='5. Jumlah kasus penyakit akibat kerja pada SDM Fasyankes'
+              question={`5. ${reportSemesterQuestion[4].question}`}
             />
             <NumberInput
               source='report.question5.total'
@@ -329,7 +329,7 @@ export const ReportsemesterEdit = ({ permissions, ...props }) => {
             {/* Question 6 */}
             <QuestionAccordion
               text='Jumlah  kasus  kecelakaan  akibat  kerja  pada  SDM  Fasyankes  yaitu  jumlahsemua kecelakaan  yang  terjadi  pada  SDM  Fasyankes  yang  berhubungan dengan  kerja, demikian  pula kecelakaan  yang  terjadi  dalam  perjalanan berangkat  kerja  dari  rumah menuju tempat kerja dan pulang ke rumah melalui jalan yang biasa atau wajar dilalui.'
-              question='6. Jumlah kasus kecelakaan akibat kerja pada SDM Fasyankes'
+              question={`6. ${reportSemesterQuestion[5].question}`}
             />
             <NumberInput
               source='report.question6.total'
@@ -360,7 +360,7 @@ export const ReportsemesterEdit = ({ permissions, ...props }) => {
             {/* Question 7 */}
             <QuestionAccordion
               text='Jumlah  Kasus  kejadian  hampir  celaka  (near  miss)  pada  SDM  Fasyankes yaitu  suatu kejadian  insiden  yang  hampir  menimbulkan  cedera  atau celaka  seperti  terpeleset,kejatuhan benda, namun tidak mengenai manusia'
-              question='7. Jumlah kasus kejadian hampir celaka pada SDM Fasyankes'
+              question={`7. ${reportSemesterQuestion[6].question}`}
             />
             <NumberInput
               source='report.question7.total'
@@ -391,7 +391,7 @@ export const ReportsemesterEdit = ({ permissions, ...props }) => {
             {/* Qustion 8 */}
             <QuestionAccordion
               text='Jumlah  hari absen  SDM  Fasyankes  karena  sakit  yaitu  jumlah  hari  kerja hilang  SDM Fasyankes karena sakit'
-              question='8. Jumlah hari absen SDM Fasyankes karena sakit'
+              question={`8. ${reportSemesterQuestion[7].question}`}
             />
             <NumberInput
               source='report.question8.total'
@@ -426,7 +426,7 @@ export const ReportsemesterEdit = ({ permissions, ...props }) => {
               {/* Question 1 */}
               <QuestionAccordion
                 text='Jumlah SDM Fasyankes adalah jumlah SDM yang bekerja di Fasilitas Pelayanan Kesehatan.'
-                question='1. Jumlah SDM Fasyankes'
+                question={`1. Jumlah SDM Fasyankes ${reportSemesterQuestion[0].question}`}
               />
               <NumberField
                 source='report.question1.total'
@@ -448,8 +448,8 @@ export const ReportsemesterEdit = ({ permissions, ...props }) => {
 
               {/* Question 2 */}
               <QuestionAccordion
-                text='Jumlah SDM Fasyankes yang sakit yaitu jumlah SDM Fasyankes yang sakit'
-                question='2. Jumlah SDM Fasyankes yang sakit'
+                text='Jumlah SDM Fasyankes yang sakit yaitu jumlah SDM Fasyankes yang sakit dalam satu semester'
+                question={`2. ${reportSemesterQuestion[2].question}`}
               />
               <NumberField
                 source='report.question2.total'
@@ -468,7 +468,7 @@ export const ReportsemesterEdit = ({ permissions, ...props }) => {
               {/* Question 3 */}
               <QuestionAccordion
                 text='Jumlah  kasus  penyakit  umum  pada  SDM  Fasyankes  yaitu  jumlah  kasuspada  SDM Fasyankes  yang  terdiagnosis  penyakit  umum,  seperti  flu,batuk,  diare  dan  lain-lain (yang  tidak  berhubungan  dengan  pekerjaan)baik  penyakit  menular  maupun  tidak menular dalam pencatatan 1 SDMFasyankes bisa lebih dari 1 kasus penyakit'
-                question='3. Jumlah SDM yang sakit'
+                question={`3. ${reportSemesterQuestion[2].question}`}
               />
               <NumberField
                 source='report.question3.total'
@@ -487,7 +487,7 @@ export const ReportsemesterEdit = ({ permissions, ...props }) => {
               {/* Question 4 */}
               <QuestionAccordion
                 text='Jumlah kasus dugaan penyakit akibat kerja pada SDM Fasyankes yaitu jumlah kasus penyakit yang disebabkan oleh pekerjaan dan/atau lingkungan kerja termasuk penyakit terkait  kerja.  Penyakit  terkait  kerjaa dalah  penyakit  yang  mempunyai  beberapa  agen penyebab  dengan  faktor pekerjaan  dan  atau  lingkungan  kerja  memegang  peranan bersama denganfaktor risiko lainnya.'
-                question='4. Jumlah kasus dugaan penyakit akibat kerja pada suatu SDM Fasyankes'
+                question={`4. ${reportSemesterQuestion[3].question}`}
               />
               <NumberField
                 source='report.question4.total'
@@ -506,7 +506,7 @@ export const ReportsemesterEdit = ({ permissions, ...props }) => {
               {/* Question 5 */}
               <QuestionAccordion
                 text='Jumlah kasus penyakit akibat kerja pada SDM Fasyankes yaitu jumlah kasus penyakit akibat  kerja  pada  SDM  Fasyankes  yang  dibuktikan  dengandiagnosis  klinis  Penyakit Akibat Kerja'
-                question='5. Jumlah kasus penyakit akibat kerja pada SDM Fasyankes'
+                question={`5. ${reportSemesterQuestion[4].question}`}
               />
               <NumberField
                 source='report.question5.total'
@@ -517,7 +517,7 @@ export const ReportsemesterEdit = ({ permissions, ...props }) => {
               {/* Question 6 */}
               <QuestionAccordion
                 text='Jumlah  kasus  kecelakaan  akibat  kerja  pada  SDM  Fasyankes  yaitu  jumlahsemua kecelakaan  yang  terjadi  pada  SDM  Fasyankes  yang  berhubungan dengan  kerja, demikian  pula kecelakaan  yang  terjadi  dalam  perjalanan berangkat  kerja  dari  rumah menuju tempat kerja dan pulang ke rumah melalui jalan yang biasa atau wajar dilalui.'
-                question='6. Jumlah kasus kecelakaan akibat kerja pada SDM Fasyankes'
+                question={`6. ${reportSemesterQuestion[5].question}`}
               />
               <NumberField
                 source='report.question6.total'
@@ -536,7 +536,7 @@ export const ReportsemesterEdit = ({ permissions, ...props }) => {
               {/* Question 7 */}
               <QuestionAccordion
                 text='Jumlah  Kasus  kejadian  hampir  celaka  (near  miss)  pada  SDM  Fasyankes yaitu  suatu kejadian  insiden  yang  hampir  menimbulkan  cedera  atau celaka  seperti  terpeleset,kejatuhan benda, namun tidak mengenai manusia'
-                question='7. Jumlah kasus kejadian hampir celaka pada SDM Fasyankes'
+                question={`7. ${reportSemesterQuestion[6].question}`}
               />
               <NumberField
                 source='report.question7.total'
@@ -555,7 +555,7 @@ export const ReportsemesterEdit = ({ permissions, ...props }) => {
               {/* Qustion 8 */}
               <QuestionAccordion
                 text='Jumlah  hari absen  SDM  Fasyankes  karena  sakit  yaitu  jumlah  hari  kerja hilang  SDM Fasyankes karena sakit'
-                question='8. Jumlah hari absen SDM Fasyankes karena sakit'
+                question={`8. ${reportSemesterQuestion[7].question}`}
               />
               <NumberField
                 source='report.question8.total'
@@ -617,7 +617,7 @@ export const ReportsemesterShow = (props) => (
       </Tab>
       <Tab label='Laporan' path='report'>
         {/* Question 1 */}
-        <p>1. Jumlah SDM Fasyankes </p>
+        <p>1 {reportSemesterQuestion[0].question}</p>
         <NumberField source='report.question1.total' label='Jumlah' />
         <FileField
           source='report.question1.file.src'
@@ -630,7 +630,7 @@ export const ReportsemesterShow = (props) => (
         />
 
         {/* Question 2 */}
-        <p>2. Jumlah SDM Fasyankes yang sakit </p>
+        <p>2. {reportSemesterQuestion[1].question} </p>
         <NumberField source='report.question2.total' label='Jumlah' />
         <FileField
           source='report.question2.file.src'
@@ -643,7 +643,7 @@ export const ReportsemesterShow = (props) => (
         />
 
         {/* Question 3 */}
-        <p>3. Jumlah kasus penyakit umum pada SDM Fasyankes </p>
+        <p>3. {reportSemesterQuestion[2].question} </p>
         <NumberField source='report.question3.total' label='Jumlah' />
         <FileField
           source='report.question3.file.src'
@@ -657,8 +657,7 @@ export const ReportsemesterShow = (props) => (
 
         {/* Question 4 */}
         <p>
-          4. Jumlah kasus dugaan penyakit akibat kerja pada suatu SDM
-          Fasyankes{' '}
+          4. {reportSemesterQuestion[3].question}
         </p>
         <NumberField source='report.question4.total' label='Jumlah' />
         <FileField
@@ -672,7 +671,7 @@ export const ReportsemesterShow = (props) => (
         />
 
         {/* Question 5 */}
-        <p>5. Jumlah kasus penyakit akibat kerja pada SDM Fasyankes</p>
+        <p>5. {reportSemesterQuestion[4].question}</p>
         <NumberField source='report.question5.total' label='Jumlah' />
         <FileField
           source='report.question5.file.src'
@@ -686,7 +685,7 @@ export const ReportsemesterShow = (props) => (
 
         {/* Question 6 */}
         <p>
-          6. Jumlah kasus kecelakaan akibat kerja pada SDM Fasyankes
+          6. {reportSemesterQuestion[5].question}
         </p>
         <NumberField source='report.question6.total' label='Jumlah' />
         <FileField
@@ -701,8 +700,7 @@ export const ReportsemesterShow = (props) => (
 
         {/* Question 7 */}
         <p>
-          7. Jumlah kasus kejadian hampir celaka(<i>near misses</i>)
-          pada SDM Fasyankes
+          7. {reportSemesterQuestion[6].question}
         </p>
         <NumberField source='report.question7.total' label='Jumlah' />
         <FileField
@@ -716,7 +714,7 @@ export const ReportsemesterShow = (props) => (
         />
 
         {/* Qustion 8 */}
-        <p>8. Jumlah hari absen SDM Fasyankes karena sakit</p>
+        <p>8. {reportSemesterQuestion[7].question}</p>
         <NumberField source='report.question8.total' label='Jumlah' />
         <FileField
           source='report.question8.file.src'

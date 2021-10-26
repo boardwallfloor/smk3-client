@@ -7,10 +7,30 @@ import {
     } from 'react-admin';
 
 import PageTitle from '../Util/PageTitle';
+import { makeStyles } from "@material-ui/core";
 
-export const UserList = props => (
+const useStyles = makeStyles({
+    root: {
+        flexGrow: 1,
+        marginLeft: '20px',
+      },
+    centering: {
+        marginBottom: '-20px',
+      },
+    headerCell: {
+        fontWeight: "bold",
+        borderBottom: "solid black",
+    },
+    leftPadding: {
+        marginLeft: "20px",
+    },
+});
+
+export const UserList = props => {
+    const classes = useStyles();
+    return (
     <List title="User" {...props} bulkActionButtons={false}>
-        <Datagrid rowClick="show">
+        <Datagrid rowClick="show" classes={{ headerCell: classes.headerCell }}>
             <TextField source="full_name" label="Nama"/>
             <TextField source="privilege" label="Jenis User"/>
             <TextField source="email" label="Email"/>
@@ -21,7 +41,7 @@ export const UserList = props => (
             <DeleteButton />
         </Datagrid>
     </List>
-);
+)}
 
 export const UserEdit = props => (
     <Edit title={<PageTitle action="Editing"/>} {...props}>

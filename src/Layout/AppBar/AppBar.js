@@ -26,6 +26,7 @@ const useStyles = makeStyles({
 
 export const CustomAppBar = props => {
     const classes = useStyles();
+    let privilege = localStorage.getItem('privilege')
     
     return (
         <AppBar  {...props} userMenu={<MyUserMenu />}>
@@ -37,7 +38,7 @@ export const CustomAppBar = props => {
             />
             <Logo />
             <span className={classes.spacer} />
-            <NotificationBadge />
+            {privilege === 'Operator' || privilege === 'Kepala Fasyankes' ? <NotificationBadge /> : null}
         </AppBar>
     );
 };

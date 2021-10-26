@@ -12,7 +12,8 @@ import moment from 'moment'
 import { usePermissions } from 'react-admin'
 
 const AlertDialog = (props) => {
-  console.log(props.revisionData)
+  console.log(props.data)
+  let privilege = localStorage.getItem('privilege')
   const [reportSemester, setReportSemester] = useState({ laporan: 'Semester' })
   const [reportYear, setReportYear] = useState({ laporan: 'Tahun' })
 
@@ -36,7 +37,7 @@ const AlertDialog = (props) => {
       <DialogTitle id='alert-dialog-title'>Peringatan Laporan</DialogTitle>
       <DialogContent>
         <DialogContentText id='alert-dialog-description'>
-          {props.message}
+      {props.data.year?.length !== 0 || props.data.semester?.length !== 0 ? props.message : 'Belum ada tugas yang diperlukan'}
         </DialogContentText>
         {Object.values(reportSemester).map((item) => (
           <DialogContentText>
@@ -51,7 +52,7 @@ const AlertDialog = (props) => {
           </DialogContentText>
         ))}
       </DialogContent>
-      {props.revision !== '' ? 
+      {props.revision !== '' && privilege === 'Operator' ? 
       <DialogContent>
       <DialogContentText id='alert-dialog-description'>
         {props.revision}

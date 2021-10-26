@@ -6,7 +6,6 @@ import {
     Show,
     Datagrid,
     BooleanField,
-    BooleanInput,
     DateInput,
     DateField,
     ReferenceField,
@@ -1297,7 +1296,7 @@ export const ReportyearShow = (props) => (
                 <p>1. SMK3 di Fasyankes</p>
                 <BooleanField
                     source="report.question1.a.information"
-                    label="a. Ada komitmen/kebijakan"
+                    label={`a. ${reportYearQuestion[0].question1}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1306,7 +1305,7 @@ export const ReportyearShow = (props) => (
                 />
                 <BooleanField
                     source="report.question1.b.information"
-                    label="b. Dokumen rencana kegiatan K3"
+                    label={`b. ${reportYearQuestion[0].question2}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1315,7 +1314,7 @@ export const ReportyearShow = (props) => (
                 />
                 <BooleanField
                     source="report.question1.c.information"
-                    label="c. Ada Tim K3/Pengelola  K3"
+                    label={`c. ${reportYearQuestion[0].question3}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1327,7 +1326,7 @@ export const ReportyearShow = (props) => (
                 <p>2. Pengenalan Potensi Bahaya dan Pengendalian Resiko</p>
                 <BooleanField
                     source="report.question2.a.information"
-                    label="a. Identifikasi potensi bahaya"
+                    label={`a. ${reportYearQuestion[1].question1}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1336,7 +1335,7 @@ export const ReportyearShow = (props) => (
                 />
                 <BooleanField
                     source="report.question2.b.information"
-                    label="b. Penilaian risiko"
+                    label={`b. ${reportYearQuestion[1].question2}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1345,7 +1344,7 @@ export const ReportyearShow = (props) => (
                 />
                 <BooleanField
                     source="report.question2.c.information"
-                    label="c. Pengendalian Risiko"
+                    label={`c. ${reportYearQuestion[1].question3}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1357,7 +1356,7 @@ export const ReportyearShow = (props) => (
                 <p>3. Penerapan Kewaspadaan Standar </p>
                 <BooleanField
                     source="report.question3.a.information"
-                    label="a. Sarana dan Prasarana Kebersihan Tangan"
+                    label={`a. ${reportYearQuestion[2].question1}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1366,7 +1365,7 @@ export const ReportyearShow = (props) => (
                 />
                 <BooleanField
                     source="report.question3.b.information"
-                    label="b. Penyediaan APD"
+                    label={`b. ${reportYearQuestion[2].question1}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1375,7 +1374,7 @@ export const ReportyearShow = (props) => (
                 />
                 <BooleanField
                     source="report.question3.c.information"
-                    label="c. Pengelolaan jarun dan alat tajam"
+                    label={`c. ${reportYearQuestion[2].question2}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1384,7 +1383,7 @@ export const ReportyearShow = (props) => (
                 />
                 <BooleanField
                     source="report.question3.d.information"
-                    label="d. Dekontaminasi peralatan"
+                    label={`d. ${reportYearQuestion[2].question3}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1396,7 +1395,7 @@ export const ReportyearShow = (props) => (
                 <p>4. Penerapan Prinsip Ergonomi Pada </p>
                 <BooleanField
                     source="report.question4.a.information"
-                    label="a. Angkat angkut pasien (pasien, barang, dan lain-lain), postur kerja"
+                    label={`a. ${reportYearQuestion[3].question1}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1405,7 +1404,7 @@ export const ReportyearShow = (props) => (
                 />
                 <BooleanField
                     source="report.question4.b.information"
-                    label="b. Pengaturan shift kerja"
+                    label={`b. ${reportYearQuestion[3].question2}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1414,7 +1413,7 @@ export const ReportyearShow = (props) => (
                 />
                 <BooleanField
                     source="report.question4.c.information"
-                    label="c. Pengaturan Tata Ruang Kerja"
+                    label={`c. ${reportYearQuestion[3].question3}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1426,7 +1425,7 @@ export const ReportyearShow = (props) => (
                 <p>5. Pelayanan Kesehatan Kerja dan Imunisasi</p>
                 <BooleanField
                     source="report.question5.a.information"
-                    label="Pemeriksaan kesehatan SDM  Fasyankes"
+                    label={`a. ${reportYearQuestion[4].question1}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1435,28 +1434,19 @@ export const ReportyearShow = (props) => (
                 />
                 <BooleanField
                     source="report.question5.b.information"
-                    label="a. Fasyankes melakukan pemeriksaan kesehatan berkala"
+                    label={`b. ${reportYearQuestion[4].question2}`}
                 />
                 <FileField
                     label="File terlampir"
                     source="report.question5.b.file.src"
                     title="report.question5.b.file.title"
                 />
-                <BooleanField
-                    source="report.question5.c.information"
-                    label="b. Fasyankes melakukan imunisasi pada SDM Fasyankes yang beresiko"
-                />
-                <FileField
-                    label="File terlampir"
-                    source="report.question5.c.file.src"
-                    title="report.question5.c.file.title"
-                />
 
                 {/* Question 6 */}
                 <p>6. Pembudayaan PHBS di Fasyankes</p>
                 <BooleanField
                     source="report.question6.a.information"
-                    label="a. Melakukan sosialisasi"
+                    label={`a. ${reportYearQuestion[5].question1}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1465,7 +1455,7 @@ export const ReportyearShow = (props) => (
                 />
                 <BooleanField
                     source="report.question6.b.information"
-                    label="b. Media KIE"
+                    label={`b. ${reportYearQuestion[5].question2}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1480,7 +1470,7 @@ export const ReportyearShow = (props) => (
                 </p>
                 <BooleanField
                     source="report.question7.a.information"
-                    label="a. Daftar inventaris B3"
+                    label={`a. ${reportYearQuestion[6].question1}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1489,7 +1479,7 @@ export const ReportyearShow = (props) => (
                 />
                 <BooleanField
                     source="report.question7.b.information"
-                    label="b. SPO penggunaan B3"
+                    label={`b. ${reportYearQuestion[6].question2}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1498,7 +1488,7 @@ export const ReportyearShow = (props) => (
                 />
                 <BooleanField
                     source="report.question7.c.information"
-                    label="c. Penyimpanan dan Pembuangan limbah B3 dan domestik sesuai persyaratan"
+                    label={`c. ${reportYearQuestion[6].question3}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1510,7 +1500,7 @@ export const ReportyearShow = (props) => (
                 <p>8. Pengelolaan Sarana dan Prasarana dari Aspek K3</p>
                 <BooleanField
                     source="report.question8.a.information"
-                    label="a. Pengukuran pencahayaan, kualitas air, kualitas udara"
+                    label={`a. ${reportYearQuestion[7].question1}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1519,7 +1509,7 @@ export const ReportyearShow = (props) => (
                 />
                 <BooleanField
                     source="report.question8.b.information"
-                    label="b. Pemeliharaan Kebersihan Bangunan"
+                    label={`b. ${reportYearQuestion[7].question2}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1528,7 +1518,7 @@ export const ReportyearShow = (props) => (
                 />
                 <BooleanField
                     source="report.question8.c.information"
-                    label="c. Ketersediaan air dan listrik"
+                    label={`c. ${reportYearQuestion[7].question3}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1537,7 +1527,7 @@ export const ReportyearShow = (props) => (
                 />
                 <BooleanField
                     source="report.question8.d.information"
-                    label="d. Ketersediaan toilet sesuai standar"
+                    label={`d. ${reportYearQuestion[7].question4}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1549,7 +1539,7 @@ export const ReportyearShow = (props) => (
                 <p>9. Pengelolaan Peralatan Medis Dari Aspek K3</p>
                 <BooleanField
                     source="report.question9.information"
-                    label="a. Pemeliharaan pada peralatan medis"
+                    label={`a. ${reportYearQuestion[8].question1}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1558,19 +1548,21 @@ export const ReportyearShow = (props) => (
                 />
 
                 {/* Question 10 */}
-                <p>10. Kesiapsiagaan menghadapi kondisi darurat/bencana</p>
+                <p>10. {reportYearQuestion[9].prompt}</p>
                 <BooleanField
                     source="report.question10.a.information"
-                    label="a. SPO Penanganan Kondisi Darurat / Bencana"
+                    label={`a. ${reportYearQuestion[9].question1}`}
                 />
                 <FileField
                     label="File terlampir"
                     source="report.question10.a.file.src"
                     title="report.question10.a.file.title"
                 />
+                <p>{reportYearQuestion[9].prompt2}</p>
+                <p>{reportYearQuestion[9].prompt3}</p>
                 <BooleanField
                     source="report.question10.b.a.information"
-                    label="b. Proteksi kebakaran"
+                    label={`-. ${reportYearQuestion[9].question2}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1579,16 +1571,20 @@ export const ReportyearShow = (props) => (
                 />
                 <TextField
                     source="report.question10.b.b.information"
-                    label="Aktif"
+                    label={`- ${reportYearQuestion[9].question3}`}
                 />
                 <TextField
                     source="report.question10.b.c.information"
-                    label="Pasif"
+                    label={`- ${reportYearQuestion[9].question4}`}
                 />
-                <p>c. Simulasi</p>
+                <TextField
+                    source="report.question10.b.d.information"
+                    label={`- ${reportYearQuestion[9].question5}`}
+                />
+                <p>c. {reportYearQuestion[9].prompt4}</p>
                 <BooleanField
                     source="report.question10.c.a.information"
-                    label="- Darurat Bencana"
+                    label={`-  ${reportYearQuestion[9].question7}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1597,7 +1593,7 @@ export const ReportyearShow = (props) => (
                 />
                 <BooleanField
                     source="report.question10.c.b.information"
-                    label="- Penggunaan APAR"
+                    label={`-  ${reportYearQuestion[9].question8}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1605,11 +1601,13 @@ export const ReportyearShow = (props) => (
                     title="report.question10.c.a.file.title"
                 />
 
+                
+
                 {/* Question 11 */}
                 <p>11. Pelatihan</p>
                 <BooleanField
                     source="report.question11.a.information"
-                    label="a. SDM Fasyankes terlatih K3"
+                    label={`a. ${reportYearQuestion[10].question1}`}
                 />
                 <FileField
                     label="File terlampir"
@@ -1766,11 +1764,7 @@ export const ReportyearCreate = (props) => {
                         }
                     </FormDataConsumer>
 
-                        <BooleanInput
-                        fullWidth
-                        source="report.question3.b.information"
-                        label={`b. ${reportYearQuestion[2].question2}`}
-                    />
+
                     <SwitchWithSign label={`b. ${reportYearQuestion[2].question2}`} source="report.question3.b.information"/>
                     
                     <FormDataConsumer>
